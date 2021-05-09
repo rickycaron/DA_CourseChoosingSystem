@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xmlns:aop="http://www.springframework.org/schema/aop"
+           xmlns:tx="http://www.springframework.org/schema/tx"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="com.a20da10.Entity.spring"></context:component-scan>
+    <context:component-scan base-package="com.a20da10.service.spring"></context:component-scan>
+    <context:component-scan base-package="com.a20da10.dao.spring"></context:component-scan>
+
+
+    <!-- import the database connection properties file    -->
+    <context:property-placeholder location="WEB-INF/dbConfig.properties"></context:property-placeholder>
+
+    <!--    create the connection pool-->
+        <bean id="dsConnection" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+            <property name="user" value="${jdbc.user}"></property>
+            <property name="password" value="${jdbc.password}"></property>
+            <property name="driverClass" value="${jdbc.driverClass}"></property>
+            <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+            <property name="maxPoolSize" value="${jdbc.maxPoolSize}"></property>
+        </bean>
+
+
+    <!-- create hibernate session factory once for entire application    -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <!-- conenct the db source to the hibernate session factory        -->
+        <property name="dataSource" ref="dsConnection"/>
+    <!-- scan the entity to be used in spring container-->
+        <property name="packagesToScan" value="com.a20da10.Entity.spring"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.connection.url"><![CDATA[jdbc:mysql://localhost:3306/sys?useTimeZone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false]]></prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="myTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="myTransactionManager"/>
+
+
+</beans>
