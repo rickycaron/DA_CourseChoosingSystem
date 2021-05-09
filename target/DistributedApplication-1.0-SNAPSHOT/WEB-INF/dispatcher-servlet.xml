@@ -5,10 +5,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="com.a20da10.controller"></context:component-scan>
 
-
     <!--    set up viewResolver-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
+
+    <bean id="myBean" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/whatever!com.a20da10.service.ejb.MyFirstBeanLocal"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.MyFirstBeanLocal"></property>
+    </bean>
+
 </beans>

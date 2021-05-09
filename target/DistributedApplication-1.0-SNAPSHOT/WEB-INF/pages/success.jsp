@@ -7,11 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
+
+<head >
     <title>List students</title>
 </head>
 <body>
 this is your first jsp page
-
+<%
+    String name = (String) request.getAttribute("student");
+%>
 </body>
 </html>

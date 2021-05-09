@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
+
 public class StudentDaoImpl implements StudentDao{
 
     @Autowired
@@ -24,7 +25,8 @@ public class StudentDaoImpl implements StudentDao{
 //        2.create sql query
         Query<StudentEntity> query = session.createQuery("from StudentEntity ",StudentEntity.class);
 //        3.execute sql query
-        List<StudentEntity> students =query.getResultList();
+        List<StudentEntity> students = query.getResultList();
         return students;
     }
+
 }

@@ -1,4 +1,4 @@
-package com.a20da10.Entity.spring;
+package com.a20da10.Entity.ejb;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -6,14 +6,23 @@ import java.util.Objects;
 @Entity
 @Table(name = "student", schema = "sys", catalog = "")
 public class StudentEntity {
-    @Id
-    @GeneratedValue
+    private Long id;
     private int studentId;
     private String firstName;
     private String lastName;
     private String email;
 
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Id
     @Column(name = "studentId", nullable = false)
     public int getStudentId() {
         return studentId;
@@ -62,19 +71,7 @@ public class StudentEntity {
     }
 
     @Override
-    public String toString() {
-        return "StudentEntity{" +
-                "studentId=" + studentId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(studentId, firstName, lastName, email);
     }
-
-
 }

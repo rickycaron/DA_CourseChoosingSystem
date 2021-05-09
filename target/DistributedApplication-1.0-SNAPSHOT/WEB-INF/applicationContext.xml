@@ -31,7 +31,6 @@
             <property name="maxPoolSize" value="${jdbc.maxPoolSize}"></property>
         </bean>
 
-
     <!-- create hibernate session factory once for entire application    -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
     <!-- conenct the db source to the hibernate session factory        -->
