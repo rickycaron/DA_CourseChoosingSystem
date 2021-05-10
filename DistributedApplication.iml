@@ -38,7 +38,7 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
-          <unit-entry name="sessionFactory" value="d4c99961-1676-49d7-821b-55f074e30d2d" />
+          <unit-entry name="sessionFactory" />
         </datasource-map>
         <naming-strategy-map />
       </configuration>
@@ -58,6 +58,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Spring-5.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Spring MVC-5.2.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Hibernate 5.4.11-5.4.11" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:8.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.activation:activation:1.1" level="project" />
@@ -65,12 +66,14 @@
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
     <orderEntry type="library" name="Maven: com.mchange:c3p0:0.9.5.2" level="project" />
     <orderEntry type="library" name="Maven: com.mchange:mchange-commons-java:0.2.11" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.12.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.0" level="project" />
-    <orderEntry type="library" name="Hibernate 5.4.11-5.4.11" level="project" />
   </component>
 </module>

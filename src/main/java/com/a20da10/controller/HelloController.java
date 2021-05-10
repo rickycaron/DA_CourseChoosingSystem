@@ -1,5 +1,6 @@
 package com.a20da10.controller;
 
+import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.dao.spring.StudentDao;
 import com.a20da10.service.ejb.MyFirstBeanLocal;
 import com.a20da10.service.spring.GetStudentGrade;
@@ -8,8 +9,7 @@ import com.mchange.v2.c3p0.DriverManagerDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -24,45 +24,41 @@ import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
 @Controller
 @RequestMapping("/hello")
 public class HelloController {
-
     @Autowired
     private StudentDao studentDao;
-
     @Autowired
     private GetStudentGrade getStudentGrade;
-
+    @Autowired
+    private  WebApplicationContext springMVCIOC;
 
     @RequestMapping(value = "/hello1")
-    public String mySixthRequest(HttpServletRequest request, HttpServletResponse response, Model model) throws SQLException, PropertyVetoException, ClassNotFoundException {
-//        1.Get the context of server
-        ServletContext sc = request.getSession().getServletContext();
+    @ResponseBody
+    public String getAllStudent(HttpServletRequest request,Model model) throws SQLException, PropertyVetoException, ClassNotFoundException {
 
-//        2.Get the context of Spring IOC
-        WebApplicationContext springIOC= WebApplicationContextUtils.getWebApplicationContext(sc);
-
-//        3.Get the context of Spring MVC IOC
-        WebApplicationContext springMVCIOC = RequestContextUtils.findWebApplicationContext(request);
-
-//
-//        ComboPooledDataSource dataSource1 = (ComboPooledDataSource) springIOC.getBean("dsConnection");
-//
-//        System.out.println(dataSource1.getConnection());
-
-        System.out.println("this is the student info"+studentDao.getCustomers());
-
+        System.out.println("this is the student info"+studentDao.getAllStudents());
         System.out.println(getStudentGrade.getaveragegrade());
 
         model.addAttribute("student","name is shuai");
-//        System.out.println("this is from spring mvc ioc of HelloController" + springMVCContext.getBean(HelloController.class));
-//        System.out.println("this is from spring mvc ioc of book" + springContext.getBean(Book.class));
+
         return "success";
+//        return studentDao.getAllStudents();
 //       return "forward:/WEB-INF/222.html";
     }
+
+    @ResponseBody
+    @GetMapping("/hello3")
+    public List<StudentEntity> getAllStudentJson(){
+
+        return studentDao.getAllStudents();
+    }
+
+
     @RequestMapping(value = "hello2")
     public String getEJB(HttpServletRequest request, HttpServletResponse response) throws NamingException {
 

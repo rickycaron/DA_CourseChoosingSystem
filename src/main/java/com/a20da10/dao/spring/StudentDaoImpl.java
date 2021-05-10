@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-
 public class StudentDaoImpl implements StudentDao{
 
     @Autowired
@@ -19,7 +18,7 @@ public class StudentDaoImpl implements StudentDao{
 
     @Override
     @Transactional
-    public List<StudentEntity> getCustomers() {
+    public List<StudentEntity> getAllStudents() {
 //        1.get the current hibernate session
         Session session = sessionFactory.getCurrentSession();
 //        2.create sql query
