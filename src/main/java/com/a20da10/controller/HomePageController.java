@@ -11,23 +11,22 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class Login {
+public class HomePageController {
 
     @Autowired
     private StudentSelfService studentSelfService;
 
-    @Autowired
-    private WebApplicationContext springIOC;
 
     @RequestMapping("/login")
-    public String Login(String email,String password){
+    public String Login(String email,String password,Integer id){
 
     //1.Verification
     //2.Add studentId into service
         System.out.println(email + password);
-        studentSelfService.setStudentId(1);
+        studentSelfService.setStudentId(id);
     //3.redirect to home page
         System.out.println(studentSelfService);
+        System.out.println("studentSelfService id is" + id);
         return "success";
     }
 
