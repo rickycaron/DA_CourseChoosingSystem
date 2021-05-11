@@ -12,7 +12,7 @@ services:
       - MYSQL_PASSWORD=secret
   glassfish:
     build:
-      context: ./glassfish
+      context: ./glassfish            #use the self-bulid image
     container_name: dockerGlassfish
     ports:
       - '8080:8080'

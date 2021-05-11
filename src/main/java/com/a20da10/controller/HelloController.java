@@ -3,9 +3,6 @@ package com.a20da10.controller;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.dao.spring.StudentDao;
 import com.a20da10.service.ejb.MyFirstBeanLocal;
-import com.a20da10.service.spring.GetStudentGrade;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mchange.v2.c3p0.DriverManagerDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +11,11 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -32,8 +25,7 @@ import java.util.Properties;
 public class HelloController {
     @Autowired
     private StudentDao studentDao;
-    @Autowired
-    private GetStudentGrade getStudentGrade;
+
     @Autowired
     private  WebApplicationContext springMVCIOC;
 
@@ -42,7 +34,6 @@ public class HelloController {
     public String getAllStudent(HttpServletRequest request,Model model) throws SQLException, PropertyVetoException, ClassNotFoundException {
 
         System.out.println("this is the student info"+studentDao.getAllStudents());
-        System.out.println(getStudentGrade.getaveragegrade());
 
         model.addAttribute("student","name is shuai");
 
