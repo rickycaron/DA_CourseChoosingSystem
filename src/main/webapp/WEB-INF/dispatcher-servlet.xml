@@ -17,7 +17,7 @@
     </bean>
 
     <bean id="myBean" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
-        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/whatever!com.a20da10.service.ejb.MyFirstBeanLocal"/>
+        <property name="jndiName" value="java:global/DistributedApplication_war/whatever!com.a20da10.service.ejb.MyFirstBeanLocal"/>
         <property name="businessInterface" value="com.a20da10.service.ejb.MyFirstBeanLocal"></property>
     </bean>
 <!--    MyFirstBeanLocal myBean = new MyFirstBeanLocal(); -->

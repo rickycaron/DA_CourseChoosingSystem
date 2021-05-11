@@ -46,7 +46,7 @@ public class HelloController {
 
         model.addAttribute("student","name is shuai");
 
-        return "success";
+        return "success!";
 //        return studentDao.getAllStudents();
 //       return "forward:/WEB-INF/222.html";
     }
