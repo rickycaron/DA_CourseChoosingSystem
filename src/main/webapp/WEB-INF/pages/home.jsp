@@ -8,5 +8,16 @@
 
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+
+<form action="${pageContext.request.contextPath }/login" method="post">
+    Email: <input type="text" name="email"><br/>
+    Pssword: <input type="password" name="password"><br/>
+    <input type="submit" value="Login">
+</form>
+
+
+<a href="${pageContext.request.contextPath }/logout">logout</a>
+
+
 </body>
 </html>
