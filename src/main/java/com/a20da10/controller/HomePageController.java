@@ -19,7 +19,6 @@ public class HomePageController {
 
     @RequestMapping("/login")
     public String Login(String email,String password,Integer id){
-
     //1.Verification
     //2.Add studentId into service
         System.out.println(email + password);

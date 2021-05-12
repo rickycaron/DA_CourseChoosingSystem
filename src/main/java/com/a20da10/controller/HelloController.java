@@ -15,6 +15,7 @@ import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.List;
@@ -36,6 +37,7 @@ public class HelloController {
         System.out.println("this is the student info"+studentDao.getAllStudents());
 
         model.addAttribute("student","name is shuai");
+
 
         return "success!";
 //        return studentDao.getAllStudents();
@@ -67,7 +69,9 @@ public class HelloController {
 
         MyFirstBeanLocal bean1 = (MyFirstBeanLocal) springMVCIOC.getBean("myBean");
 
-        System.out.println("this is the value calculated by ejb "+bean1.doOperation(3,5));
+        DataSource bean2 = (DataSource) springIOC.getBean("dsConnection");
+        System.out.println("THIS IS THE DS ADDRESS"+bean2);
+        System.out.println("This is the value calculated by ejb "+bean1.doOperation(3,5));
 
         return "success";
     }
