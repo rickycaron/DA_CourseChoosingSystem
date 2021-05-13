@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="DistributedApplication:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/deploy</output-path>
+  <artifact type="exploded-war" name="DistributedApplication:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/DistributedApplication_war_exploded</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -20,7 +20,6 @@
         </element>
       </element>
       <element id="javaee-facet-resources" facet="DistributedApplication/web/Web" />
-      <element id="javaee-facet-resources" facet="DistributedApplication/ejb/EJB" />
     </root>
   </artifact>
 </component>

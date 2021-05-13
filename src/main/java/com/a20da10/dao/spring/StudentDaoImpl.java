@@ -1,5 +1,6 @@
 package com.a20da10.dao.spring;
 
+import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,6 +27,29 @@ public class StudentDaoImpl implements StudentDao{
 //        3.execute sql query
         List<StudentEntity> students = query.getResultList();
         return students;
+    }
+
+    @Override
+    @Transactional
+    public void subscribeCourse(StudentEntity studentEntity, CourseEntity courseEntity) {
+        studentEntity.addCourse(courseEntity);
+    }
+
+    @Override
+    @Transactional
+    public void addStudent(StudentEntity studentEntity) {
+        if (studentEntity!=null){
+            Session session = sessionFactory.getCurrentSession();
+            session.save(studentEntity);
+        }
+
+    }
+
+    @Override
+    @Transactional
+    public StudentEntity getStudentEntity(Integer studentId) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(StudentEntity.class,studentId);
     }
 
 }

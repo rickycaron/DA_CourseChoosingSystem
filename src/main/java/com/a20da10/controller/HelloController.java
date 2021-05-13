@@ -1,10 +1,12 @@
 package com.a20da10.controller;
 
+import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.dao.spring.StudentDao;
 import com.a20da10.service.ejb.MyFirstBeanLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
@@ -22,7 +24,6 @@ import java.util.List;
 import java.util.Properties;
 
 @Controller
-@RequestMapping("/hello")
 public class HelloController {
     @Autowired
     private StudentDao studentDao;
@@ -39,7 +40,7 @@ public class HelloController {
         model.addAttribute("student","name is shuai");
 
 
-        return "success!";
+        return "success!!";
 //        return studentDao.getAllStudents();
 //       return "forward:/WEB-INF/222.html";
     }
@@ -74,6 +75,15 @@ public class HelloController {
         System.out.println("This is the value calculated by ejb "+bean1.doOperation(3,5));
 
         return "success";
+    }
+
+    @RequestMapping("/hello4")
+    @Transactional
+    @ResponseBody
+    public List<CourseEntity> getStudentCourseTest(){
+       return studentDao.getStudentEntity(1).getCourseEntities();
+
+
     }
 
 }

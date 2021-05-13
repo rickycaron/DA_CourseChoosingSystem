@@ -1,9 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="ejb-jar" name="DistributedApplication:ejb">
+  <artifact type="exploded-ejb" name="DistributedApplication:ejb exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/deploy</output-path>
-    <root id="archive" name="DistributedApplication_ejb.jar">
+    <root id="root">
+      <element id="module-output" name="DistributedApplication" />
       <element id="javaee-facet-resources" facet="DistributedApplication/ejb/EJB" />
-      <element id="javaee-facet-classes" facet="DistributedApplication/ejb/EJB" />
     </root>
   </artifact>
 </component>
