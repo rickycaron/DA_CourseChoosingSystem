@@ -20,6 +20,11 @@
         <property name="jndiName" value="java:global/DistributedApplication_war/whatever!com.a20da10.service.ejb.MyFirstBeanLocal"/>
         <property name="businessInterface" value="com.a20da10.service.ejb.MyFirstBeanLocal"></property>
     </bean>
+
+    <bean id="testEJB" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/deploy/myCourseENJ!com.a20da10.service.ejb.CourseServiceLocal"></property>
+        <property name="businessInterface" value="com.a20da10.service.ejb.CourseServiceLocal"></property>
+    </bean>
 <!--    MyFirstBeanLocal myBean = new MyFirstBeanLocal(); -->
 
 </beans>
