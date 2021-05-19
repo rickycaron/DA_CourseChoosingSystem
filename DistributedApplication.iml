@@ -19,7 +19,8 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="DAPU" value="3a116b9c-c1be-48ec-9b9b-ff1b98d9ac5b" />
+          <factory-entry name="DAPU" value="660e5b28-c6da-48b0-92d4-738ca8dee1c5" />
+          <factory-entry name="default" value="d4c99961-1676-49d7-821b-55f074e30d2d" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
@@ -75,5 +76,9 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.0" level="project" />
+    <orderEntry type="library" name="Maven: javax:javaee-api:8.0.1" level="project" />
+    <orderEntry type="library" name="Maven: javax:javaee-api:8.0.1" level="project" />
+    <orderEntry type="library" name="Maven: javax:javaee-api:8.0.1" level="project" />
+    <orderEntry type="library" name="Maven: javax:javaee-api:8.0.1" level="project" />
   </component>
 </module>

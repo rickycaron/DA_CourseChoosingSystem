@@ -1,11 +1,10 @@
 package com.a20da10.controller;
 
-import com.a20da10.Entity.ejb.EJBCourseEntity;
+import com.a20da10.Entity.ejb.EJBInstructorsEntity;
 import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.dao.spring.StudentDao;
-import com.a20da10.service.ejb.CourseService;
-import com.a20da10.service.ejb.CourseServiceLocal;
+import com.a20da10.service.ejb.InstructorServiceLocal;
 import com.a20da10.service.ejb.MyFirstBeanLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.ejb.EJB;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +34,7 @@ public class HelloController {
     private  WebApplicationContext springMVCIOC;
 
     @Autowired
-    private CourseServiceLocal courseService;
+    private InstructorServiceLocal instructorServiceLocal;
 
 
     @RequestMapping(value = "/hello1")
@@ -95,9 +93,9 @@ public class HelloController {
 
     @RequestMapping("/hello5")
     @ResponseBody
-    public List<EJBCourseEntity> findCourceTest(){
+    public List<EJBInstructorsEntity> getAllInstructors(){
 
-        return courseService.findStudent("testcourse");
+        return instructorServiceLocal.getAllInstructors();
     }
 
 }

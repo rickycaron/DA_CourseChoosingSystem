@@ -15,16 +15,19 @@
         <property name="prefix" value="/WEB-INF/pages/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-
+    <bean id="instructorStudent" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/InstructorServiceImpl!com.a20da10.service.ejb.InstructorServiceLocal"></property>
+        <property name="businessInterface" value="com.a20da10.service.ejb.InstructorServiceLocal"></property>
+    </bean>
     <bean id="myBean" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
-        <property name="jndiName" value="java:global/DistributedApplication_war/whatever!com.a20da10.service.ejb.MyFirstBeanLocal"/>
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/MyfirstBean"/>
         <property name="businessInterface" value="com.a20da10.service.ejb.MyFirstBeanLocal"></property>
     </bean>
 
-    <bean id="testEJB" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
-        <property name="jndiName" value="java:global/deploy/myCourseENJ!com.a20da10.service.ejb.CourseServiceLocal"></property>
-        <property name="businessInterface" value="com.a20da10.service.ejb.CourseServiceLocal"></property>
-    </bean>
+<!--    <bean id="testEJB" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">-->
+<!--        <property name="jndiName" value="java:global/deploy/myCourseENJ!com.a20da10.service.ejb.CourseServiceLocal"></property>-->
+<!--        <property name="businessInterface" value="com.a20da10.service.ejb.CourseServiceLocal"></property>-->
+<!--    </bean>-->
 <!--    MyFirstBeanLocal myBean = new MyFirstBeanLocal(); -->
 
 </beans>
