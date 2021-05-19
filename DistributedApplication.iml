@@ -19,7 +19,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="default" value="d4c99961-1676-49d7-821b-55f074e30d2d" />
+          <factory-entry name="DAPU" value="3a116b9c-c1be-48ec-9b9b-ff1b98d9ac5b" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
