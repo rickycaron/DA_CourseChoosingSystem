@@ -25,7 +25,13 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
             <bean class="com.a20da10.controller.LoginInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+
 </beans>

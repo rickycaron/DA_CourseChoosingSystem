@@ -60,11 +60,12 @@ public class HomePageController<LoginOutAndRegisterSer> {
 //        springIOC.getAutowireCapableBeanFactory().destroyBean(studentSelfService);
         session.invalidate();
         sessionStatus.setComplete();
+        System.out.println(this.getClass().getClassLoader().getResource("main.css").getPath());
         return "home";
     }
 
     @RequestMapping("/")
     public String welcome(){
-        return "home";
+        return "login";
     }
 }
