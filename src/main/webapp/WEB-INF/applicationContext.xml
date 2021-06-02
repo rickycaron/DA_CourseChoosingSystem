@@ -14,21 +14,21 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:component-scan base-package="com.a20da10.Entity.spring"></context:component-scan>
-    <context:component-scan base-package="com.a20da10.service.spring"></context:component-scan>
-    <context:component-scan base-package="com.a20da10.dao.spring"></context:component-scan>
-
+    <context:component-scan base-package="com.a20da10.Entity.spring"/>
+    <context:component-scan base-package="com.a20da10.service.spring"/>
+    <context:component-scan base-package="com.a20da10.dao.spring"/>
+    <context:component-scan base-package="com.a20da10.activemq"/>
 
     <!-- import the database connection properties file    -->
-    <context:property-placeholder location="WEB-INF/dbConfig.properties"></context:property-placeholder>
+    <context:property-placeholder location="WEB-INF/dbConfig.properties"/>
 
     <!--    create the connection pool-->
         <bean id="dsConnection" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-            <property name="user" value="${jdbc.user}"></property>
-            <property name="password" value="${jdbc.password}"></property>
-            <property name="driverClass" value="${jdbc.driverClass}"></property>
-            <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
-            <property name="maxPoolSize" value="${jdbc.maxPoolSize}"></property>
+            <property name="user" value="${jdbc.user}"/>
+            <property name="password" value="${jdbc.password}"/>
+            <property name="driverClass" value="${jdbc.driverClass}"/>
+            <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
+            <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
         </bean>
 
     <!-- create hibernate session factory once for entire application    -->
@@ -59,5 +59,27 @@
     </bean>
     <tx:annotation-driven transaction-manager="myTransactionManager"/>
 
-
+    <!--    JMS Setting-->
+<!--    1. set prodeucer-->
+    <bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+        <property name="connectionFactory">
+<!--            dependency injection for implementation-->
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="tcp://localhost:61616"/>
+            </bean>
+        </property>
+        <property name="maxConnections" value="80"/>
+    </bean>
+<!--    2. set destination for queue-->
+    <bean id="destinationQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="studentQueue"/>
+    </bean>
+<!--    3.generate jms operator for send&receive-->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsFactory"/>
+        <property name="defaultDestination" ref="destinationQueue"/>
+        <property name="messageConverter">
+            <bean class="org.springframework.jms.support.converter.SimpleMessageConverter"/>
+        </property>
+    </bean>
 </beans>

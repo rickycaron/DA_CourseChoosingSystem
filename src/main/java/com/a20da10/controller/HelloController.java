@@ -3,6 +3,7 @@ package com.a20da10.controller;
 import com.a20da10.Entity.ejb.EJBCourseEntity;
 import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
+import com.a20da10.activemq.ProducerTest;
 import com.a20da10.dao.spring.StudentDao;
 import com.a20da10.service.ejb.CourseService;
 import com.a20da10.service.ejb.CourseServiceLocal;
@@ -42,6 +43,8 @@ public class HelloController {
     @Autowired
     private CourseServiceLocal courseService;
 
+    @Autowired
+    private ProducerTest producerTest;
 
     @RequestMapping(value = "/hello1")
     @ResponseBody
@@ -107,6 +110,12 @@ public class HelloController {
     public List<EJBCourseEntity> findCourceTest(){
 
         return courseService.findStudent("testcourse");
+    }
+
+    @RequestMapping("/hello6")
+    public String sendMessage(){
+        producerTest.sendMessage("time now is 2020");
+        return "success";
     }
 
 }
