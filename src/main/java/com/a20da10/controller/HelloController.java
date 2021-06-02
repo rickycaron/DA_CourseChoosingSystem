@@ -3,6 +3,7 @@ package com.a20da10.controller;
 import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.dao.spring.StudentDao;
+import com.a20da10.service.spring.StudentGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,17 +26,20 @@ import java.util.Properties;
 
 @Controller
 public class HelloController {
-    @Autowired
-    private StudentDao studentDao;
+//    @Autowired
+//    private StudentDao studentDao;
 
     @Autowired
     private  WebApplicationContext springMVCIOC;
+
+    @Autowired
+    private StudentGeneralService studentGeneralService;
 
     @RequestMapping(value = "/hello1")
     @ResponseBody
     public String getAllStudent(HttpServletRequest request,Model model) throws SQLException, PropertyVetoException, ClassNotFoundException {
 
-        System.out.println("this is the student info"+studentDao.getAllStudents());
+        System.out.println("this is the student info"+studentGeneralService.getAllStudent());
 
         model.addAttribute("student","name is shuai");
 
@@ -49,7 +53,7 @@ public class HelloController {
     @GetMapping("/hello3")
     public List<StudentEntity> getAllStudentJson(){
 
-        return studentDao.getAllStudents();
+        return studentGeneralService.getAllStudent();
     }
 
 
@@ -81,7 +85,7 @@ public class HelloController {
     @Transactional
     @ResponseBody
     public List<CourseEntity> getStudentCourseTest(){
-       return studentDao.getStudentEntity(1).getCourseEntities();
+       return studentGeneralService.getSingleStudent(1).getCourseEntities();
 
     }
 
