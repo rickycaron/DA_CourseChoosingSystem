@@ -82,4 +82,11 @@
             <bean class="org.springframework.jms.support.converter.SimpleMessageConverter"/>
         </property>
     </bean>
+<!--    4. generate general listener-->
+    <bean id="jmsLinstener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsFactory"/>
+        <property name="destination" ref="destinationQueue"/>
+<!--        callback function-->
+        <property name="messageListener" ref="myMessageListener"/>
+    </bean>
 </beans>
