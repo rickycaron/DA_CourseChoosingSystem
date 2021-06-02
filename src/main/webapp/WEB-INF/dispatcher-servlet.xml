@@ -26,5 +26,10 @@
         <property name="businessInterface" value="com.a20da10.service.ejb.CourseServiceLocal"></property>
     </bean>
 <!--    MyFirstBeanLocal myBean = new MyFirstBeanLocal(); -->
-
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.a20da10.controller.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

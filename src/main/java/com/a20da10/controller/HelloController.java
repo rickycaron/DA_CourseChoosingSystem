@@ -7,6 +7,7 @@ import com.a20da10.dao.spring.StudentDao;
 import com.a20da10.service.ejb.CourseService;
 import com.a20da10.service.ejb.CourseServiceLocal;
 import com.a20da10.service.ejb.MyFirstBeanLocal;
+import com.a20da10.service.spring.StudentGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +30,11 @@ import java.util.Properties;
 
 @Controller
 public class HelloController {
+//    @Autowired
+//    private StudentDao studentDao;
+
     @Autowired
-    private StudentDao studentDao;
+    private StudentGeneralService studentGeneralService;
 
     @Autowired
     private  WebApplicationContext springMVCIOC;
@@ -41,9 +45,10 @@ public class HelloController {
 
     @RequestMapping(value = "/hello1")
     @ResponseBody
+    @Transactional
     public String getAllStudent(HttpServletRequest request,Model model) throws SQLException, PropertyVetoException, ClassNotFoundException {
 
-        System.out.println("this is the student info"+studentDao.getAllStudents());
+        System.out.println("this is the student info"+studentGeneralService.getAllStudent());
 
         model.addAttribute("student","name is shuai");
 
@@ -55,9 +60,10 @@ public class HelloController {
 
     @ResponseBody
     @GetMapping("/hello3")
+    @Transactional
     public List<StudentEntity> getAllStudentJson(){
-
-        return studentDao.getAllStudents();
+//        return studentDao.getAllStudents();
+        return studentGeneralService.getAllStudent();
     }
 
 
@@ -89,12 +95,15 @@ public class HelloController {
     @Transactional
     @ResponseBody
     public List<CourseEntity> getStudentCourseTest(){
-       return studentDao.getStudentEntity(1).getCourseEntities();
+//       return studentDao.getStudentEntity(1).getCourseEntities();
+
+       return studentGeneralService.getSingleStudent(1).getCourseEntities();
 
     }
 
     @RequestMapping("/hello5")
     @ResponseBody
+    @Transactional
     public List<EJBCourseEntity> findCourceTest(){
 
         return courseService.findStudent("testcourse");

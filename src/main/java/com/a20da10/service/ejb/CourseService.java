@@ -14,7 +14,7 @@ import java.util.List;
 
 @Stateless(name = "myCourseENJ")
 @Local(com.a20da10.service.ejb.CourseServiceLocal.class)
-@Remote({com.a20da10.service.ejb.CourseServiceRemote.class})
+@Remote(com.a20da10.service.ejb.CourseServiceRemote.class)
 public class CourseService implements CourseServiceLocal,CourseServiceRemote {
 
     @PersistenceContext(name = "DAPU")
