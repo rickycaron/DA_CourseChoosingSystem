@@ -1,6 +1,5 @@
 package com.a20da10.Entity.spring;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -16,6 +15,7 @@ public class CourseEntity {
     private int courseId;
     private String name;
     private Integer instructorId;
+    private CourseTypeEnum type;
 
     public List<StudentEntity> getStudentEntities() {
         return studentEntities;
@@ -81,6 +81,14 @@ public class CourseEntity {
             studentEntities=new ArrayList<>();
         }
         studentEntities.add(studentEntity);
+    }
+
+    public CourseTypeEnum getType() {
+        return type;
+    }
+
+    public void setType(CourseTypeEnum type) {
+        this.type = type;
     }
 
     @Override

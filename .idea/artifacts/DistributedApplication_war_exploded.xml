@@ -28,9 +28,9 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-core:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.5.RELEASE" />
-          <element id="library" level="project" name="Hibernate 5.4.11-5.4.11" />
-          <element id="library" level="project" name="Spring-5.2.3.RELEASE" />
           <element id="library" level="project" name="Spring MVC-5.2.3.RELEASE" />
+          <element id="library" level="project" name="Spring-5.2.3.RELEASE" />
+          <element id="library" level="project" name="Hibernate 5.4.11-5.4.11" />
         </element>
       </element>
       <element id="directory" name="META-INF">
