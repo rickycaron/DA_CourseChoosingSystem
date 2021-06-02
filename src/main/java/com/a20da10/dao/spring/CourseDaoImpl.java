@@ -17,7 +17,6 @@ public class CourseDaoImpl implements CourseDao{
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional
     public void addCourse(CourseEntity courseEntity) {
         if (courseEntity!=null){
             Session session = sessionFactory.getCurrentSession();
@@ -26,21 +25,18 @@ public class CourseDaoImpl implements CourseDao{
     }
 
     @Override
-    @Transactional
     public CourseEntity getCourseEntity(Integer courseId) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(CourseEntity.class,courseId);
     }
 
     @Override
-    @Transactional
     public List<StudentEntity> getAllStudentOfCourse(Integer courseId) {
         CourseEntity courseEntity = getCourseEntity(courseId);
         return courseEntity.getStudentEntities();
     }
 
     @Override
-    @Transactional
     public void addStudentsToCourse(StudentEntity studentEntity,CourseEntity courseEntity) {
 
         courseEntity.addStudent(studentEntity);

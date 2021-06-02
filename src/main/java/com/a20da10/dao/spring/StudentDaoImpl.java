@@ -18,7 +18,6 @@ public class StudentDaoImpl implements StudentDao{
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional
     public List<StudentEntity> getAllStudents() {
 //        1.get the current hibernate session
         Session session = sessionFactory.getCurrentSession();
@@ -28,15 +27,26 @@ public class StudentDaoImpl implements StudentDao{
         List<StudentEntity> students = query.getResultList();
         return students;
     }
+    @Override
+    public void updateStudent(StudentEntity studentEntity) {
+        Session session =sessionFactory.getCurrentSession();
+        session.saveOrUpdate(studentEntity);
+    }
 
     @Override
-    @Transactional
+    public void deleteStudent(Integer studentId) {
+        Session session=sessionFactory.getCurrentSession();
+        Query query =session.createQuery("delete from StudentEntity where id=:studentId");
+        query.setParameter("studentId",studentId);
+        query.executeUpdate();
+    }
+
+    @Override
     public void subscribeCourse(StudentEntity studentEntity, CourseEntity courseEntity) {
         studentEntity.addCourse(courseEntity);
     }
 
     @Override
-    @Transactional
     public void addStudent(StudentEntity studentEntity) {
         if (studentEntity!=null){
             Session session = sessionFactory.getCurrentSession();
@@ -46,10 +56,17 @@ public class StudentDaoImpl implements StudentDao{
     }
 
     @Override
-    @Transactional
     public StudentEntity getStudentEntity(Integer studentId) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(StudentEntity.class,studentId);
     }
+    @Override
+    public StudentEntity getStudentEntityByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query =session.createQuery("select s from StudentEntity s where s.email = :email",StudentEntity.class);
+        query.setParameter("email",email);
+        return (StudentEntity) query.getSingleResult();
+    }
+
 
 }
