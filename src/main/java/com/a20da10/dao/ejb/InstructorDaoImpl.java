@@ -60,7 +60,6 @@ public class InstructorDaoImpl implements InstructorDao {
         em.remove(i);
     }
 
-
     @Override
     @Transactional
     public List<CourseEntity> findCoursesByInsId(int insId) {
@@ -71,17 +70,23 @@ public class InstructorDaoImpl implements InstructorDao {
 
     @Override
     @Transactional
-    public void updateCourseType(int id, CourseTypeEnum type) {
-        CourseEntity c = em.find(CourseEntity.class,id);
+    public void updateCourseInfo(int courseId, String name, int instructorId, CourseTypeEnum type){
+        CourseEntity c = em.find(CourseEntity.class,courseId);
+        c.setName(name);
+        c.setInstructorId(instructorId);
         c.setType(type);
     }
 
     @Override
-    @Transactional
-    public EJBInstructorEntity getInstructorEntityByEmail(String email) {
-        Query query =em.createQuery("SELECT i FROM  EJBInstructorEntity i WHERE i.email = :email",EJBInstructorEntity.class);
-        query.setParameter("email",email);
-        return (EJBInstructorEntity) query.getSingleResult();
+    public void addNewCourse(String name, int instructorId, CourseTypeEnum courseType) {
+        CourseEntity c = new CourseEntity(name, instructorId, courseType);
+        em.persist(c);
+    }
+
+    @Override
+    public void deleteCourse(int courseId) {
+        CourseEntity c = em.find(CourseEntity.class,courseId);
+        em.remove(c);
     }
 
 }

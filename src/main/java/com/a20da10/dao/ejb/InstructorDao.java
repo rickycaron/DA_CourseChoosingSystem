@@ -14,6 +14,7 @@ public interface InstructorDao {
     public List<EJBInstructorEntity> getAll();
     public void deleteById(int id);
     public List<CourseEntity> findCoursesByInsId(int insId);
-    public void updateCourseType(int id, CourseTypeEnum type);
-    public EJBInstructorEntity getInstructorEntityByEmail(String email);
+    public void updateCourseInfo(int courseId, String name, int instructorId, CourseTypeEnum type);
+    public void addNewCourse(String name, int instructorId, CourseTypeEnum type);
+    public void deleteCourse(int courseId);
 }

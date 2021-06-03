@@ -5,7 +5,9 @@
              version="2.2">
     <persistence-unit name="DAPU">
         <jta-data-source>jdbc/mysqlres</jta-data-source>
-        <class>com.a20da10.Entity.ejb.EJBCourseEntity</class>
+        <class>com.a20da10.Entity.spring.CourseEntity</class>
+        <class>com.a20da10.Entity.spring.StudentEntity</class>
+        <class>com.a20da10.Entity.ejb.EJBInstructorEntity</class>
         <properties>
             <property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/school"/>
             <property name="toplink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

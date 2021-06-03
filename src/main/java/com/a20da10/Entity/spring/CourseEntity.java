@@ -17,6 +17,16 @@ public class CourseEntity {
     private Integer instructorId;
     private CourseTypeEnum type;
 
+    public CourseEntity(String name, Integer instructorId, CourseTypeEnum type) {
+        this.name = name;
+        this.instructorId = instructorId;
+        this.type = type;
+    }
+
+    public CourseEntity() {
+
+    }
+
     public List<StudentEntity> getStudentEntities() {
         return studentEntities;
     }
