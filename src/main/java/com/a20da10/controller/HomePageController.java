@@ -6,6 +6,7 @@ import com.a20da10.service.spring.LoginOutAndRegisterService;
 import com.a20da10.service.spring.StudentSelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
@@ -68,4 +69,14 @@ public class HomePageController<LoginOutAndRegisterSer> {
     public String welcome(){
         return "login";
     }
+
+    @RequestMapping("/hash")
+    public void hashCodepassRui(){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        System.out.println("This is my password hashcode  :  "+passwordEncoder.encode("rui"));
+
+    }
 }
+
+

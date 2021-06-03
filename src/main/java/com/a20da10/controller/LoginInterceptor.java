@@ -16,6 +16,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         if(url.contains("/welcome")){
             return true;
         }
+        if(url.contains("/rest")){
+            return true;
+        }
         HttpSession session = request.getSession();
         StudentSelfService studentSelfService = (StudentSelfService) session.getAttribute("USER_SESSION");
         if (studentSelfService!=null){
