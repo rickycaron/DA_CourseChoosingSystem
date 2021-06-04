@@ -18,6 +18,7 @@ public class MyMessageListener implements MessageListener {
             try {
                 String txtMessage = textMessage.getText();
                 System.out.println("receive message from listner with selector"+txtMessage);
+
             } catch (JMSException e) {
                 e.printStackTrace();
             }

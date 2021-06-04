@@ -1,5 +1,6 @@
 package com.a20da10.activemq;
 
+import com.a20da10.service.spring.StudentGeneralService;
 import com.a20da10.service.spring.StudentSelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.Session;
 import javax.jms.TextMessage;
 
 @Component
@@ -19,6 +21,9 @@ public class StudentReceiver {
 
 @Autowired
     StudentSelfService studentSelfService;
+
+@Autowired
+    StudentGeneralService studentGeneralService;
 
 public void connectToReceiverService(){
     System.out.println(studentSelfService.getStudentId());
@@ -29,23 +34,36 @@ public void connectToReceiverService(){
 
 }
     @JmsListener(destination = "myQueue", containerFactory = "jmsContainerFactory", selector = "role = 'student'")
-    public void receiveStudentMessage(Message message) throws JMSException {
+    public void receiveStudentMessage(Message message, Session session) throws JMSException {
 
+        System.out.println("-------------------------------------");
+        System.out.println(message.getJMSCorrelationID());
+        //this is the id of sending address
+        Integer senderId =message.getIntProperty("senderId");
+        Integer receiver =message.getIntProperty("receiverId");
+        System.out.println("---------------------------1111----------");
 
-        String id =message.getJMSMessageID();
-        System.out.println("received is is "+ id);
+        System.out.println("sender id is  "+senderId);
+        System.out.println("sender id is  "+receiver);
 
-//        if (message !=null && id.equals(studentId)){
-//            TextMessage textMessage = (TextMessage) message;
-//            try {
-//
-//                String txtMessage = textMessage.getText();
-//                System.out.println("this is the message get from controller with selector"+txtMessage);
-//            } catch (JMSException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
+        System.out.println("-------------------------------------");
+
+//        System.out.println("send to user  "+ id + "from user" + userId);
+        System.out.println("-------------------------------------");
+
+        if (message !=null ){
+            TextMessage textMessage = (TextMessage) message;
+            try {
+
+                String txtMessage = textMessage.getText();
+                System.out.println("this is the message get from controller with selector"+txtMessage);
+                //here persist the message
+                System.out.println(studentGeneralService.getAllStudent());
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 }

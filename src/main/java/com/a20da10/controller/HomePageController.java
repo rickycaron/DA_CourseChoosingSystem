@@ -49,6 +49,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
 //            statefulMessageListener.setStudentId(id);
             //4.Set session attribute for interceptor checking later
             session.setAttribute("USER_SESSION",studentSelfService);
+            session.setAttribute("USER_ID",id);
             //5.redirect to home page
             System.out.println(studentSelfService);
             System.out.println("login success");
