@@ -16,16 +16,17 @@ public class LoginInterceptor implements HandlerInterceptor {
         if(url.contains("/welcome")){
             return true;
         }
-        if(url.contains("/rest")){
-            return true;
-        }
+//        if(url.contains("/rest")){
+//            return true;
+//        }
         HttpSession session = request.getSession();
         StudentSelfService studentSelfService = (StudentSelfService) session.getAttribute("USER_SESSION");
         if (studentSelfService!=null){
             return true;
+        } else {
+            //Here can set forward to login page jsp
+            return false;
         }
-        //Here can set forward to login page jsp
-        return false;
     }
 
     @Override
