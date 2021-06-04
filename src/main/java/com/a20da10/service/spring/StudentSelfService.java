@@ -9,4 +9,6 @@ public interface StudentSelfService {
     public void setStudentId(int i);
 
     public int getStudentId();
+
+
 }

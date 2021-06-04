@@ -1,7 +1,8 @@
 package com.a20da10.controller;
-
-import com.a20da10.activemq.MyMessageListener;
-import com.a20da10.activemq.StatefulMessageListener;
+//
+//import com.a20da10.activemq.MyMessageListener;
+//import com.a20da10.activemq.StatefulMessageListener;
+import com.a20da10.activemq.StudentReceiver;
 import com.a20da10.service.spring.LoginOutAndRegisterService;
 import com.a20da10.service.spring.StudentSelfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,9 @@ public class HomePageController<LoginOutAndRegisterSer> {
     private LoginOutAndRegisterService logService;
 
     @Autowired
-    private StatefulMessageListener statefulMessageListener;
+    private StudentReceiver studentReceiver;
+//    @Autowired
+//    private StatefulMessageListener statefulMessageListener;
 
 
     @RequestMapping("/loginStudent")
@@ -41,7 +44,9 @@ public class HomePageController<LoginOutAndRegisterSer> {
             //3.create stateful bean for later access
             studentSelfService.setStudentId(id);
             System.out.println("studentSelfService id is" + id);
-            statefulMessageListener.setStudentId(id);
+            System.out.println(studentReceiver);
+            studentReceiver.connectToReceiverService();
+//            statefulMessageListener.setStudentId(id);
             //4.Set session attribute for interceptor checking later
             session.setAttribute("USER_SESSION",studentSelfService);
             //5.redirect to home page

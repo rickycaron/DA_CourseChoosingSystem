@@ -2,9 +2,13 @@ package com.a20da10.controller;
 
 import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
-import com.a20da10.dao.spring.StudentDao;
+import com.a20da10.activemq.ConsumerTest;
+import com.a20da10.activemq.JmsListener11;
+import com.a20da10.activemq.ProducerTest;
+import com.a20da10.activemq.StudentReceiver;
 import com.a20da10.service.spring.StudentGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -15,6 +19,11 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.annotation.Resource;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.TextMessage;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +43,21 @@ public class HelloController {
 
     @Autowired
     private StudentGeneralService studentGeneralService;
+
+    @Autowired
+    private ProducerTest producerTest;
+
+    @Autowired
+    ConsumerTest consumerTest;
+
+    @Resource(name = "myMessageListener")
+    MessageListener messageListener;
+
+    @Autowired
+    JmsListener11 jmsListener;
+
+    @Autowired
+    StudentReceiver studentReceiver;
 
     @RequestMapping(value = "/hello1")
     @ResponseBody
@@ -86,8 +110,20 @@ public class HelloController {
     @ResponseBody
     public List<CourseEntity> getStudentCourseTest(){
        return studentGeneralService.getSingleStudent(1).getCourseEntities();
-
     }
 
+    @RequestMapping("/hello11")
+    @ResponseBody
+    public void sendMessage(){
+        producerTest.sendMessage("time now is 1305 ","1");
+    }
+
+
+    @RequestMapping("/hello12")
+    @ResponseBody
+    public void receiverCheck(){
+        studentReceiver.connectToReceiverService();
+    }
+    //    @JmsListener(destination = "studentQueue",selector = "studentIdSelector='" +1+"'")
 
 }
