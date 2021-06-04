@@ -2,6 +2,7 @@ package com.a20da10.controller;
 
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.service.spring.StudentGeneralService;
+import com.a20da10.service.spring.UpdateTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,11 +40,17 @@ public class RESTController {
     @PutMapping("/student")
     public StudentEntity updateStudent(@RequestBody StudentEntity studentEntity){
         //here the studentId is not null or 0,therefore it will update instead of adding
+        int studentId =studentEntity.getStudentId();
+        if( studentId!= 0){
+            StudentEntity source= studentGeneralService.getSingleStudent(studentId);
+            UpdateTool.copyNullProperties(source, studentEntity);
+        }
         studentGeneralService.updateStudent(studentEntity);
         return studentEntity;
     }
     @DeleteMapping("/delete/{studentId}")
     public String deleteStudent(@PathVariable int studentId){
+
         StudentEntity studentEntity = studentGeneralService.getSingleStudent(studentId);
         if (studentEntity==null){
             return "student with id = "+studentId+" is not found";

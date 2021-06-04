@@ -13,7 +13,7 @@ import java.util.Objects;
 @Table(name = "student", schema = "school")
 public class StudentEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int studentId;
     private String firstName;
     private String lastName;
