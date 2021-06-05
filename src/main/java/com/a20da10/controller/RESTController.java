@@ -13,7 +13,7 @@ import java.util.List;
 
 //cotroller + responseBody
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
 @RequestMapping("/rest")
 public class RESTController {
 
