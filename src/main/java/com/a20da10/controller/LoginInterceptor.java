@@ -13,14 +13,13 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String url =request.getRequestURI();
 
-        System.out.println("66666666666666666666666666666666666666666666666666666666666666");
+        System.out.println("Rui: The session is");
         System.out.println(request.getSession());
-        System.out.println("66666666666666666666666666666666666666666666666666666666666666");
 
         //Only allow accessing to WelcomePageController
         if(url.contains("/welcome")){
+            System.out.println("Rui: Enter the welcome webpage");
             System.out.println(request.getSession());
-            System.out.println("0000000000000000000000000000000000000000000000000000");
             return true;
         }
 //        if(url.contains("/rest")){
@@ -30,15 +29,13 @@ public class LoginInterceptor implements HandlerInterceptor {
         StudentSelfService studentSelfService = (StudentSelfService) session.getAttribute("USER_SESSION");
         if (studentSelfService!=null)
         {
+            System.out.println("Rui: Successfully authenticated!!!:");
             System.out.println(request.getSession());
-            System.out.println("44444444444444444444444444444444444444444444444444444");
             return true;
         }
         else
         {
-            System.out.println(request.getSession());
-            System.out.println("Not loged in yet! Intercept!");
-            System.out.println("555555555555555555555555555555555555555555555555555555");
+            System.out.println("Rui: Not loged in yet! Intercept!" + request.getSession());
             //Here can set forward to login page jsp
             return false;
         }

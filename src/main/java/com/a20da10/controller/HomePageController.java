@@ -40,7 +40,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
     public boolean Login(@RequestBody StudentEntity studentEntity, HttpSession session, HttpServletResponse response,HttpServletRequest request){
 
         //0.Fetching parameters
-        System.out.println("22222222222222222222222222222222222222222");
 //        String email = request.getParameter("email");
 //        String password = request.getParameter("password");
         String email = studentEntity.getEmail();
@@ -50,7 +49,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
         //1.Verification
         if (logService.StudentAuthentication(email, password)) {
-            System.out.println("1111111111111111111111111111111111111111111");
             //2.Add studentId into service
             Integer id = logService.getStudentIdByEmail(email);
             System.out.println(email + password);
@@ -72,7 +70,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
             // 是否允许浏览器携带用户身份信息（cookie）
             response.setHeader("Access-Control-Allow-Credentials","true");
-
 
 //            response.setHeader("Access-Control-Allow-Credentials", "true");
 //            response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080/");
