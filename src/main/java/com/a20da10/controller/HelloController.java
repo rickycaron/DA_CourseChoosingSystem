@@ -12,6 +12,7 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Properties;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
 public class HelloController {
 //    @Autowired
 //    private StudentDao studentDao;
