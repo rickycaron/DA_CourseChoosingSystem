@@ -71,11 +71,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
             // 是否允许浏览器携带用户身份信息（cookie）
             response.setHeader("Access-Control-Allow-Credentials","true");
 
-//            response.setHeader("Access-Control-Allow-Credentials", "true");
-//            response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080/");
-//            response.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
-//            response.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-
             return true;
 
         }
