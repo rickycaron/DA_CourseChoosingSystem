@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:context="http://www.springframework.org/schema/context"
-           xmlns:aop="http://www.springframework.org/schema/aop"
-           xmlns:tx="http://www.springframework.org/schema/tx"
-           xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/cache"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/aop
     http://www.springframework.org/schema/aop/spring-aop.xsd
     http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx.xsd">
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/jms
+    https://www.springframework.org/schema/jms/spring-jms.xsd">
 
     <context:component-scan base-package="com.a20da10.Entity.spring"/>
     <context:component-scan base-package="com.a20da10.service.spring"/>
@@ -59,20 +65,26 @@
     </bean>
     <tx:annotation-driven transaction-manager="myTransactionManager"/>
 
+<!--    <mvc:annotation-driven/>-->
+
+    <jms:annotation-driven/>
+
     <!--    JMS Setting-->
 <!--    1. set prodeucer-->
-    <bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
-        <property name="connectionFactory">
+<!--    <bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">-->
+    <bean id="jmsFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory">
 <!--            dependency injection for implementation-->
             <bean class="org.apache.activemq.ActiveMQConnectionFactory">
                 <property name="brokerURL" value="tcp://localhost:61616"/>
             </bean>
         </property>
-        <property name="maxConnections" value="80"/>
+<!--        <property name="maxConnections" value="80"/>-->
+        <property name="sessionCacheSize" value="20"/>
     </bean>
 <!--    2. set destination for queue-->
     <bean id="destinationQueue" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg index="0" value="studentQueue"/>
+        <constructor-arg index="0" value="myQueue"/>
     </bean>
 <!--    3.generate jms operator for send&receive-->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
@@ -83,10 +95,17 @@
         </property>
     </bean>
 <!--    4. generate general listener-->
-    <bean id="jmsLinstener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+<!--    <bean id="jmsLinstener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
+<!--        <property name="connectionFactory" ref="jmsFactory"/>-->
+<!--        <property name="destination" ref="destinationQueue"/>-->
+<!--&lt;!&ndash;        callback function&ndash;&gt;-->
+<!--        <property name="messageListener" ref="myMessageListener"/>-->
+<!--    </bean>-->
+<!--    5.generate defaultContainer-->
+
+    <bean id="jmsContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
         <property name="connectionFactory" ref="jmsFactory"/>
-        <property name="destination" ref="destinationQueue"/>
-<!--        callback function-->
-        <property name="messageListener" ref="myMessageListener"/>
+<!--        <property name="destination" ref="destinationQueue"/>-->
     </bean>
+
 </beans>

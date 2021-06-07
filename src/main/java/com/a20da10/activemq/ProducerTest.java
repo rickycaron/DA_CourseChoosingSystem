@@ -15,11 +15,16 @@ public class ProducerTest {
     @Autowired
     private JmsTemplate jmsTemplate;
 
-    public void sendMessage(String mess){
+    public void sendMessage(String mess,int jmsId){
         jmsTemplate.send(new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
                  TextMessage txtMessage = session.createTextMessage("this is the message sent by producer " + mess);
+                 txtMessage.setStringProperty("role","student");
+
+                txtMessage.setIntProperty("receiverId",3);
+
+                txtMessage.setIntProperty("senderId",jmsId);
                  return txtMessage;
             }
         });

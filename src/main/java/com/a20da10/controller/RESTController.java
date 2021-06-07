@@ -2,15 +2,19 @@ package com.a20da10.controller;
 
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.service.spring.StudentGeneralService;
+import com.a20da10.service.spring.UpdateTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
 import java.util.List;
 
 
 //cotroller + responseBody
 @RestController
+@CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
 @RequestMapping("/rest")
 public class RESTController {
 
@@ -18,8 +22,10 @@ public class RESTController {
     private StudentGeneralService studentGeneralService;
 
     @GetMapping("/students")
-    public List<StudentEntity> getAllStudentJson(){
-
+    public List<StudentEntity> getAllStudentJson(HttpServletResponse response){
+//        Response.setHeader.Add("Access-Control-Allow-Origin", "*");
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+        System.out.println("Data is already sent!!!!!!!!!!!!");
         return studentGeneralService.getAllStudent();
     }
 
@@ -39,11 +45,17 @@ public class RESTController {
     @PutMapping("/student")
     public StudentEntity updateStudent(@RequestBody StudentEntity studentEntity){
         //here the studentId is not null or 0,therefore it will update instead of adding
+        int studentId =studentEntity.getStudentId();
+        if( studentId!= 0){
+            StudentEntity source= studentGeneralService.getSingleStudent(studentId);
+            UpdateTool.copyNullProperties(source, studentEntity);
+        }
         studentGeneralService.updateStudent(studentEntity);
         return studentEntity;
     }
     @DeleteMapping("/delete/{studentId}")
     public String deleteStudent(@PathVariable int studentId){
+
         StudentEntity studentEntity = studentGeneralService.getSingleStudent(studentId);
         if (studentEntity==null){
             return "student with id = "+studentId+" is not found";

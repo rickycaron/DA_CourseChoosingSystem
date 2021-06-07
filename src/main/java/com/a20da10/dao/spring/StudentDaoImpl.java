@@ -65,6 +65,7 @@ public class StudentDaoImpl implements StudentDao{
         Session session = sessionFactory.getCurrentSession();
         Query query =session.createQuery("select s from StudentEntity s where s.email = :email",StudentEntity.class);
         query.setParameter("email",email);
+        System.out.println("email:"+ email);
         return (StudentEntity) query.getSingleResult();
     }
 
