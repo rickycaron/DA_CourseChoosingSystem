@@ -15,12 +15,12 @@ public class CourseEntity {
     private int courseId;
     private String name;
     private Integer instructorId;
-    private CourseTypeEnum type;
+    private String type;
 
     public CourseEntity(String name, Integer instructorId, CourseTypeEnum type) {
         this.name = name;
         this.instructorId = instructorId;
-        this.type = type;
+        this.type = type.toString();
     }
 
     public CourseEntity() {
@@ -65,12 +65,22 @@ public class CourseEntity {
     }
 
     @Basic
-    @Column(name = "instructorId", nullable = true)
+    @Column(name = "instructorId", nullable = false)
     public Integer getInstructorId() {
         return instructorId;
     }
     public void setInstructorId(Integer instructorId) {
         this.instructorId = instructorId;
+    }
+
+    @Basic
+    @Column(name = "type", nullable = false)
+    public CourseTypeEnum getType() {
+        CourseTypeEnum enumType = CourseTypeEnum.valueOf(this.type);
+        return enumType;
+    }
+    public void setType(CourseTypeEnum type) {
+        this.type = type.toString();
     }
 
     @Override
@@ -93,13 +103,6 @@ public class CourseEntity {
         studentEntities.add(studentEntity);
     }
 
-    public CourseTypeEnum getType() {
-        return type;
-    }
-
-    public void setType(CourseTypeEnum type) {
-        this.type = type;
-    }
 
     @Override
     public String toString() {

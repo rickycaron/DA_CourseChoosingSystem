@@ -1,5 +1,6 @@
 package com.a20da10.controller;
 
+import com.a20da10.service.ejb.InstructorSelfServiceRemote;
 import com.a20da10.service.spring.StudentSelfService;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,23 +23,23 @@ public class LoginInterceptor implements HandlerInterceptor {
             System.out.println(request.getSession());
             return true;
         }
-//        if(url.contains("/rest")){
-//            return true;
-//        }
         HttpSession session = request.getSession();
-        StudentSelfService studentSelfService = (StudentSelfService) session.getAttribute("USER_SESSION");
-        if (studentSelfService!=null)
-        {
-            System.out.println("Rui: Successfully authenticated!!!:");
-            System.out.println(request.getSession());
-            return true;
+        if(session.getAttribute("LOGIN_TYPE") == "student") {
+            System.out.println("Rui: enter the interceptor");
+            StudentSelfService service = (StudentSelfService) session.getAttribute("USER_SESSION");
+            if (service!=null){
+                System.out.println("Rui: passed the interceptor");
+                return true;
+            }
         }
-        else
-        {
-            System.out.println("Rui: Not loged in yet! Intercept!" + request.getSession());
-            //Here can set forward to login page jsp
-            return false;
+        else{
+            InstructorSelfServiceRemote service = (InstructorSelfServiceRemote) session.getAttribute("USER_SESSION");
+            if (service!=null){
+                return true;
+            }
         }
+        //Here can set forward to login page jsp
+        return false;
     }
 
     @Override

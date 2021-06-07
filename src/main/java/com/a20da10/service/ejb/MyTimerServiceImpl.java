@@ -7,12 +7,12 @@ import javax.ejb.Timer;
 import javax.ejb.TimerService;
 import java.util.logging.Logger;
 
-@Stateless
-public class MyTimerService {
+@Stateless(name = "MyTimerServiceImpl")
+public class MyTimerServiceImpl implements  MyTimerServiceLocal, MyTimerServiceRemote{
     @Resource
     TimerService timerService;
     private static final Logger logger = Logger.getLogger("ejb.MyTimerService");
-    public MyTimerService(){}
+    public MyTimerServiceImpl(){}
     public void setTimer(long interval){
         timerService.createTimer(interval,"Setting a programmatic timer");
     }

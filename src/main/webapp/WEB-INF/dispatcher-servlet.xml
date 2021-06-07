@@ -17,11 +17,51 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
-<!--    <bean id="myBean" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">-->
-<!--        <property name="jndiName" value="java:global/DistributedApplication_war/whatever!com.a20da10.service.ejb.MyFirstBeanLocal"/>-->
-<!--        <property name="businessInterface" value="com.a20da10.service.ejb.MyFirstBeanLocal"></property>-->
+    <bean id="InstructorSelfServiceLocal" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/InstructorSelfServiceImpl!com.a20da10.service.ejb.InstructorSelfServiceLocal"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.InstructorSelfServiceLocal"></property>
+    </bean>
+    <bean id="InstructorSelfServiceRemote" class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/InstructorSelfServiceImpl!com.a20da10.service.ejb.InstructorSelfServiceRemote"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.InstructorSelfServiceRemote"></property>
+    </bean>
+
+    <bean id="InstructorGenServiceLocal" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/InstructorGenServiceImpl!com.a20da10.service.ejb.InstructorGenServiceLocal"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.InstructorGenServiceLocal"></property>
+    </bean>
+    <bean id="InstructorGenServiceRemote" class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/InstructorGenServiceImpl!com.a20da10.service.ejb.InstructorGenServiceRemote"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.InstructorGenServiceRemote"></property>
+    </bean>
+
+    <bean id="AccountServiceLocal" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/AccountServiceImpl!com.a20da10.service.ejb.AccountServiceLocal"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.AccountServiceLocal"></property>
+    </bean>
+    <bean id="AccountServiceRemote" class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/AccountServiceImpl!com.a20da10.service.ejb.AccountServiceRemote"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.AccountServiceRemote"></property>
+    </bean>
+
+    <bean id="MyTimerServiceLocal" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/MyTimerServiceImpl!com.a20da10.service.ejb.MyTimerServiceLocal"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.MyTimerServiceLocal"></property>
+    </bean>
+    <bean id="MyTimerServiceRemote" class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/MyTimerServiceImpl!com.a20da10.service.ejb.MyTimerServiceRemote"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.MyTimerServiceRemote"></property>
+    </bean>
+
+
+    <!--    <bean id="InstructorSelfServiceRemotess" class="org.springframework.jndi.JndiObjectFactoryBean">-->
+<!--        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/InstructorSelfServiceImpl!com.a20da10.service.ejb.InstructorGenServiceRemote"/>-->
 <!--    </bean>-->
 
+
+
+
+<!--@atResourse(name =)-->
 <!--    MyFirstBeanLocal myBean = new MyFirstBeanLocal(); -->
     <mvc:interceptors>
         <mvc:interceptor>

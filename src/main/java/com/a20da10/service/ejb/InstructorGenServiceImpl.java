@@ -6,11 +6,14 @@ import com.a20da10.dao.ejb.InstructorDao;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.jws.WebService;
 import java.util.List;
 
+@WebService
 @Stateless(name = "InstructorGenServiceImpl")
 public class InstructorGenServiceImpl implements InstructorGenServiceLocal, InstructorGenServiceRemote{
 
+    int testInt = 0;
     @Inject
     private InstructorDao dao;
 
@@ -33,4 +36,10 @@ public class InstructorGenServiceImpl implements InstructorGenServiceLocal, Inst
     public List<CourseEntity> getCoursesByInsId(int insId) {
         return dao.findCoursesByInsId(insId);
     }
+
+    public int statelessIncrementTestInt(){
+        testInt++;
+        return testInt;
+    }
+
 }
