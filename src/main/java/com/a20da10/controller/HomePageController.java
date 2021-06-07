@@ -1,5 +1,6 @@
 package com.a20da10.controller;
 
+import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.activemq.StatefulMessageListener;
 import com.a20da10.service.ejb.AccountServiceLocal;
@@ -37,12 +38,11 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
     @Autowired
     private InstructorSelfServiceRemote instructorSelfServiceRemote;
+
     private final List<String> allowedOrigins = Arrays.asList("http://localhost:8081");// 允许跨域的地址
     @PostMapping("/loginStudent")
     @ResponseBody
-//    public boolean Login(HttpServletRequest request,HttpSession session){
     public boolean Login(@RequestBody StudentEntity studentEntity, HttpSession session, HttpServletResponse response,HttpServletRequest request){
-
         //0.Fetching parameters
 //        String email = request.getParameter("email");
 //        String password = request.getParameter("password");
@@ -50,7 +50,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
         String password = studentEntity.getPassword();
         System.out.println("Email got from Vue" + email);
         System.out.println("Password got from Vue" + password);
-
         //1.Verification
         if (logService.StudentAuthentication(email, password)) {
             //2.Add studentId into service
@@ -73,17 +72,19 @@ public class HomePageController<LoginOutAndRegisterSer> {
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
             // 是否允许浏览器携带用户身份信息（cookie）
             response.setHeader("Access-Control-Allow-Credentials","true");
-
             return true;
         }
         return false;
     }
 
-    @RequestMapping("/loginInstructor")
-    public String LoginIns(HttpServletRequest request, HttpSession session){
-        //0.Fetching parameters
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+    private final List<String> allowed = Arrays.asList("http://localhost:8081");// 允许跨域的地址
+    @PostMapping("/loginInstructor")
+    @ResponseBody
+    public boolean LoginIns(@RequestBody EJBInstructorEntity ejbInstructorEntity, HttpSession session, HttpServletResponse response, HttpServletRequest request){
+        String email = ejbInstructorEntity.getEmail();
+        String password = ejbInstructorEntity.getPassword();
+        System.out.println("Email got from Vue" + email);
+        System.out.println("Password got from Vue" + password);
         //1.Verification
         if (accountServiceLocal.InstructorAuthentication(email, password)) {
             //2.Add studentId into service
@@ -94,13 +95,20 @@ public class HomePageController<LoginOutAndRegisterSer> {
             System.out.println("InstructorSelfService id is" + id);
             //4.Set session attribute for interceptor checking later
             session.setAttribute("LOGIN_TYPE", "instructor");
-            session.setAttribute("USER_SESSION", instructorSelfServiceRemote);
+            session.setAttribute("USER_SESSION",instructorSelfServiceRemote);
             //5.redirect to home page
             System.out.println(instructorSelfServiceRemote);
-            System.out.println("login success");
-            return "InstructorMainPage";
+            System.out.println("instructor login success");
+
+            response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+            String origin = request.getHeader("Origin");
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+            // 是否允许浏览器携带用户身份信息（cookie）
+            response.setHeader("Access-Control-Allow-Credentials","true");
+            return true;
         }
-        return "loginFail";
+        return false;
     }
 
     @RequestMapping("/logout")
