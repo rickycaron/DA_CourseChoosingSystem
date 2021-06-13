@@ -27,8 +27,9 @@ User Information: {{$store.getters.getUserInfo}}</p>
       <li class="nav-item">
         <router-link :to="{name:'Instructors'}" class="nav-link" >Instructors</router-link> 
       </li>
-      <li v-if="$store.getters.isLoggedIn" class="nav-item">
-        <router-link v-if=" $store.getters.getIsStudent" :to ="{ name: 'SelfProfile'}" class="nav-link" >Profile</router-link>
+      <li class="nav-item">
+        <!-- <router-link v-if=" $store.getters.getIsStudent" :to ="{ name: 'SelfProfile'}" class="nav-link" >Profile{{this.userId}}</router-link> -->
+        <a v-if=" $store.getters.getIsStudent" class="nav-link" @click="goToSelfProfile">Profile</a>
       </li>
       <li class="nav-item">
         <router-link :to="{name:'About'}" class="nav-link" >About</router-link> 
@@ -38,10 +39,10 @@ User Information: {{$store.getters.getUserInfo}}</p>
       </li> -->
     </ul>
  
-    <form class="form-inline my-2 my-lg-0 mr-4">
+    <div class="form-inline my-2 my-lg-0 mr-4">
       <input class="form-control mr-sm-2" type="search" placeholder="Search">
-      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+      <button class="btn purple-button-secondary my-2 my-sm-0" type="submit">Search</button>
+    </div>
 
     <div v-if="$store.getters.isLoggedIn" class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> 
@@ -74,10 +75,6 @@ User Information: {{$store.getters.getUserInfo}}</p>
 <script>
 export default {
     name:"Nav",
-    data(){
-      console.log("Data function is called")
-      id :this.$store.getters.getUserId
-    },
     methods:{
         logOut()
         {
@@ -97,13 +94,20 @@ export default {
                 alert("Log out failed. Please try again!")
               }
             }).catch(error => {console.log(error);})
+         },
+         goToSelfProfile(){
+           if(this.$store.getters.isLoggedIn)
+           {
+            if(this.$store.getters.getIsStudent)
+            {
+             this.$router.push({ name: 'Profile', params: { id:this.$store.getters.getUserId,isStudent:this.$store.getters.getIsStudent} }) 
+            }else
+            {
+             this.$router.push({ name: 'Profile', params: { id:this.$store.getters.getUserId } }) 
+            }
+           }
          }
     }
-    // created: function(){
-    //   console.log("created function in nav is called")
-    //   this.id= this.$store.getters.getUserId
-    //   this.isStudent=this.$store.getters.getIsStudent
-    // }
 }
 </script>
 

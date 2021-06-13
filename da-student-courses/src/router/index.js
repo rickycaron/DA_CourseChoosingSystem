@@ -61,11 +61,11 @@ const routes = [
     name:'Instructors', 
     component: () => import  ('../views/instructors/Instructors.vue')
   },
-  {
-    path: '/selfProfile',
-    name: 'SelfProfile',
-    component: () => import  ('../components/SelfProfile.vue') 
-  },
+  // {
+  //   path: '/selfProfile',
+  //   name: 'SelfProfile',
+  //   component: () => import  ('../components/SelfProfile.vue') 
+  // },
   { 
     path:'/profile/:id',
     name:'Profile', 

@@ -243,15 +243,17 @@
   }
 
   .purple-button-primary{
+    
     background-color: #3F48CC;;
     color: white;
   }
-  .purple-button-primary{
-    background-color: #3F48CC;;
-    color: white;
+  .purple-button-primary:hover{
+    border-color:#3F48CC ;
+     background-color:white;
   }
 
   .purple-button-secondary{
+    
     border-color:#3F48CC ;
     color: #3F48CC;
   }
@@ -259,6 +261,8 @@
     background-color:#3F48CC ;
     color: white;
   }
+
+ 
 
 
 

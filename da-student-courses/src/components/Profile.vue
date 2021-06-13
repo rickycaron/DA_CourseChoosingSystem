@@ -11,8 +11,8 @@
                       <h4>{{this.firstName}} {{this.lastName}} </h4>
                       <p class="text-secondary mb-1">KU Leuven Student </p>
                       <p class="text-muted font-size-sm">{{this.email}}</p>
-                      <button class="btn list-table-head">Add Friend</button>
-                      <button class="btn rui-button-style">Message</button>
+                      <button class="btn purple-button-primary">Add Friend</button>
+                      <button class="btn purple-button-secondary">Message</button>
                     </div>
                   </div>
                 </div>
@@ -103,10 +103,11 @@
                     </div>
                   </div>
                   <div class="row" v-if=" id == $store.getters.getUserId" >
-                  <hr>
+                  
                     <div class="col-sm-12">
-                      <button v-if="!editable"  @click="ToggleEdit" class="btn btn-primary" >Edit</button>
-                      <button v-if="editable"  @click="UpdateUserInfo" class="btn btn-outline-primary" >Save</button>
+                      <hr>
+                      <button v-if="!editable"  @click="ToggleEdit" class="btn purple-button-primary col-sm-2" > Edit </button>
+                      <button v-if="editable"  @click="UpdateUserInfo" class="btn purple-button-secondary col-sm-2" >Save</button>
                     </div>
                   </div>
                 </div>
@@ -135,6 +136,7 @@ export default {
   mounted: function () 
   {
     console.log("The mounted function in profile runs")
+    console.log("The id in the profile page: " + this.id )
       axios.get("rest/student/" + this.id)
       .then(res => {
           console.log(res)

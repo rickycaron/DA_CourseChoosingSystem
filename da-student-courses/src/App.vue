@@ -62,7 +62,7 @@ export default {
     // this.userinformation = res.data
 }).catch(error => {
     console.log(error);})
-    
+
   },
   updated: function () 
   {
