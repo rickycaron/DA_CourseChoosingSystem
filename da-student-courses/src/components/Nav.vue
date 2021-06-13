@@ -98,9 +98,10 @@ export default {
          goToSelfProfile(){
            if(this.$store.getters.isLoggedIn)
            {
+             
             if(this.$store.getters.getIsStudent)
             {
-             this.$router.push({ name: 'Profile', params: { id:this.$store.getters.getUserId,isStudent:this.$store.getters.getIsStudent} }) 
+             this.$router.push({ name: 'Profile', params: { id:this.$store.getters.getUserId, isStudent:true} }) 
             }else
             {
              this.$router.push({ name: 'Profile', params: { id:this.$store.getters.getUserId } }) 

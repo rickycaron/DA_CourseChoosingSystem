@@ -41,8 +41,7 @@ export default {
             console.log("Students are found here!")
             console.log(res.data)
             this.students = res.data
-            })
-        .catch(err => console.log(err))
+        }).catch(err => console.log(err))
         // axios({
         //     url: 'rest/students',
         //     headers: {
@@ -57,7 +56,6 @@ export default {
         //         this.students = res.data
         //     }).catch(error => {
         //         console.log(error);})
-
     }
 }
 </script>

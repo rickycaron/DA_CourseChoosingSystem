@@ -1,6 +1,10 @@
 <template>
-  <router-link 
+  <!-- <router-link 
     :to = "{ name: 'Profile', params: {id:this.id}}" 
+    class="mb-1 list-group-item list-group-item-action flex-column align-items-start">
+  </router-link> -->
+  <div
+    @click="goToStudentProfile(id)"
     class="mb-1 list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="my-1">
@@ -12,7 +16,7 @@
         {{studentEmail}}
       </div>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script>
@@ -29,6 +33,16 @@ export default {
             studentNumber:this.studentinfo.studentNumber
         }
     },
+    methods:
+    {
+        goToStudentProfile(studetid)
+        {
+           if(this.$store.getters.isLoggedIn)
+           {       
+             this.$router.push({ name: 'Profile', params: { id:studetid, isStudent:true} }) 
+           }
+        }
+    }
 
 }
 </script>

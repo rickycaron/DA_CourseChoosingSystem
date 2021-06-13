@@ -9,7 +9,7 @@
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                       <h4>{{this.firstName}} {{this.lastName}} </h4>
-                      <p class="text-secondary mb-1">KU Leuven Student </p>
+                      <p class="text-secondary mb-1">KU Leuven {{isStudent?"Student":"Instructor"}} </p>
                       <p class="text-muted font-size-sm">{{this.email}}</p>
                       <button class="btn purple-button-primary">Add Friend</button>
                       <button class="btn purple-button-secondary">Message</button>
@@ -116,15 +116,19 @@
           </div>
         </div>
     </div>
+    {{"The id is " + this.$route.params.id}}
+    {{"is a student " + this.$route.params.isStudent}}
+
 </template>
 
 <script>
 export default {
-  props:['id'],
+  props:['id','isStudent'],
   data()
   {
       return{
         id:this.id,
+        isStudent:this.isStudent,
         email:'',
         firstName:'',
         lastName:'',
@@ -132,22 +136,6 @@ export default {
         number:'',
         editable:false
       }
-  },
-  mounted: function () 
-  {
-    console.log("The mounted function in profile runs")
-    console.log("The id in the profile page: " + this.id )
-      axios.get("rest/student/" + this.id)
-      .then(res => {
-          console.log(res)
-          console.log("Student of id "+ this.id +" are found here!")
-          console.log(res.data)
-          this.email = res.data.email,
-          this.firstName = res.data.firstName ,
-          this.lastName = res.data.lastName ,
-          this.number = res.data.studentNumber
-          })
-      .catch(err => console.log(err))
   },
   methods:{
     ToggleEdit(){
@@ -158,14 +146,37 @@ export default {
         this.editable=false
       }
     },
+    setUpProfilePage(){
+      console.log(this.$route.params)
+      console.log("The id in the profile page: " + this.id + "is a student?" + this.isStudent )
+      let url = "rest/" + ( this.isStudent ? "student":"instructor") +"/"+ this.id
+        // axios.get("rest/student/" + this.id)
+        axios.get(url)
+        .then(res => {
+            console.log(res)
+            console.log("Student of id "+ this.id +" are found here!")
+            console.log(res.data)
+            this.email = res.data.email,
+            this.firstName = res.data.firstName ,
+            this.lastName = res.data.lastName ,
+            this.number = res.data.studentNumber
+            }).catch(err => console.log(err))
+    },
     UpdateUserInfo(){
-      //update student profile
+      //update user profile
       this.editable = !this.editable
     }
-
+  },
+  mounted: function () 
+  {
+    console.log("The mounted function in profile runs")
+    this.setUpProfilePage()
+  },
+  updated:function()
+  {
+    console.log("The mounted function in profile runs")
+    this.setUpProfilePage()
   }
-
-
 }
 </script>
 

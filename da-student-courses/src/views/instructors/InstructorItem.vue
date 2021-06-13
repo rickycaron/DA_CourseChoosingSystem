@@ -1,6 +1,8 @@
 <template>
 
-  <a href="/" class="mb-1 list-group-item list-group-item-action flex-column align-items-start">
+  <div
+    @click="goToStudentProfile(id)"
+    class="mb-1 list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="my-1">
           &nbsp;
@@ -11,7 +13,8 @@
         {{instructorEmail}}
       </div>
     </div>
-  </a>
+  </div>
+
 </template>
 
 <script>
@@ -28,6 +31,16 @@ export default {
             instructorNumber:this.instructortinfo.studentNumber
         }
     },
+     methods:
+    {
+        goToInstructorProfile(instructorid)
+        {
+           if(this.$store.getters.isLoggedIn)
+           {       
+             this.$router.push({ name: 'Profile', params: { id:instructorid, isStudent:false} }) 
+           }
+        }
+    }
 
 }
 </script>
