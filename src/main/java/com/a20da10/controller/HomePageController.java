@@ -6,6 +6,7 @@ import com.a20da10.activemq.StatefulMessageListener;
 import com.a20da10.service.ejb.AccountServiceLocal;
 import com.a20da10.service.ejb.InstructorSelfServiceRemote;
 import com.a20da10.service.spring.LoginOutAndRegisterService;
+import com.a20da10.service.spring.StudentGeneralService;
 import com.a20da10.service.spring.StudentSelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,9 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
 @RequestMapping("/welcome")
 public class HomePageController<LoginOutAndRegisterSer> {
+
+    @Autowired
+    private StudentGeneralService studentGeneralService;
 
     @Autowired
     private StudentSelfService studentSelfService;
@@ -77,7 +81,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
         return false;
     }
 
-    private final List<String> allowed = Arrays.asList("http://localhost:8081");// 允许跨域的地址
     @PostMapping("/loginInstructor")
     @ResponseBody
     public boolean LoginIns(@RequestBody EJBInstructorEntity ejbInstructorEntity, HttpSession session, HttpServletResponse response, HttpServletRequest request){
@@ -112,12 +115,13 @@ public class HomePageController<LoginOutAndRegisterSer> {
     }
 
     @RequestMapping("/logout")
-    public String Logout(HttpSession session, SessionStatus sessionStatus) {
+    @ResponseBody
+    public boolean Logout(HttpSession session, SessionStatus sessionStatus) {
 //        springIOC.getAutowireCapableBeanFactory().destroyBean(studentSelfService);
         session.invalidate();
         sessionStatus.setComplete();
-        System.out.println(this.getClass().getClassLoader().getResource("main.css").getPath());
-        return "home";
+//        System.out.println(this.getClass().getClassLoader().getResource("main.css").getPath());
+        return true;
     }
 
     @RequestMapping("/")
@@ -138,6 +142,15 @@ public class HomePageController<LoginOutAndRegisterSer> {
     public StudentEntity getMyInfo(){
         System.out.println(studentSelfService.getBasicInfo());
         return studentSelfService.getBasicInfo();
+    }
+
+    @GetMapping("/students")
+    @ResponseBody
+    public List<StudentEntity> getAllStudentJson(HttpServletResponse response){
+//        Response.setHeader.Add("Access-Control-Allow-Origin", "*");
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+        System.out.println("Data is already sent!!!!!!!!!!!!");
+        return studentGeneralService.getAllStudent();
     }
 }
 
