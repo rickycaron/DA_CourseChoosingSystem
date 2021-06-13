@@ -45,32 +45,46 @@ export default {
   },
   mounted:function()
   {
-     console.log("The mounted function in the App page is called")
-      axios.get('welcome/myinfo')
-      .then(res =>{
-        console.log("In the begining:" + res.data)
-         this.setUser(res.data)})
-      .catch(err => console.log(err))
+    //  console.log("The mounted function in the App page is called")
+    //   axios.get('welcome/myinfo')
+    //   .then(res =>{
+    //     console.log("In the begining:" + res.data)
+    //      this.setUser(res.data)})
+    //   .catch(err => console.log(err))
+    axios({url: 'welcome/myinfo',
+    headers: { "Content-Type":"application/json;charset=utf-8"},
+    method: 'GET',
+    withCredentials: true,
+    crossDomain: true
+}).then(res => {
+    console.log("In the begining:" + res.data)
+    this.setUser(res.data)
+    // this.userinformation = res.data
+}).catch(error => {
+    console.log(error);})
+    
   },
   updated: function () 
   {
     console.log("The updated function in the App page is called")
-      axios.get('welcome/myinfo')
-      .then(res =>{
-        console.log("In the begining:" + res.data)
-         this.setUser(res.data)})
-      .catch(err => console.log(err))
 
-      // axios({url: 'welcome/myinfo',
-      //       headers: { "Content-Type":"application/json;charset=utf-8"},
-      //       method: 'GET',
-      //       withCredentials: true,
-      //       crossDomain: true
-      //   }).then(res => {
-      //       console.log("In the begining:" + res.data)
-      //       this.userinformation = res.data
-      //   }).catch(error => {
-      //       console.log(error);})
+      // axios.get('welcome/myinfo')
+      // .then(res =>{
+      //   console.log("In the begining:" + res.data)
+      //    this.setUser(res.data)})
+      // .catch(err => console.log(err))
+
+      axios({url: 'welcome/myinfo',
+            headers: { "Content-Type":"application/json;charset=utf-8"},
+            method: 'GET',
+            withCredentials: true,
+            crossDomain: true
+        }).then(res => {
+            console.log("In the begining:" + res.data)
+            this.setUser(res.data)
+            // this.userinformation = res.data
+        }).catch(error => {
+            console.log(error);})
   }
 }
 </script>

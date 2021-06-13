@@ -241,9 +241,33 @@
     background-color: #3F48CC;;
     color: white;
   }
+
+  .purple-button-primary{
+    background-color: #3F48CC;;
+    color: white;
+  }
+  .purple-button-primary{
+    background-color: #3F48CC;;
+    color: white;
+  }
+
+  .purple-button-secondary{
+    border-color:#3F48CC ;
+    color: #3F48CC;
+  }
+  .purple-button-secondary:hover{
+    background-color:#3F48CC ;
+    color: white;
+  }
+
+
+
+
+
+
   
   /* ---------------------------------------------------------------------------------------------------------------------------- */
-  body{
+  /* body{
     margin-top:20px;
     color: #1a202c;
     text-align: left;
@@ -295,7 +319,7 @@
 }
 .shadow-none {
     box-shadow: none!important;
-}
+} */
   
   
   

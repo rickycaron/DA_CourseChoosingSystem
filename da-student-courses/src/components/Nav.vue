@@ -27,9 +27,8 @@ User Information: {{$store.getters.getUserInfo}}</p>
       <li class="nav-item">
         <router-link :to="{name:'Instructors'}" class="nav-link" >Instructors</router-link> 
       </li>
-      <li class="nav-item">
-        <router-link v-if=" $store.getters.getIsStudent" :to = "{ name: 'Profile', params: {id: this.id }}" class="nav-link" >Profile</router-link>
-        <router-link v-if="!$store.getters.getIsStudent" :to = "{ name: 'Profile', params: {id: this.id }}" class="nav-link" >Profile</router-link> 
+      <li v-if="$store.getters.isLoggedIn" class="nav-item">
+        <router-link v-if=" $store.getters.getIsStudent" :to ="{ name: 'SelfProfile'}" class="nav-link" >Profile</router-link>
       </li>
       <li class="nav-item">
         <router-link :to="{name:'About'}" class="nav-link" >About</router-link> 
@@ -77,7 +76,7 @@ export default {
     name:"Nav",
     data(){
       console.log("Data function is called")
-      {id :this.$store.getters.getUserId}
+      id :this.$store.getters.getUserId
     },
     methods:{
         logOut()
