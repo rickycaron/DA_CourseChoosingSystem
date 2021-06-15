@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginOutAndRegisterServiceImpl implements LoginOutAndRegisterService {
     @Autowired
     private StudentDao studentDao;
+
     @Override
     @Transactional
     public Boolean StudentAuthentication(String email,String password) {

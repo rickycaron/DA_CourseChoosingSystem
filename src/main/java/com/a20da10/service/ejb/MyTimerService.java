@@ -1,11 +1,10 @@
 package com.a20da10.service.ejb;
 
 import javax.annotation.Resource;
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
-import javax.ejb.TimerService;
 import javax.ejb.Timer;
+import javax.ejb.TimerService;
 import java.util.logging.Logger;
 
 @Stateless
@@ -22,9 +21,9 @@ public class MyTimerService {
     public void programmaticTimeout(Timer timer){ //mouse click event
         logger.info("@Timeout in programmatic timer at " + new java.util.Date());
     }
-    @Schedule(second = "*/5", minute = "*", hour = "0-23", dayOfWeek = "Mon-Fri", dayOfMonth = "*", month = "*", year = "*", info = "MyTimer")
-    private void scheduleTimeout(final Timer t){
-        logger.info("@Scheduled timer triggered at " + new java.util.Date());
-    }
+//    @Schedule(second = "*/5", minute = "*", hour = "0-23", dayOfWeek = "Mon-Fri", dayOfMonth = "*", month = "*", year = "*", info = "MyTimer")
+//    private void scheduleTimeout(final Timer t){
+//        logger.info("@Scheduled timer triggered at " + new java.util.Date());
+//    }
 
 }

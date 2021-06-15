@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "instructors", schema = "school")
+@Table(name = "instructor", schema = "school")
 public class EJBInstructorEntity implements Serializable {
     public EJBInstructorEntity(String firstName, String lasttName, String email, String password) {
         this.firstName = firstName;
@@ -81,6 +81,8 @@ public class EJBInstructorEntity implements Serializable {
         return Objects.hash(instructorId, firstName, lastName, email);
     }
 
+    @Basic
+    @Column(name = "password", nullable = false, length = 95)
     public String getPassword() {
         return this.password;
     }

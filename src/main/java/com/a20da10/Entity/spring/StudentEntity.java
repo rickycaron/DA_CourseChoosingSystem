@@ -1,13 +1,13 @@
 package com.a20da10.Entity.spring;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import net.bytebuddy.build.ToStringPlugin;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+//import net.bytebuddy.build.ToStringPlugin;
 
 @Entity
 @Table(name = "student", schema = "school")

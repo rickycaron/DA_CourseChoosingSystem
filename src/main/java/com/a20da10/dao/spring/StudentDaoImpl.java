@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -65,8 +64,7 @@ public class StudentDaoImpl implements StudentDao{
         Session session = sessionFactory.getCurrentSession();
         Query query =session.createQuery("select s from StudentEntity s where s.email = :email",StudentEntity.class);
         query.setParameter("email",email);
+        System.out.println("email:"+ email);
         return (StudentEntity) query.getSingleResult();
     }
-
-
 }
