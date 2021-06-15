@@ -19,7 +19,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="DAPU" value="ac9d2425-e38e-4ee1-a9ec-bda6bfa1ed61" />
+          <factory-entry name="DAPU" value="aec7dd29-e67d-4177-8555-21dbb93b2e25" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
@@ -34,7 +34,9 @@
     </facet>
     <facet type="hibernate" name="Hibernate">
       <configuration>
-        <datasource-map />
+        <datasource-map>
+          <unit-entry name="sessionFactory" value="aec7dd29-e67d-4177-8555-21dbb93b2e25" />
+        </datasource-map>
         <naming-strategy-map />
       </configuration>
     </facet>
