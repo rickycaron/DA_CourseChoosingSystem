@@ -5,28 +5,21 @@ import java.util.Objects;
 
 @Entity
 @DiscriminatorValue("txt")
-@Table(name = "TextMessage", schema = "school")
+@Table(name = "TextMessage")
 public class TextMessageEntity extends MessageEntity {
 
-    @Column(name = "text",length = 500)
-    private String textMessage;
 
+    @Column(name = "textMessage")
+    private String textMessage;
 
     public String getTextMessage() {
         return textMessage;
     }
-
     public void setTextMessage(String textMessage) {
         this.textMessage = textMessage;
     }
 
-    public String getText() {
-        return textMessage;
-    }
 
-    public void setText(String text) {
-        this.textMessage = text;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,7 @@
 package com.a20da10.service.spring;
 
 import com.a20da10.Entity.spring.StudentEntity;
+import com.a20da10.Entity.spring.TextMessageEntity;
 import com.a20da10.dao.spring.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -28,6 +30,11 @@ public class StudentSelfServiceImpl implements StudentSelfService {
 
     public int getStudentId() {
         return StudentId;
+    }
+
+    @Override
+    public List<TextMessageEntity> getAllTextMessageById() {
+        return null;
     }
 
     public void setStudentId(int studentId) {

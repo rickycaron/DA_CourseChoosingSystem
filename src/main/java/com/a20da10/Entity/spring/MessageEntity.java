@@ -1,23 +1,38 @@
 package com.a20da10.Entity.spring;
 
+import sun.util.calendar.BaseCalendar;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "message", schema = "school", catalog = "")
-public abstract class MessageEntity {
+@DiscriminatorValue("mess")
+@DiscriminatorColumn(name = "DTYPE")
+@Table(name = "message")
+public class MessageEntity {
     @Id
+    @Column(name = "messageId", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int messageId;
     private Integer senderId;
     private Integer receiverId;
-    @Temporal(value = TemporalType.DATE)
-    private Date date;
 
-    @Id
-    @Column(name = "messageId", nullable = false)
+
+    @Column(name = "date")
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Temporal(TemporalType.DATE)
+    private java.util.Date date;
+
+
     public int getMessageId() {
         return messageId;
     }
@@ -46,15 +61,7 @@ public abstract class MessageEntity {
         this.receiverId = receiverId;
     }
 
-    @Basic
-    @Column(name = "date", nullable = true)
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     @Override
     public boolean equals(Object o) {

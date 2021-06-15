@@ -2,7 +2,6 @@ package com.a20da10.controller;
 
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.StudentEntity;
-import com.a20da10.activemq.StatefulMessageListener;
 import com.a20da10.service.ejb.AccountServiceLocal;
 import com.a20da10.service.ejb.InstructorSelfServiceRemote;
 import com.a20da10.service.spring.LoginOutAndRegisterService;
@@ -34,8 +33,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @Autowired
     private LoginOutAndRegisterService logService;
 
-    @Autowired
-    private StatefulMessageListener statefulMessageListener;
 
     @Autowired
     private AccountServiceLocal accountServiceLocal;
@@ -43,7 +40,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @Autowired
     private InstructorSelfServiceRemote instructorSelfServiceRemote;
 
-    private final List<String> allowedOrigins = Arrays.asList("http://localhost:8081");// 允许跨域的地址
+    private final List<String> allowedOrigins = Arrays.asList("http://localhost:8081");//
     @PostMapping("/loginStudent")
     @ResponseBody
     public boolean Login(@RequestBody StudentEntity studentEntity, HttpSession session, HttpServletResponse response,HttpServletRequest request){
@@ -62,7 +59,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
             //3.create stateful bean for later access
             studentSelfService.setStudentId(id);
             System.out.println("studentSelfService id is" + id);
-            statefulMessageListener.setStudentId(id);
             //4.Set session attribute for interceptor checking later
             session.setAttribute("LOGIN_TYPE", "student");
             session.setAttribute("USER_SESSION",studentSelfService);

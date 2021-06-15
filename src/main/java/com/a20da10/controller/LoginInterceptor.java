@@ -14,21 +14,20 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String url =request.getRequestURI();
 
-        System.out.println("Rui: The session is");
         System.out.println(request.getSession());
-
+        //used for testing only
+        if(url.contains("/hello")){
+            return true;
+        }
         //Only allow accessing to WelcomePageController
         if(url.contains("/welcome")){
-            System.out.println("Rui: Enter the welcome webpage");
             System.out.println(request.getSession());
             return true;
         }
         HttpSession session = request.getSession();
         if(session.getAttribute("LOGIN_TYPE") == "student") {
-            System.out.println("Rui: enter the interceptor");
             StudentSelfService service = (StudentSelfService) session.getAttribute("USER_SESSION");
             if (service!=null){
-                System.out.println("Rui: passed the interceptor");
                 return true;
             }
         }
