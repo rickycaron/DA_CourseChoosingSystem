@@ -9,15 +9,13 @@ import com.a20da10.activemq.ProducerTest;
 import com.a20da10.activemq.StudentReceiver;
 import com.a20da10.dao.spring.MessageDao;
 import com.a20da10.service.spring.StudentGeneralService;
+import com.a20da10.service.spring.StudentSelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -47,6 +45,9 @@ public class HelloController {
 
     @Autowired
     private StudentGeneralService studentGeneralService;
+
+    @Autowired
+    private StudentSelfService studentSelfService;
 
     @Autowired
     private ProducerTest producerTest;
@@ -126,11 +127,23 @@ public class HelloController {
     }
     @RequestMapping("/hello12")
     @ResponseBody
-
     public List<TextMessageEntity> getMessage(){
-       return messageDao.getAllTextMessageById(3);
+
+        return messageDao.getAllTextMessageById(3);
     }
 
+    @PostMapping("/sendMyMessage")
+    @ResponseBody
+    public void produceMessage(@RequestBody TextMessageEntity textMessageEntity){
+        producerTest.sendMessage(textMessageEntity.getTextMessage(),
+                                    textMessageEntity.getSenderId(),
+                                    textMessageEntity.getReceiverId());
+    }
+    @GetMapping("/getMyMessages")
+    @ResponseBody
+    public List<TextMessageEntity> getMessages(){
 
+        return messageDao.getAllTextMessageById(studentSelfService.getStudentId());
+    }
 
 }
