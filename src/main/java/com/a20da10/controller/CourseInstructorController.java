@@ -39,7 +39,7 @@ public class CourseInstructorController {
      * input: course
      * output: true/false
      * */
-    @PostMapping("/AddCourse")
+    @PostMapping("/UpdateCourse")
     @Transactional
     @ResponseBody
     public boolean UpdateCourse(){
