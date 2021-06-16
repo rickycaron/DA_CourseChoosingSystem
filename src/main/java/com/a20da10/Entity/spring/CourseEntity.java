@@ -24,6 +24,18 @@ public class CourseEntity {
     @Column(name = "endTime", nullable = true)
     private String endTime;
 
+    @Column(name = "description", nullable = true,length = 1000)
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
     public Integer getWeekDay() {
         return weekDay;
     }
