@@ -27,7 +27,7 @@ User Information: {{$store.getters.getUserInfo}}</p>
       <li class="nav-item">
         <router-link :to="{name:'Instructors'}" class="nav-link" >Instructors</router-link> 
       </li>
-      <li class="nav-item">
+      <li  v-if="! (this.$route.name === 'Profile')" class="nav-item">
         <!-- <router-link v-if=" $store.getters.getIsStudent" :to ="{ name: 'SelfProfile'}" class="nav-link" >Profile{{this.userId}}</router-link> -->
         <a v-if=" $store.getters.getIsStudent" class="nav-link" @click="goToSelfProfile">Profile</a>
       </li>
@@ -96,12 +96,17 @@ export default {
             }).catch(error => {console.log(error);})
          },
          goToSelfProfile(){
+           console.log("111111111111111111111111111111111111111")
+           console.log(this.$route)
+           console.log()
            if(this.$store.getters.isLoggedIn)
            {
              
             if(this.$store.getters.getIsStudent)
             {
+             
              this.$router.push({ name: 'Profile', params: { id:this.$store.getters.getUserId, isStudent:true} }) 
+              // window.location.reload()
             }else
             {
              this.$router.push({ name: 'Profile', params: { id:this.$store.getters.getUserId } }) 

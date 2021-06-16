@@ -156,7 +156,8 @@ export default {
     setUpProfilePage(){
       console.log(this.$route.params)
       console.log("The id in the profile page: " + this.id + "is a student?" + this.isStudent )
-      let url = "rest/" + ( this.isStudent ? "student":"instructor") +"/"+ this.id
+      // let url = "rest/" + ( this.isStudent ? "student":"instructor") +"/"+ this.id
+      let url ="welcome/myinfo"
         // axios.get(url)
          axios({
             url: url,
