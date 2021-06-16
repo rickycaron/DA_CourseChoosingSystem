@@ -45,6 +45,9 @@
             <div class="col-md-8 text-left">
               <div class="card mb-3">
                 <div class="card-body">
+                  <div v-if="successMessage" class="alert alert-success">
+                      <strong>Success! </strong>{{successMessage}}
+                  </div>
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">First Name</h6>
@@ -102,8 +105,10 @@
                       Bay Area, San Francisco, CA
                     </div>
                   </div>
+                  <div v-if="errorMessage" class="alert alert-danger">
+                    <strong>Warning! </strong>{{errorMessage}}
+                  </div>
                   <div class="row" v-if=" id == $store.getters.getUserId" >
-                  
                     <div class="col-sm-12">
                       <hr>
                       <button v-if="!editable"  @click="ToggleEdit" class="btn purple-button-primary col-sm-2" > Edit </button>
@@ -134,7 +139,9 @@ export default {
         lastName:'',
         password:'',
         number:'',
-        editable:false
+        editable:false,
+        successMessage:null,
+        errorMessage:null
       }
   },
   methods:{
@@ -150,8 +157,14 @@ export default {
       console.log(this.$route.params)
       console.log("The id in the profile page: " + this.id + "is a student?" + this.isStudent )
       let url = "rest/" + ( this.isStudent ? "student":"instructor") +"/"+ this.id
-        // axios.get("rest/student/" + this.id)
-        axios.get(url)
+        // axios.get(url)
+         axios({
+            url: url,
+            headers: {"Content-Type":"application/json;charset=utf-8"},
+            method: 'GET',
+            withCredentials: true,
+            crossDomain: true
+            })
         .then(res => {
             console.log(res)
             console.log("Student of id "+ this.id +" are found here!")
@@ -165,6 +178,33 @@ export default {
     UpdateUserInfo(){
       //update user profile
       this.editable = !this.editable
+
+      let userInfo = {
+          studentId:1,
+          firstName:this.firstName,
+          lastName:this.lastName,
+          email: this.email,
+          // password: this.password
+          }
+      let apiurl = "rest/" + ( this.isStudent ? "student":"instructor")
+
+         axios({
+            url: apiurl,
+            headers: {"Content-Type":"application/json;charset=utf-8"},
+            data: userInfo,
+            method: 'PUT',
+            withCredentials: true,
+            crossDomain: true
+            })
+        .then(res => {
+            console.log(res)
+            this.successMessage = "Successfully updated!",
+            console.log(res.data)
+            this.email = res.data.email,
+            this.firstName = res.data.firstName ,
+            this.lastName = res.data.lastName ,
+            this.number = res.data.studentNumber
+            }).catch(err => console.log(err))
     }
   },
   mounted: function () 
@@ -174,8 +214,8 @@ export default {
   },
   updated:function()
   {
-    console.log("The mounted function in profile runs")
-    this.setUpProfilePage()
+    console.log("The updated function in profile runs")
+    // this.setUpProfilePage()
   }
 }
 </script>

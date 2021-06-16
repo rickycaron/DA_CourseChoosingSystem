@@ -94,12 +94,10 @@ export default {
             axios({
             url: apiUrl,
             data: info,
-            headers: {
-                "Content-Type":"application/json;charset=utf-8"
-            },
+            // headers: { "Content-Type":"application/json;charset=utf-8" },
             method: 'POST',
             withCredentials: true,
-            crossDomain: true
+            // crossDomain: true
             }).then(res => {
                 console.log("Login in request sent!")
                 console.log(res.data)

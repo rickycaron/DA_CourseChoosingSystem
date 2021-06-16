@@ -35,27 +35,27 @@ export default {
     },
     mounted: function () 
     {
-        axios.get("rest/students")
-        .then(res => {
-            console.log(res)
-            console.log("Students are found here!")
-            console.log(res.data)
-            this.students = res.data
-        }).catch(err => console.log(err))
-        // axios({
-        //     url: 'rest/students',
-        //     headers: {
-        //         "Content-Type":"application/json;charset=utf-8"
-        //     },
-        //     method: 'GET',
-        //     withCredentials: true,
-        //     crossDomain: true
-        //     }).then(res => {
-        //         console.log("Students information Got!")
-        //         console.log(res.data)
-        //         this.students = res.data
-        //     }).catch(error => {
-        //         console.log(error);})
+        // axios.get("rest/students")
+        // .then(res => {
+        //     console.log(res)
+        //     console.log("Students are found here!")
+        //     console.log(res.data)
+        //     this.students = res.data
+        // }).catch(err => console.log(err))
+
+        axios({
+            url: 'rest/students',
+            headers: {"Content-Type":"application/json;charset=utf-8"},
+            method: 'GET',
+            withCredentials: true,
+            crossDomain: true
+            }).then(res => {
+                console.log("Students information Got!")
+                console.log(res.data)
+                this.students = res.data
+            }).catch(error => {
+                console.log(error);})
+
     }
 }
 </script>

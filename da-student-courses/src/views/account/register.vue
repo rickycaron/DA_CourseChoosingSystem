@@ -35,6 +35,9 @@
                                 <div v-if="errorMessage" class="alert alert-danger">
                                     <strong>Warning! </strong>{{errorMessage}}
                                 </div>
+                            <p> I am a student: {{isStudent}}</p> 
+                            <p>{{firstName}}</p>
+
                                 <!-- <div class="custom-control custom-checkbox mb-3 d-flex justify-content-end">
                                     <input type="checkbox" class="custom-control-input" id="customCheck1" @click="showPassword">
                                     <label class="custom-control-label" for="customCheck1">Show password</label>
@@ -108,7 +111,7 @@ export default {
                     password: this.password
                     }
                 console.log(userInfo)
-                let apiUrl = 'welcome/register' + (this.isStudent?'Student':'Instructor')
+                // let apiUrl = 'welcome/' + (this.isStudent?'student':'instructor') //
                 axios({
                 url: apiUrl,
                 data: userInfo,
