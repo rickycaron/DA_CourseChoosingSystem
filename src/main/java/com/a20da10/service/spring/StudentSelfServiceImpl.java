@@ -55,6 +55,7 @@ public class StudentSelfServiceImpl implements StudentSelfService {
     @Transactional
     public CourseEntity cancelCourse(StudentEntity studentEntity, Integer courseId) {
         studentDao.cancleCourse(getBasicInfo(),courseDao.getCourseEntity(courseId));
+        return courseDao.getCourseEntity(courseId);
     }
 
 
