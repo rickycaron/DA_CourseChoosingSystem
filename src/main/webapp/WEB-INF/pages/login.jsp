@@ -27,7 +27,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-9 col-lg-8 mx-auto">
-                            <h3 class="login-heading mb-4">Welcome to the school Course System!</h3>
+                            <h3 class="login-heading mb-4">This is not the page of our app。。。 The buttons won't work!</h3>
 
                             <form name="loginStudentForm" action="loginStudent" method="POST">
                                 <div class="form-label-group">

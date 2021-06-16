@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.Response;
 import java.util.List;
@@ -15,6 +16,11 @@ import java.util.List;
 //cotroller + responseBody
 @RestController
 @CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
+//@CrossOrigin(origins = "http://localhost:8081",
+//        allowCredentials = "true",
+//        methods = {RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE},
+//        allowedHeaders = ("*"),
+//        exposedHeaders = {"Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"})
 @RequestMapping("/rest")
 public class RESTController {
 
@@ -25,7 +31,7 @@ public class RESTController {
     public List<StudentEntity> getAllStudentJson(HttpServletResponse response){
 //        Response.setHeader.Add("Access-Control-Allow-Origin", "*");
 //        response.setHeader("Access-Control-Allow-Origin", "*");
-        System.out.println("Data is already sent!!!!!!!!!!!!");
+//        System.out.println("Data is already sent!!!!!!!!!!!!");
         return studentGeneralService.getAllStudent();
     }
 
@@ -37,13 +43,13 @@ public class RESTController {
     @PostMapping("/student")
     //auto change data format from json to pojo
     public StudentEntity addStudent(@RequestBody StudentEntity studentEntity){
-
+        System.out.println("_________________Enter the post Student method!");
         studentEntity.setStudentId(0);
         studentGeneralService.saveStudent(studentEntity);
         return studentEntity;
     }
     @PutMapping("/student")
-    public StudentEntity updateStudent(@RequestBody StudentEntity studentEntity){
+    public StudentEntity updateStudent(@RequestBody StudentEntity studentEntity, HttpServletResponse response, HttpServletRequest request){
         //here the studentId is not null or 0,therefore it will update instead of adding
         int studentId =studentEntity.getStudentId();
         if( studentId!= 0){
