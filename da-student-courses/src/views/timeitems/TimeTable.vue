@@ -22,7 +22,7 @@ export default {
     },
     mounted: function () 
     {
-        axios.get('http://localhost:3000/courses')
+        axios.get('courseStudent/getMycourses')
         .then(res => this.courses = res.data.sort(function compareFn(a, b) 
         {  
             if(a.weekDay < b.weekDay){return -1}

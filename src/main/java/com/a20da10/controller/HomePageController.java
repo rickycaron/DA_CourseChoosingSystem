@@ -45,8 +45,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @ResponseBody
     public boolean Login(@RequestBody StudentEntity studentEntity, HttpSession session, HttpServletResponse response,HttpServletRequest request){
         //0.Fetching parameters
-//        String email = request.getParameter("email");
-//        String password = request.getParameter("password");
         String email = studentEntity.getEmail();
         String password = studentEntity.getPassword();
         System.out.println("Email got from Vue" + email);

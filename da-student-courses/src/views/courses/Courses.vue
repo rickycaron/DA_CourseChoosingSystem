@@ -14,7 +14,7 @@
     
     <div v-if="courses.length">
         <div class="card-deck d-flex justify-content-center">
-            <div v-for="course in courses" :key="course.id" >
+            <div v-for="course in courses" :key="course.courseId" >
                 <CourseCard :courseinfo="course" :ableToDelete = "editSwitch"  @delete-a-Course="deleteCourse">
                 </CourseCard>
             </div>
@@ -23,17 +23,13 @@
     <div v-else>
         <p>Loading page</p>
     </div>
-    
-
-    <!-- <CreateCourseForm @create-a-new-course ="addCourse">
-    </CreateCourseForm> -->
 
 </template>
 
 
 
 <script>
-import CourseCard from '../../components/CourseCard.vue'
+import CourseCard from './CourseCard.vue'
 import CreateCourseForm from '../../components/CreateCourseForm.vue'
 
 export default {
@@ -60,19 +56,23 @@ export default {
         // },
         deleteCourse(courseid)
         {
-            if(confirm("Do you really want to delete this course?"))
-            {
-                axios.delete('http://localhost:3000/courses/'+ courseid + '/')
+            // if(confirm("Do you really want to disenroll from this course?"))
+            // {
+                console.log("To delete the course of id"+ courseid)
+                axios.get('courseStudent/disenrollCourse/'+ courseid)
                 .then(resp => {
+                    console.log("The course is disenrolled")
+                    console.log(resp.data)
                     this.courses = this.courses.filter(function(course, index, arr)
                     { 
-                        return course.id != courseid;
+                        return course.courseId != courseid;
                     });
                 })
                 .catch(error => {
                     console.log(error);
                 })
-            }
+            // }
+
             //  this.$confirm("Are you sure to delete it ?").then(() => { });//NOT USEABLE
             // for( let i = 0; i < this.courses.length; i++)
             // {                    
@@ -86,14 +86,12 @@ export default {
     }, 
     mounted: function () 
     {
-        // fetch('http://localhost:3000/courses')
-        // .then((res)=> res.json())
-        // .then((data) => this.courses = data)
-        // .catch(err => console.log(err.message)) 
-
-        axios.get('http://localhost:3000/courses')
-        .then(res => this.courses = res.data)
-        .catch(err => console.log("No courses found") )
+        axios.get('courseStudent/getMycourses')
+        .then(res => {
+            console.log(res.data)
+            this.courses = res.data
+        })
+        .catch(err => console.log(err) )
     }
 }
 </script>

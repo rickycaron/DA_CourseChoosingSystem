@@ -139,15 +139,6 @@ public class HelloController {
     }
 
 
-
-
-
-
-
-
-
-
-
     @PutMapping("/updateProfile")
     @ResponseBody
     public StudentEntity updateStudent(@RequestBody StudentEntity studentEntity, HttpServletResponse response, HttpServletRequest request){
