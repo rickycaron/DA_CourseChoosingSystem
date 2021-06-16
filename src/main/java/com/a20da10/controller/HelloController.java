@@ -2,10 +2,12 @@ package com.a20da10.controller;
 
 import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
+import com.a20da10.Entity.spring.TextMessageEntity;
 import com.a20da10.activemq.ConsumerTest;
 import com.a20da10.activemq.JmsListener11;
 import com.a20da10.activemq.ProducerTest;
 import com.a20da10.activemq.StudentReceiver;
+import com.a20da10.dao.spring.MessageDao;
 import com.a20da10.service.spring.StudentGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
@@ -57,6 +59,9 @@ public class HelloController {
 
     @Autowired
     JmsListener11 jmsListener;
+
+    @Autowired
+    MessageDao messageDao;
 
     @Autowired
     StudentReceiver studentReceiver;
@@ -119,13 +124,13 @@ public class HelloController {
     public void sendMessage(){
         producerTest.sendMessage("time now is 1305 ",1);
     }
-
-
     @RequestMapping("/hello12")
     @ResponseBody
-    public void receiverCheck(){
-        studentReceiver.connectToReceiverService();
+
+    public List<TextMessageEntity> getMessage(){
+       return messageDao.getAllTextMessageById(3);
     }
-    //    @JmsListener(destination = "studentQueue",selector = "studentIdSelector='" +1+"'")
+
+
 
 }

@@ -19,4 +19,4 @@ public interface StudentDao {
     //5.High level operation
     public void subscribeCourse(StudentEntity studentEntity,CourseEntity courseEntity);
 
-}
+    }

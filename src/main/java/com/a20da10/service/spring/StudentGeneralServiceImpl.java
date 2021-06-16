@@ -2,6 +2,7 @@ package com.a20da10.service.spring;
 
 
 import com.a20da10.Entity.spring.StudentEntity;
+import com.a20da10.dao.spring.MessageDao;
 import com.a20da10.dao.spring.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,7 +15,11 @@ import java.util.List;
 @Scope("prototype")
 public class StudentGeneralServiceImpl implements StudentGeneralService {
     @Autowired
-    private StudentDao studentDao;
+    StudentDao studentDao;
+
+    @Autowired
+    MessageDao messageDao;
+
     @Override
     @Transactional
     public StudentEntity getSingleStudent(Integer id) {
@@ -45,6 +50,12 @@ public class StudentGeneralServiceImpl implements StudentGeneralService {
     @Transactional
     public void deleteStudent(Integer id) {
         studentDao.deleteStudent(id);
+    }
+
+    @Override
+    public void persistTextMessge(Integer senderId, Integer receriverId, String txt) {
+        messageDao.persistTextMessge(senderId,receriverId,txt);
+        System.out.println("service persiste message");
     }
 
 }
