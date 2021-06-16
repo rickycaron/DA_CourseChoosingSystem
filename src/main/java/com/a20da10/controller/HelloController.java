@@ -122,7 +122,7 @@ public class HelloController {
     @RequestMapping("/hello11")
     @ResponseBody
     public void sendMessage(){
-        producerTest.sendMessage("time now is 1305 ",1);
+        producerTest.sendMessage("time now is 1305 ",1,3);
     }
     @RequestMapping("/hello12")
     @ResponseBody
