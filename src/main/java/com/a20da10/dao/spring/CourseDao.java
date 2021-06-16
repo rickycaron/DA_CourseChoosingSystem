@@ -10,5 +10,6 @@ public interface CourseDao {
     public CourseEntity getCourseEntity(Integer courseId);
     public List<StudentEntity> getAllStudentOfCourse(Integer courseId);
     public void addStudentsToCourse(StudentEntity studentEntity,CourseEntity courseEntity);
+    public List<CourseEntity> getAllCourses();
 
 }

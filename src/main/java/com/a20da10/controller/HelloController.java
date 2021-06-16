@@ -7,9 +7,11 @@ import com.a20da10.activemq.ConsumerTest;
 import com.a20da10.activemq.JmsListener11;
 import com.a20da10.activemq.ProducerTest;
 import com.a20da10.activemq.StudentReceiver;
+import com.a20da10.dao.spring.CourseDao;
 import com.a20da10.dao.spring.MessageDao;
 import com.a20da10.service.spring.StudentGeneralService;
 import com.a20da10.service.spring.StudentSelfService;
+import com.a20da10.service.spring.UpdateTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,7 @@ import java.util.List;
 import java.util.Properties;
 
 @Controller
+@RequestMapping("/hello")
 @CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
 public class HelloController {
 //    @Autowired
@@ -63,6 +66,9 @@ public class HelloController {
 
     @Autowired
     MessageDao messageDao;
+
+    @Autowired
+    CourseDao courseDao;
 
     @Autowired
     StudentReceiver studentReceiver;
@@ -144,6 +150,58 @@ public class HelloController {
     public List<TextMessageEntity> getMessages(){
 
         return messageDao.getAllTextMessageById(studentSelfService.getStudentId());
+    }
+
+    @RequestMapping("/getMycourses")
+    @Transactional
+    @ResponseBody
+    public List<CourseEntity> getMyCourses(){
+        return studentSelfService.getBasicInfo().getCourseEntities();
+    }
+
+    @RequestMapping("/getMyAvailableCourses")
+    @ResponseBody
+    public List<CourseEntity> getAllCoursesAvaliable(){
+        StudentEntity studentEntity =studentGeneralService.getSingleStudent(3);
+        List<CourseEntity> allCourses = studentGeneralService.getAllCourses();
+        allCourses.removeIf(e->e.getStudentEntities().contains(studentEntity));
+        System.out.println("----------------------");
+        return allCourses;
+    }
+
+    @RequestMapping("/subscribeCourse/{courseId}")
+    @ResponseBody
+    public CourseEntity subscribeCourse(@PathVariable Integer courseId){
+        CourseEntity courseEntity = courseDao.getCourseEntity(courseId);
+        studentSelfService.subscribeCourse(courseEntity);
+        return courseEntity;
+    }
+
+    @RequestMapping("/cancelCourse/{courseId}")
+    @ResponseBody
+    public CourseEntity cancelCourse(@PathVariable Integer courseId){
+
+        return studentSelfService.cancelCourse(studentSelfService.getBasicInfo(), courseId);
+    }
+
+    @PutMapping("/updateProfile")
+    @ResponseBody
+    public StudentEntity updateStudent(@RequestBody StudentEntity studentEntity, HttpServletResponse response, HttpServletRequest request){
+        //here the studentId is not null or 0,therefore it will update instead of adding
+        int studentId =studentEntity.getStudentId();
+        if( studentId!= 0){
+            StudentEntity source= studentGeneralService.getSingleStudent(studentId);
+            UpdateTool.copyNullProperties(source, studentEntity);
+        }
+        studentGeneralService.updateStudent(studentEntity);
+        return studentEntity;
+    }
+    @RequestMapping("/getCourseById/{courseId}")
+    @ResponseBody
+    public CourseEntity getCourseById(@PathVariable Integer courseId){
+
+        return studentGeneralService.getCourseById(courseId);
+
     }
 
 }

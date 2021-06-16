@@ -18,5 +18,6 @@ public interface StudentDao {
     public void deleteStudent(Integer studentId);
     //5.High level operation
     public void subscribeCourse(StudentEntity studentEntity,CourseEntity courseEntity);
+    public void cancleCourse(StudentEntity studentEntity,CourseEntity courseEntity);
 
     }

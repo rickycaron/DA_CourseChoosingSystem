@@ -1,7 +1,9 @@
 package com.a20da10.service.spring;
 
+import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.Entity.spring.TextMessageEntity;
+import com.a20da10.dao.spring.CourseDao;
 import com.a20da10.dao.spring.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -20,6 +22,11 @@ public class StudentSelfServiceImpl implements StudentSelfService {
 
     @Autowired
     private StudentDao studentDao;
+
+
+    @Autowired
+    private CourseDao courseDao;
+
     @Override
     @Transactional
     public StudentEntity getBasicInfo() {
@@ -33,9 +40,23 @@ public class StudentSelfServiceImpl implements StudentSelfService {
     }
 
     @Override
+    @Transactional
+    public void subscribeCourse(CourseEntity courseEntity) {
+        studentDao.subscribeCourse(getBasicInfo(),courseEntity);
+    }
+
+    @Override
+    @Transactional
     public List<TextMessageEntity> getAllTextMessageById() {
         return null;
     }
+
+    @Override
+    @Transactional
+    public CourseEntity cancelCourse(StudentEntity studentEntity, Integer courseId) {
+        studentDao.cancleCourse(getBasicInfo(),courseDao.getCourseEntity(courseId));
+    }
+
 
     public void setStudentId(int studentId) {
         StudentId = studentId;
