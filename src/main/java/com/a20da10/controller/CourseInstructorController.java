@@ -57,7 +57,4 @@ public class CourseInstructorController {
         return null;
     }
 
-
-
-
 }
