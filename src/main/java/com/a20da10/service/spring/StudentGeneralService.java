@@ -5,6 +5,7 @@ import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.Entity.spring.TextMessageEntity;
 
+import java.util.Date;
 import java.util.List;
 
 public interface StudentGeneralService {
@@ -13,7 +14,7 @@ public interface StudentGeneralService {
     public void saveStudent(StudentEntity studentEntity);
     public void updateStudent(StudentEntity studentEntity);
     public void deleteStudent(Integer id);
-    public void persistTextMessge(Integer senderId,Integer receriverId,String txt);
+    public void persistTextMessge(Integer senderId, Integer receriverId, String txt, Date date);
     public List<CourseEntity> getAllCourses();
     public CourseEntity getCourseById(Integer courseId);
 

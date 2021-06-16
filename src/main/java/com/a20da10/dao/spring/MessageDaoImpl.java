@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -17,12 +18,13 @@ public class MessageDaoImpl implements MessageDao{
     @Autowired
     SessionFactory sessionFactory;
     @Override
-    public void persistTextMessge(Integer senderId, Integer receriverId, String txt) {
+    public void persistTextMessge(Integer senderId, Integer receriverId, String txt, Date date) {
         if (txt!=null){
             TextMessageEntity textMessageEntity = new TextMessageEntity();
             textMessageEntity.setTextMessage(txt);
             textMessageEntity.setSenderId(senderId);
             textMessageEntity.setReceiverId(receriverId);
+            textMessageEntity.setDate(date);
             System.out.println(textMessageEntity.toString());
             Session session =sessionFactory.getCurrentSession();
             session.persist(textMessageEntity);
