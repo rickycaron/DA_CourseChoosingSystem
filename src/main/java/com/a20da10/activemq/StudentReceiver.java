@@ -18,6 +18,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import java.util.Date;
 
 @Component
 @Transactional
@@ -36,6 +37,8 @@ public class StudentReceiver {
         //this is the id of sending address
         Integer senderId =message.getIntProperty("senderId");
         Integer receiverId =message.getIntProperty("receiverId");
+        Date date= new Date(message.getJMSTimestamp());
+        System.out.println(date);
 
 
         if (message !=null ){
@@ -45,7 +48,7 @@ public class StudentReceiver {
                 String txtMessage = textMessage.getText();
                 System.out.println("this is the message get from controller with selector "+txtMessage);
                 //here persist the message
-                messageDao.persistTextMessge(senderId,receiverId,txtMessage);
+                messageDao.persistTextMessge(senderId,receiverId,txtMessage,date);
             } catch (JMSException e) {
                 e.printStackTrace();
             }

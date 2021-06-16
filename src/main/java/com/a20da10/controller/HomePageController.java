@@ -146,6 +146,36 @@ public class HomePageController<LoginOutAndRegisterSer> {
         System.out.println("Data is already sent!!!!!!!!!!!!");
         return studentGeneralService.getAllStudent();
     }
-}
+
+    @PostMapping("/registerStudent")
+    @ResponseBody
+    public boolean registerStudent(@RequestBody StudentEntity studentEntity) {
+
+        if (studentGeneralService.getAllStudent().contains(studentEntity)) {
+            return false;
+        } else {
+            String rawPass = studentEntity.getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            studentEntity.setPassword(passwordEncoder.encode(rawPass));
+            logService.register(studentEntity);
+        }
+        return true;
+    }
+    @PostMapping("/resetStudentPassword")
+    @ResponseBody
+    public boolean resetStudentPassword(@RequestBody StudentEntity studentEntity) {
+
+        if (studentGeneralService.getAllStudent().contains(studentEntity)) {
+            return false;
+        } else {
+            String rawPass = studentEntity.getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            studentEntity.setPassword(passwordEncoder.encode(rawPass));
+            studentGeneralService.updateStudent(studentEntity);
+        }
+        return true;
+    }
+
+    }
 
 
