@@ -138,51 +138,15 @@ public class HelloController {
         return messageDao.getAllTextMessageById(3);
     }
 
-    @PostMapping("/sendMyMessage")
-    @ResponseBody
-    public void produceMessage(@RequestBody TextMessageEntity textMessageEntity){
-        producerTest.sendMessage(textMessageEntity.getTextMessage(),
-                                    textMessageEntity.getSenderId(),
-                                    textMessageEntity.getReceiverId());
-    }
-    @GetMapping("/getMyMessages")
-    @ResponseBody
-    public List<TextMessageEntity> getMessages(){
 
-        return messageDao.getAllTextMessageById(studentSelfService.getStudentId());
-    }
 
-    @RequestMapping("/getMycourses")
-    @Transactional
-    @ResponseBody
-    public List<CourseEntity> getMyCourses(){
-        return studentSelfService.getBasicInfo().getCourseEntities();
-    }
 
-    @RequestMapping("/getMyAvailableCourses")
-    @ResponseBody
-    public List<CourseEntity> getAllCoursesAvaliable(){
-        StudentEntity studentEntity =studentGeneralService.getSingleStudent(3);
-        List<CourseEntity> allCourses = studentGeneralService.getAllCourses();
-        allCourses.removeIf(e->e.getStudentEntities().contains(studentEntity));
-        System.out.println("----------------------");
-        return allCourses;
-    }
 
-    @RequestMapping("/subscribeCourse/{courseId}")
-    @ResponseBody
-    public CourseEntity subscribeCourse(@PathVariable Integer courseId){
-        CourseEntity courseEntity = courseDao.getCourseEntity(courseId);
-        studentSelfService.subscribeCourse(courseEntity);
-        return courseEntity;
-    }
 
-    @RequestMapping("/cancelCourse/{courseId}")
-    @ResponseBody
-    public CourseEntity cancelCourse(@PathVariable Integer courseId){
 
-        return studentSelfService.cancelCourse(studentSelfService.getBasicInfo(), courseId);
-    }
+
+
+
 
     @PutMapping("/updateProfile")
     @ResponseBody
@@ -196,12 +160,6 @@ public class HelloController {
         studentGeneralService.updateStudent(studentEntity);
         return studentEntity;
     }
-    @RequestMapping("/getCourseById/{courseId}")
-    @ResponseBody
-    public CourseEntity getCourseById(@PathVariable Integer courseId){
 
-        return studentGeneralService.getCourseById(courseId);
-
-    }
 
 }
