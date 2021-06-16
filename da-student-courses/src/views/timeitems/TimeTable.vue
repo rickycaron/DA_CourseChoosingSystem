@@ -1,7 +1,7 @@
 <template>
     <h4 class="my-4">Week Class List</h4>
     <div class="list-group mx-2">
-        <div v-for="course in courses" :key="course.id" class="my-1">
+        <div v-for="course in courses" :key="course.courseId" class="my-1">
             <TimeTableItem :courseinfo="course" class="my-1">
             </TimeTableItem>
         </div>
@@ -22,7 +22,7 @@ export default {
     },
     mounted: function () 
     {
-        axios.get('http://localhost:3000/courses')
+        axios.get('courseStudent/getMycourses')
         .then(res => this.courses = res.data.sort(function compareFn(a, b) 
         {  
             if(a.weekDay < b.weekDay){return -1}

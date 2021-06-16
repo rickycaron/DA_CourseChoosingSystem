@@ -91,9 +91,9 @@ export default {
         // .then((data) => this.courses = data)
         // .catch(err => console.log(err.message)) 
 
-        axios.get('http://localhost:3000/courses')
+        axios.get('courseStudent/getMycourses')
         .then(res => this.courses = res.data)
-        .catch(err => console.log("No courses found") )
+        .catch(err => console.log(err) )
     }
 }
 </script>

@@ -85,12 +85,6 @@ export default {
             }   
             console.log(info)
             let apiUrl = 'welcome/login' + (this.isStudent?'Student':'Instructor')
-            // let apiUrl = 'welcome/login'
-            // if(this.isStudent)
-            // { apiUrl = apiUrl + 'Student'}
-            // else
-            // {apiUrl = apiUrl + 'Instructor'}
-
             axios({
             url: apiUrl,
             data: info,

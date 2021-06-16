@@ -37,7 +37,7 @@ export default {
         // .then((data) => this.course = data)
         // .catch(err => console.log(err.message)) 
 
-        axios.get("http://localhost:3000/courses/" + this.id)
+        axios.get("courseStudent/getCourseById/" + this.id)
         .then( res => this.course = res.data)
         .catch(err => console.log(err) )
         
