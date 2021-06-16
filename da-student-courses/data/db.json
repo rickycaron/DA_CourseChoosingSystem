@@ -1,0 +1,180 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "courseID": 1,
+      "courseName": "System Software",
+      "weekDay": 1,
+      "beginTime": "08:00",
+      "endTime": "10:00",
+      "courseDetail": "programming in C",
+      "teacherID": 1,
+      "teacherFirstName": "Stef",
+      "teacherLastName": "Desmet",
+      "teacherNumber": "s0000001"
+    },
+    {
+      "id": 2,
+      "courseID": 2,
+      "courseName": "MicroController",
+      "weekDay": 2,
+      "beginTime": "08:00",
+      "endTime": "10:00",
+      "courseDetail": "programming in C",
+      "teacherID": 2,
+      "teacherFirstName": "Luk",
+      "teacherLastName": "Gerts",
+      "teacherNumber": "s0000002"
+    },
+    {
+      "id": 3,
+      "courseID": 3,
+      "courseName": "Media Processing",
+      "weekDay": 3,
+      "beginTime": "08:00",
+      "endTime": "10:00",
+      "courseDetail": "programming in C++",
+      "teacherID": 1,
+      "teacherFirstName": "Stef",
+      "teacherLastName": "Desmet",
+      "teacherNumber": "s0000001"
+    },
+    {
+      "id": 4,
+      "courseID": 4,
+      "courseName": "Machine Learning",
+      "weekDay": 4,
+      "beginTime": "08:00",
+      "endTime": "10:00",
+      "courseDetail": "machine learning",
+      "teacherID": 3,
+      "teacherFirstName": "Bart",
+      "teacherLastName": "Vanrumste",
+      "teacherNumber": "s0000003"
+    },
+    {
+      "id": 5,
+      "courseID": 5,
+      "courseName": "UXWD Web Desisn",
+      "weekDay": 5,
+      "beginTime": "08:00",
+      "endTime": "10:00",
+      "courseDetail": "designing websites in PHP with Codeignitor",
+      "teacherID": 4,
+      "teacherFirstName": "Vero",
+      "teacherLastName": "Vanden Abeele",
+      "teacherNumber": "s0000004"
+    },
+    {
+      "id": 6,
+      "courseID": 6,
+      "courseName": "Object Oriented Programming",
+      "weekDay": 6,
+      "beginTime": "08:00",
+      "endTime": "10:00",
+      "courseDetail": "programming in Java",
+      "teacherID": 5,
+      "teacherFirstName": "Koen",
+      "teacherLastName": "Pelsmaekers",
+      "teacherNumber": "s0000005"
+    },
+    {
+      "id": 7,
+      "courseID": 7,
+      "courseName": "Software Development",
+      "weekDay": 7,
+      "beginTime": "08:00",
+      "endTime": "10:00",
+      "courseDetail": "programming in Java",
+      "teacherID": 5,
+      "teacherFirstName": "Koen",
+      "teacherLastName": "Pelsmaekers",
+      "teacherNumber": "s0000005"
+    },
+    {
+      "courseName": " iuerhiuheriuhire",
+      "courseDetail": " hsduhfiushuifhdsiu",
+      "weekDay": 1,
+      "beginTime": "08:36",
+      "endTime": "09:37",
+      "id": 8
+    },
+    {
+      "courseName": "hfiuhwuahuiehuiw",
+      "courseDetail": "hihfhwiuahfuihewuihfwe",
+      "weekDay": 1,
+      "beginTime": "08:36",
+      "endTime": "10:38",
+      "id": 9
+    },
+    {
+      "courseName": " Cooking Pizza",
+      "courseDetail": " jioweoiiowrjoiger",
+      "weekDay": 4,
+      "beginTime": "10:43",
+      "endTime": "11:44",
+      "id": 11
+    },
+    {
+      "courseName": " dummy",
+      "courseDetail": " gfywgfihweihriew",
+      "weekDay": 1,
+      "beginTime": "09:09",
+      "endTime": "11:07",
+      "id": 12
+    },
+    {
+      "courseName": " dummy2",
+      "courseDetail": " ewuihiweo",
+      "weekDay": 1,
+      "beginTime": "08:40",
+      "endTime": "10:12",
+      "id": 13
+    },
+    {
+      "courseName": " dummy3",
+      "courseDetail": " urheigoerptoer",
+      "weekDay": 1,
+      "beginTime": "14:23",
+      "endTime": "15:25",
+      "id": 14
+    }
+  ],
+  "teachers": [
+    {
+      "id": 1,
+      "teacherID": 1,
+      "teacherFirstName": "Stef",
+      "teacherLastName": "Desmet",
+      "teacherNumber": "s0000001"
+    },
+    {
+      "id": 2,
+      "teacherID": 2,
+      "teacherFirstName": "Luk",
+      "teacherLastName": "Gerts",
+      "teacherNumber": "s0000002"
+    },
+    {
+      "id": 3,
+      "teacherID": 3,
+      "teacherFirstName": "Bart",
+      "teacherLastName": "Vanrumste",
+      "teacherNumber": "s0000003"
+    },
+    {
+      "id": 4,
+      "teacherID": 4,
+      "teacherFirstName": "Vero",
+      "teacherLastName": "Vanden Abeele",
+      "teacherNumber": "s0000004"
+    },
+    {
+      "id": 5,
+      "teacherID": 5,
+      "teacherFirstName": "Koen",
+      "teacherLastName": "Pelsmaekers",
+      "teacherNumber": "s0000005"
+    }
+  ]
+}

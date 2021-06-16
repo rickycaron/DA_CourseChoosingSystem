@@ -17,10 +17,56 @@ public class CourseEntity {
     private Integer instructorId;
     private String type;
 
+    @Column(name = "weekDay", nullable = true)
+    private Integer weekDay;
+    @Column(name = "beginTime", nullable = true)
+    private String beginTime;
+    @Column(name = "endTime", nullable = true)
+    private String endTime;
+
+    @Column(name = "description", nullable = true,length = 1000)
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public Integer getWeekDay() {
+        return weekDay;
+    }
+
+    public void setWeekDay(Integer weekDay) {
+        this.weekDay = weekDay;
+    }
+
+    public String getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+
+
     public CourseEntity(String name, Integer instructorId, CourseTypeEnum type) {
         this.name = name;
         this.instructorId = instructorId;
         this.type = type.toString();
+
     }
 
     public CourseEntity() {

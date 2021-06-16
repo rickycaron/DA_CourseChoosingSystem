@@ -14,9 +14,17 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String url =request.getRequestURI();
 
-        System.out.println("Rui: The session is");
         System.out.println(request.getSession());
 
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+//        String origin = request.getHeader("Origin");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
+
+        //used for testing only
+        if(url.contains("/hello")){
+            return true;
+        }
         //Only allow accessing to WelcomePageController
         if(url.contains("/welcome")){
             System.out.println("Rui: Enter the welcome webpage");

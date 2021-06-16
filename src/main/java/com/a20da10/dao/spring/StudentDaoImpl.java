@@ -2,15 +2,18 @@ package com.a20da10.dao.spring;
 
 import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
+import com.a20da10.Entity.spring.TextMessageEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@DependsOn("sessionFactory")
 public class StudentDaoImpl implements StudentDao{
 
     @Autowired
@@ -24,6 +27,8 @@ public class StudentDaoImpl implements StudentDao{
         Query<StudentEntity> query = session.createQuery("from StudentEntity ",StudentEntity.class);
 //        3.execute sql query
         List<StudentEntity> students = query.getResultList();
+
+        System.out.println("return all the students");
         return students;
     }
     @Override
@@ -44,6 +49,14 @@ public class StudentDaoImpl implements StudentDao{
     public void subscribeCourse(StudentEntity studentEntity, CourseEntity courseEntity) {
         studentEntity.addCourse(courseEntity);
     }
+
+    @Override
+    public void cancleCourse(StudentEntity studentEntity, CourseEntity courseEntity) {
+
+            studentEntity.getCourseEntities().removeIf(e->e.getCourseId()==studentEntity.getStudentId());
+
+    }
+
 
     @Override
     public void addStudent(StudentEntity studentEntity) {

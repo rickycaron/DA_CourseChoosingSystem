@@ -2,20 +2,22 @@ package com.a20da10.controller;
 
 import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.StudentEntity;
+import com.a20da10.Entity.spring.TextMessageEntity;
 import com.a20da10.activemq.ConsumerTest;
 import com.a20da10.activemq.JmsListener11;
 import com.a20da10.activemq.ProducerTest;
 import com.a20da10.activemq.StudentReceiver;
+import com.a20da10.dao.spring.CourseDao;
+import com.a20da10.dao.spring.MessageDao;
 import com.a20da10.service.spring.StudentGeneralService;
+import com.a20da10.service.spring.StudentSelfService;
+import com.a20da10.service.spring.UpdateTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -35,6 +37,7 @@ import java.util.List;
 import java.util.Properties;
 
 @Controller
+@RequestMapping("/hello")
 @CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
 public class HelloController {
 //    @Autowired
@@ -47,6 +50,9 @@ public class HelloController {
     private StudentGeneralService studentGeneralService;
 
     @Autowired
+    private StudentSelfService studentSelfService;
+
+    @Autowired
     private ProducerTest producerTest;
 
     @Autowired
@@ -57,6 +63,12 @@ public class HelloController {
 
     @Autowired
     JmsListener11 jmsListener;
+
+    @Autowired
+    MessageDao messageDao;
+
+    @Autowired
+    CourseDao courseDao;
 
     @Autowired
     StudentReceiver studentReceiver;
@@ -117,15 +129,37 @@ public class HelloController {
     @RequestMapping("/hello11")
     @ResponseBody
     public void sendMessage(){
-        producerTest.sendMessage("time now is 1305 ",1);
+        producerTest.sendMessage("time now is 1305 ",1,3);
     }
-
-
     @RequestMapping("/hello12")
     @ResponseBody
-    public void receiverCheck(){
-        studentReceiver.connectToReceiverService();
+    public List<TextMessageEntity> getMessage(){
+
+        return messageDao.getAllTextMessageById(3);
     }
-    //    @JmsListener(destination = "studentQueue",selector = "studentIdSelector='" +1+"'")
+
+
+
+
+
+
+
+
+
+
+
+    @PutMapping("/updateProfile")
+    @ResponseBody
+    public StudentEntity updateStudent(@RequestBody StudentEntity studentEntity, HttpServletResponse response, HttpServletRequest request){
+        //here the studentId is not null or 0,therefore it will update instead of adding
+        int studentId =studentEntity.getStudentId();
+        if( studentId!= 0){
+            StudentEntity source= studentGeneralService.getSingleStudent(studentId);
+            UpdateTool.copyNullProperties(source, studentEntity);
+        }
+        studentGeneralService.updateStudent(studentEntity);
+        return studentEntity;
+    }
+
 
 }
