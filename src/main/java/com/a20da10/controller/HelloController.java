@@ -1,6 +1,8 @@
 package com.a20da10.controller;
 
+import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.CourseEntity;
+import com.a20da10.Entity.spring.CourseTypeEnum;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.Entity.spring.TextMessageEntity;
 import com.a20da10.activemq.ConsumerTest;
@@ -9,11 +11,13 @@ import com.a20da10.activemq.ProducerTest;
 import com.a20da10.activemq.StudentReceiver;
 import com.a20da10.dao.spring.CourseDao;
 import com.a20da10.dao.spring.MessageDao;
+import com.a20da10.service.ejb.InstructorGenServiceRemote;
+import com.a20da10.service.ejb.InstructorSelfServiceRemote;
+import com.a20da10.service.ejb.MyTimerServiceRemote;
 import com.a20da10.service.spring.StudentGeneralService;
 import com.a20da10.service.spring.StudentSelfService;
 import com.a20da10.service.spring.UpdateTool;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -23,10 +27,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.annotation.Resource;
-import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.TextMessage;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +74,14 @@ public class HelloController {
     @Autowired
     StudentReceiver studentReceiver;
 
+    @Autowired
+    InstructorGenServiceRemote instructorGenServiceRemote;
+
+    @Autowired
+    InstructorSelfServiceRemote instructorSelfServiceRemote;
+
+    @Autowired
+    MyTimerServiceRemote myTimerServiceRemote;
     @RequestMapping(value = "/hello1")
     @ResponseBody
     public String getAllStudent(HttpServletRequest request,Model model) throws SQLException, PropertyVetoException, ClassNotFoundException {
@@ -162,4 +171,62 @@ public class HelloController {
     }
 
 
+    /*******Test for instructors below********/
+    @ResponseBody
+    @RequestMapping("/GetCoursesOfMine")
+    public List<CourseEntity> getCoursesOfMine (){
+        return instructorSelfServiceRemote.getCoursesOfMine();
+    }
+
+    @ResponseBody
+    @RequestMapping("/UpdateCourseInfo")
+    public void updateCourseInfo() {
+        CourseTypeEnum type = CourseTypeEnum.specialization;
+        instructorSelfServiceRemote.updateCourseInfo(1,"EE5", type);
+    }
+
+    @ResponseBody
+    @RequestMapping("/AddNewCourse")
+    public void addNewCourse() {
+        CourseTypeEnum type = CourseTypeEnum.specialization;
+        instructorSelfServiceRemote.addNewCourse("Machine learning", type);
+    }
+
+    @ResponseBody
+    @RequestMapping("/SetTimeOut")
+    public String setTimeOut() {
+        myTimerServiceRemote.setTimer(5000);
+        String message = "Test the set timeout method";
+        return message;
+    }
+
+    @ResponseBody
+    @RequestMapping("/GetAll")
+    public List<EJBInstructorEntity> getAllIns() {
+        return instructorGenServiceRemote.getAllInstructors();
+    }
+
+    @ResponseBody
+    @RequestMapping("/GetInsById")
+    public EJBInstructorEntity getInsById() {
+        return instructorGenServiceRemote.getInstructorByInsId(1);
+    }
+
+    @ResponseBody
+    @RequestMapping("/GetCourseByInsId")
+    public List<CourseEntity>  getCourseByInsId() {
+        return instructorGenServiceRemote.getCoursesByInsId(1);
+    }
+
+    @ResponseBody
+    @RequestMapping("/GetMyInfo")
+    public EJBInstructorEntity getMyInfo() {
+        return instructorSelfServiceRemote.getMyInfo();
+    }
+
+    @ResponseBody
+    @RequestMapping("/UpdateInsInfo")
+    public void updateInsInfo() {
+        instructorSelfServiceRemote.updateInstructor("Bobs", "Evans", "bobs.evans");
+    }
 }

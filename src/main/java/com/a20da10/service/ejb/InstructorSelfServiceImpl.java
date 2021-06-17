@@ -19,8 +19,13 @@ public class InstructorSelfServiceImpl implements InstructorSelfServiceLocal,Ins
     private InstructorDao dao;
 
     @Override
-    public List<CourseEntity> getCoursesOfMine(int insId) {
-        return dao.findCoursesByInsId(insId);
+    public EJBInstructorEntity getMyInfo() {
+        return dao.getById(instructorId);
+    }
+
+    @Override
+    public List<CourseEntity> getCoursesOfMine() {
+        return dao.findCoursesByInsId(instructorId);
     }
 
     @Override
@@ -29,8 +34,8 @@ public class InstructorSelfServiceImpl implements InstructorSelfServiceLocal,Ins
     }
 
     @Override
-    public void updateInstructor(int insId, String firstName, String lasttName, String email){
-        dao.updateById(insId, firstName, lasttName, email);
+    public void updateInstructor(String firstName, String lastName, String email){
+        dao.updateById(this.instructorId, firstName, lastName, email);
     }
 
     @Override
@@ -39,13 +44,13 @@ public class InstructorSelfServiceImpl implements InstructorSelfServiceLocal,Ins
     }
 
     @Override
-    public void updateCourseInfo(int courseId, String name, int instructorId, CourseTypeEnum type) {
-        dao.updateCourseInfo(courseId, name, instructorId, type);
+    public void updateCourseInfo(int courseId, String name, CourseTypeEnum type) {
+        dao.updateCourseInfo(courseId, name, this.instructorId, type);
     }
 
     @Override
-    public void addNewCourse(String name, int instructorId, CourseTypeEnum type){
-        dao.addNewCourse(name, instructorId, type);
+    public void addNewCourse(String name, CourseTypeEnum type){
+        dao.addNewCourse(name, this.instructorId, type);
     }
     public void setInsId(int id){
         this.instructorId = id;

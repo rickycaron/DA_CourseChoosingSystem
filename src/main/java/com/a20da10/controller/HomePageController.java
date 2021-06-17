@@ -33,7 +33,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @Autowired
     private LoginOutAndRegisterService logService;
 
-
     @Autowired
     private AccountServiceLocal accountServiceLocal;
 
