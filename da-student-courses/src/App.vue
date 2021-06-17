@@ -29,7 +29,8 @@ export default {
     redirect(){ this.$router.push({name:'Home'})},
     back(){this.$router.go(-1)},
     forward(){this.$router.go(1)},
-    setUser(info){
+    setUser(info)
+    {
       this.$store.dispatch('changeLoginState',true)
       this.$store.dispatch('setIsStudent',true)
       let userinfo = {
@@ -41,50 +42,35 @@ export default {
           number:info.studentNumber}
           console.log(userinfo)
       this.$store.dispatch('setUserInfo',userinfo)
+    },
+    getUser()
+    {
+      axios.get('welcome/myinfo')
+      .then(res =>{
+        console.log("The current user infomation is:")
+        console.log(res.data)
+         this.setUser(res.data)})
+      .catch(err => console.log(err))
+  //     axios({url: 'welcome/myinfo',
+  //     headers: { "Content-Type":"application/json;charset=utf-8"},
+  //     method: 'GET',
+  //     withCredentials: true,
+  //     crossDomain: true
+  // }).then(res => {
+  //     console.log("In the begining:" + res.data)
+  //     this.setUser(res.data)
+  // }).catch(error => { console.log(error);})
     }
   },
   mounted:function()
   {
-    //  console.log("The mounted function in the App page is called")
-    //   axios.get('welcome/myinfo')
-    //   .then(res =>{
-    //     console.log("In the begining:" + res.data)
-    //      this.setUser(res.data)})
-    //   .catch(err => console.log(err))
-    axios({url: 'welcome/myinfo',
-    headers: { "Content-Type":"application/json;charset=utf-8"},
-    method: 'GET',
-    withCredentials: true,
-    crossDomain: true
-}).then(res => {
-    console.log("In the begining:" + res.data)
-    this.setUser(res.data)
-    // this.userinformation = res.data
-}).catch(error => {
-    console.log(error);})
-
+     console.log("The mounted function in the App page is called")
+     this.getUser()
   },
   updated: function () 
   {
     console.log("The updated function in the App page is called")
-
-      // axios.get('welcome/myinfo')
-      // .then(res =>{
-      //   console.log("In the begining:" + res.data)
-      //    this.setUser(res.data)})
-      // .catch(err => console.log(err))
-
-      axios({url: 'welcome/myinfo',
-            headers: { "Content-Type":"application/json;charset=utf-8"},
-            method: 'GET',
-            withCredentials: true,
-            crossDomain: true
-        }).then(res => {
-            console.log("In the begining:" + res.data)
-            this.setUser(res.data)
-            // this.userinformation = res.data
-        }).catch(error => {
-            console.log(error);})
+    this.getUser()
   }
 }
 </script>
@@ -102,10 +88,7 @@ export default {
   color: #2c3e50;
 }
 
-#navbarNavDropdown a.router-link-exact-active {
-  
+#navbarNavDropdown a.router-link-exact-active { 
   color: #3F48CC;
 }
-
-
 </style>

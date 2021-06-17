@@ -85,11 +85,6 @@ export default {
             }   
             console.log(info)
             let apiUrl = 'welcome/login' + (this.isStudent?'Student':'Instructor')
-            // let apiUrl = 'welcome/login'
-            // if(this.isStudent)
-            // { apiUrl = apiUrl + 'Student'}
-            // else
-            // {apiUrl = apiUrl + 'Instructor'}
 
             axios({
             url: apiUrl,
@@ -106,8 +101,7 @@ export default {
                     console.log("Successfully loggedin!")
                     this.$store.dispatch('changeLoginState',true)
                     this.$store.dispatch('setIsStudent',this.isStudent)
-                    console.log("The user state is already set!")
-                    this.$router.push({name:'Students'})
+                    // this.$router.push({name:'Courses'})
                 }else{
                     this.errorMessage = "The password does't match the email. Or the email doesn't exist."
                     console.log("Not logged in")

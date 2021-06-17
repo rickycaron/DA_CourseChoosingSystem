@@ -17,6 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         System.out.println(request.getSession());
 
         response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
         response.setHeader("Access-Control-Allow-Credentials","true");
 

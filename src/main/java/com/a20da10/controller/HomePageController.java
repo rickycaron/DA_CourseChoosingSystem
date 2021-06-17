@@ -100,7 +100,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
             response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
             String origin = request.getHeader("Origin");
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
-            // 是否允许浏览器携带用户身份信息（cookie）
             response.setHeader("Access-Control-Allow-Credentials","true");
             return true;
         }
@@ -140,9 +139,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @GetMapping("/students")
     @ResponseBody
     public List<StudentEntity> getAllStudentJson(HttpServletResponse response){
-//        Response.setHeader.Add("Access-Control-Allow-Origin", "*");
-//        response.setHeader("Access-Control-Allow-Origin", "*");
-        System.out.println("Data is already sent!!!!!!!!!!!!");
         return studentGeneralService.getAllStudent();
     }
 
