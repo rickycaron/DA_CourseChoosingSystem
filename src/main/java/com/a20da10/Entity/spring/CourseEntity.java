@@ -3,13 +3,14 @@ package com.a20da10.Entity.spring;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "course", schema = "school")
-public class CourseEntity {
+public class CourseEntity implements Serializable {
 
     @Id
     private int courseId;

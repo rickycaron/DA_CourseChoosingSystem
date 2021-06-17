@@ -9,6 +9,7 @@ import java.util.List;
 public interface InstructorDao {
     public void create(EJBInstructorEntity entity);
     public void updateById(int id, String firstName, String lasttName, String email);
+    public void updateEntity(EJBInstructorEntity instructorEntity);
     public List<EJBInstructorEntity> getByName(String firsName, String lastName);
     public EJBInstructorEntity getById(int id);
     public EJBInstructorEntity getByEmail(String email);

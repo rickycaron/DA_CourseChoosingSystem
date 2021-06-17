@@ -29,8 +29,8 @@ public class InstructorSelfServiceImpl implements InstructorSelfServiceLocal,Ins
     }
 
     @Override
-    public void insertInstructor(String firstName, String lasttName, String email, String password) {
-        dao.create(new EJBInstructorEntity(firstName, lasttName, email, password));
+    public void insertInstructor(String firstName, String lasttName, String email, String password, String instructorNumber) {
+        dao.create(new EJBInstructorEntity(firstName, lasttName, email, password, instructorNumber));
     }
 
     @Override

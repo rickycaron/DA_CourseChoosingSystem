@@ -3,6 +3,7 @@ package com.a20da10.controller;
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.service.ejb.AccountServiceLocal;
+import com.a20da10.service.ejb.InstructorGenServiceRemote;
 import com.a20da10.service.ejb.InstructorSelfServiceRemote;
 import com.a20da10.service.spring.LoginOutAndRegisterService;
 import com.a20da10.service.spring.StudentGeneralService;
@@ -38,6 +39,9 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
     @Autowired
     private InstructorSelfServiceRemote instructorSelfServiceRemote;
+
+    @Autowired
+    private InstructorGenServiceRemote instructorGenServiceRemote;
 
     private final List<String> allowedOrigins = Arrays.asList("http://localhost:8081");//
     @PostMapping("/loginStudent")
@@ -160,6 +164,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
         }
         return true;
     }
+
     @PostMapping("/resetStudentPassword")
     @ResponseBody
     public boolean resetStudentPassword(@RequestBody StudentEntity studentEntity) {
@@ -174,6 +179,41 @@ public class HomePageController<LoginOutAndRegisterSer> {
         }
         return true;
     }
+
+//    @PostMapping("/registerInstructor")
+//    @ResponseBody
+//    public boolean registerInstructor() {
+//
+//        EJBInstructorEntity instructorEntity = new EJBInstructorEntity("Xi", "Li", "xiao.li@kuleuven.be","xiaoli", "t000003");
+//
+//        if (instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+//            return false;
+//        } else {
+//            String rawPass = instructorEntity.getPassword();
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            instructorEntity.setPassword(passwordEncoder.encode(rawPass));
+//            accountServiceLocal.register(instructorEntity);
+//        }
+//        return true;
+//    }
+
+    @PostMapping("/resetInsPassword")
+    @ResponseBody
+    public boolean resetInsPassword() {
+
+        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(2);
+        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+            return false;
+        } else {
+//            String rawPass = instructorEntity.getPassword();
+            String newPass = "reset";
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            instructorEntity.setPassword(passwordEncoder.encode(newPass));
+            instructorGenServiceRemote.updateIns(instructorEntity);
+        }
+        return true;
+    }
+
 
     }
 

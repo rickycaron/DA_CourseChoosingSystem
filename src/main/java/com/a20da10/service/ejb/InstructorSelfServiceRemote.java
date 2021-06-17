@@ -11,7 +11,7 @@ import java.util.List;
 public interface InstructorSelfServiceRemote {
     public EJBInstructorEntity getMyInfo ();
     public List<CourseEntity> getCoursesOfMine ();
-    public void insertInstructor(String firstName, String lasttName, String email, String password);
+    public void insertInstructor(String firstName, String lasttName, String email, String password, String instructorNumber);
     public void updateInstructor(String firstName, String lasttName, String email);
     public void deleteInstructorByInsId(int insId);
     public void updateCourseInfo(int courseId, String name, CourseTypeEnum type);

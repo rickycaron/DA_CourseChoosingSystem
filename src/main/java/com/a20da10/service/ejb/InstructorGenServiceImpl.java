@@ -42,4 +42,9 @@ public class InstructorGenServiceImpl implements InstructorGenServiceLocal, Inst
         return testInt;
     }
 
+    @Override
+    public void updateIns(EJBInstructorEntity instructorEntity) {
+        dao.updateEntity(instructorEntity);
+    }
+
 }
