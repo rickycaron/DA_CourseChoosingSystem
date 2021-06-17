@@ -169,23 +169,6 @@ public class HelloController {
 
     /*******Test for instructors below********/
 
-    @ResponseBody
-    @RequestMapping("/Instructors")
-    public List<EJBInstructorEntity> getAllIns() {
-        return instructorGenServiceRemote.getAllInstructors();
-    }
-
-    @ResponseBody
-    @RequestMapping("/GetInsById/{insId}")
-    public EJBInstructorEntity getInsById(@PathVariable Integer insId) {
-        return instructorGenServiceRemote.getInstructorByInsId(insId);
-    }
-
-    @ResponseBody
-    @RequestMapping("/GetCourseByInsId/{insId}")
-    public List<CourseEntity>  getCourseByInsId(@PathVariable Integer insId) {
-        return instructorGenServiceRemote.getCoursesByInsId(insId);
-    }
 
     @ResponseBody
     @RequestMapping("/UpdateInsInfo")
@@ -201,11 +184,7 @@ public class HelloController {
         instructorSelfServiceRemote.setInsId(1);
     }
 
-    @ResponseBody
-    @RequestMapping("/GetCoursesOfMine")
-    public List<CourseEntity> getCoursesOfMine (){
-        return instructorSelfServiceRemote.getCoursesOfMine();
-    }
+
 
     @ResponseBody
     @RequestMapping("/UpdateCourseInfo")

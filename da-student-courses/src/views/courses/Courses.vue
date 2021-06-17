@@ -86,6 +86,7 @@ export default {
     }, 
     mounted: function () 
     {
+        
         axios.get('courseStudent/getMycourses')
         .then(res => {
             console.log(res.data)

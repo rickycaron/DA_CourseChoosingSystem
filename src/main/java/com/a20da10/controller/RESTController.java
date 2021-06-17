@@ -18,11 +18,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
-//@CrossOrigin(origins = "http://localhost:8081",
-//        allowCredentials = "true",
-//        methods = {RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE},
-//        allowedHeaders = ("*"),
-//        exposedHeaders = {"Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"})
 @RequestMapping("/rest")
 public class RESTController {
 
