@@ -44,6 +44,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
     private InstructorGenServiceRemote instructorGenServiceRemote;
 
     private final List<String> allowedOrigins = Arrays.asList("http://localhost:8081");//
+
     @PostMapping("/loginStudent")
     @ResponseBody
     public boolean Login(@RequestBody StudentEntity studentEntity, HttpSession session, HttpServletResponse response,HttpServletRequest request){
@@ -69,9 +70,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
             response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
             response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-            String origin = request.getHeader("Origin");
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
-            // 是否允许浏览器携带用户身份信息（cookie）
             response.setHeader("Access-Control-Allow-Credentials","true");
             return true;
         }
@@ -84,7 +83,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
         String email = ejbInstructorEntity.getEmail();
         String password = ejbInstructorEntity.getPassword();
         System.out.println("Email got from Vue" + email);
-        System.out.println("Password got from Vue" + password);
+        System.out.println("Password got from Vue: " + password);
         //1.Verification
         if (accountServiceLocal.InstructorAuthentication(email, password)) {
             //2.Add studentId into service
@@ -102,7 +101,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
             response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
             response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-            String origin = request.getHeader("Origin");
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
             response.setHeader("Access-Control-Allow-Credentials","true");
             return true;
@@ -136,15 +134,15 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @GetMapping("/myinfo")
     @ResponseBody
     public StudentEntity getMyInfo(){
-        System.out.println(studentSelfService.getBasicInfo());
         return studentSelfService.getBasicInfo();
     }
 
-    @GetMapping("/students")
     @ResponseBody
-    public List<StudentEntity> getAllStudentJson(HttpServletResponse response){
-        return studentGeneralService.getAllStudent();
+    @GetMapping("/myinfoIns")
+    public EJBInstructorEntity getMyInfoIns() {
+        return instructorSelfServiceRemote.getMyInfo();
     }
+
 
     @PostMapping("/registerStudent")
     @ResponseBody

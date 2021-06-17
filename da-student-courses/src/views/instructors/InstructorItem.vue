@@ -1,7 +1,7 @@
 <template>
 
   <div
-    @click="goToStudentProfile(id)"
+    @click="goToInstructorProfile(id)"
     class="mb-1 list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="my-1">
@@ -24,11 +24,11 @@ export default {
     data()
     {
         return{
-            id:this.instructortinfo.studentId,// HERE
+            id:this.instructortinfo.instructorId,
             instructorFirstName:this.instructortinfo.firstName,
             instructorLastName:this.instructortinfo.lastName,
             instructorEmail:this.instructortinfo.email,
-            instructorNumber:this.instructortinfo.studentNumber
+            instructorNumber:this.instructortinfo.instructorNumber
         }
     },
      methods:

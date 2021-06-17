@@ -33,13 +33,15 @@
                                     </div>
                                 </div>
                                 <p  v-if="isStudent" > I am a student！</p>
-                                <p  v-else > I am a course instructor!</p>
+                                <p  v-if="!isStudent" > {{isStudent}}I am a course instructor!</p>
                                 <button  class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" >Sign in</button>
                                 <div class="d-flex justify-content-between">
                                     <router-link :to="{name:'forgetPassword'}" class="small" >Forgot password?</router-link> 
                                     <router-link :to="{name:'register'}" class="small" >Register</router-link> 
                                 </div>
                             </form>
+                            {{this.$store.state.isloggedin}}
+                            {{this.$store.state.isStudent}}
                         </div>
                     </div>
                 </div>
@@ -85,23 +87,24 @@ export default {
             }   
             console.log(info)
             let apiUrl = 'welcome/login' + (this.isStudent?'Student':'Instructor')
-
+            
             axios({
             url: apiUrl,
             data: info,
-            // headers: { "Content-Type":"application/json;charset=utf-8" },
+            headers: { "Content-Type":"application/json;charset=utf-8" },
             method: 'POST',
             withCredentials: true,
-            // crossDomain: true
+            crossDomain: true
             }).then(res => {
                 console.log("Login in request sent!")
                 console.log(res.data)
                 if(res.data){
                     this.successMessage = "Successfully logged in! Loading..."
-                    console.log("Successfully loggedin!")
+                    this.$cookies.set('isLoggedIn','true')
+                    this.$cookies.set('isStudent',this.isStudent)
                     this.$store.dispatch('changeLoginState',true)
                     this.$store.dispatch('setIsStudent',this.isStudent)
-                    // this.$router.push({name:'Courses'})
+                    this.$router.push({name:'Courses'})
                 }else{
                     this.errorMessage = "The password does't match the email. Or the email doesn't exist."
                     console.log("Not logged in")

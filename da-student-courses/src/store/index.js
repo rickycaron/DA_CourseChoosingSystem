@@ -39,7 +39,7 @@ export default createStore({
             commit('changeLoginState',theloginstate)
         },
         setIsStudent({commit},isStudentorNot){
-            commit('changeLoginState',isStudentorNot)
+            commit('setIsStudent',isStudentorNot)
         },
         setUserInfo({commit},info){
             commit('setUserInfo',info)

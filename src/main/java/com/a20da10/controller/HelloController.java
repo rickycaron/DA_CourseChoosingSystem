@@ -168,6 +168,33 @@ public class HelloController {
 
 
     /*******Test for instructors below********/
+
+    @ResponseBody
+    @RequestMapping("/Instructors")
+    public List<EJBInstructorEntity> getAllIns() {
+        return instructorGenServiceRemote.getAllInstructors();
+    }
+
+    @ResponseBody
+    @RequestMapping("/GetInsById/{insId}")
+    public EJBInstructorEntity getInsById(@PathVariable Integer insId) {
+        return instructorGenServiceRemote.getInstructorByInsId(insId);
+    }
+
+    @ResponseBody
+    @RequestMapping("/GetCourseByInsId/{insId}")
+    public List<CourseEntity>  getCourseByInsId(@PathVariable Integer insId) {
+        return instructorGenServiceRemote.getCoursesByInsId(insId);
+    }
+
+    @ResponseBody
+    @RequestMapping("/UpdateInsInfo")
+    public void updateInsInfo() {
+        instructorSelfServiceRemote.updateInstructor("Bobs", "Evans", "bobs.evans@gmail.com");
+    }
+
+    /******* Above Has been finished ********/
+
     @ResponseBody
     @RequestMapping("/SetInsId")
     public void setInsId(){
@@ -202,35 +229,15 @@ public class HelloController {
         return message;
     }
 
-    @ResponseBody
-    @RequestMapping("/GetAll")
-    public List<EJBInstructorEntity> getAllIns() {
-        return instructorGenServiceRemote.getAllInstructors();
-    }
 
-    @ResponseBody
-    @RequestMapping("/GetInsById")
-    public EJBInstructorEntity getInsById() {
-        return instructorGenServiceRemote.getInstructorByInsId(1);
-    }
 
-    @ResponseBody
-    @RequestMapping("/GetCourseByInsId")
-    public List<CourseEntity>  getCourseByInsId() {
-        return instructorGenServiceRemote.getCoursesByInsId(1);
-    }
 
-    @ResponseBody
-    @RequestMapping("/GetMyInfo")
-    public EJBInstructorEntity getMyInfo() {
-        return instructorSelfServiceRemote.getMyInfo();
-    }
 
-    @ResponseBody
-    @RequestMapping("/UpdateInsInfo")
-    public void updateInsInfo() {
-        instructorSelfServiceRemote.updateInstructor("Bobs", "Evans", "bobs.evans");
-    }
+
+
+
+
+
 
     @ResponseBody
     @RequestMapping("/RegisterInstructor")
