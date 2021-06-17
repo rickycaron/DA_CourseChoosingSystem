@@ -46,6 +46,9 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-orm:5.0.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.0.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.8.12" />
+          <element id="library" level="project" name="Hibernate 5.4.11-5.4.11" />
+          <element id="library" level="project" name="Spring-5.2.3.RELEASE" />
+          <element id="library" level="project" name="Spring MVC-5.2.3.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">
