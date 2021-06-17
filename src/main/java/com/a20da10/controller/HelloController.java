@@ -20,6 +20,7 @@ import com.a20da10.service.spring.StudentSelfService;
 import com.a20da10.service.spring.UpdateTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -39,7 +40,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
-@Controller
+@RestController
 @RequestMapping("/hello")
 @CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
 public class HelloController {
@@ -172,8 +173,15 @@ public class HelloController {
 
     @ResponseBody
     @RequestMapping("/UpdateInsInfo")
-    public void updateInsInfo() {
-        instructorSelfServiceRemote.updateInstructor("Bobs", "Evans", "bobs.evans@gmail.com");
+    public EJBInstructorEntity updateInstructor(@RequestBody EJBInstructorEntity instructorEntity){
+        //here the studentId is not null or 0,therefore it will update instead of adding
+        int insId = instructorEntity.getInstructorId();
+        if( insId != 0){
+            EJBInstructorEntity source= instructorGenServiceRemote.getInstructorByInsId(insId);
+            UpdateTool.copyNullProperties(source, instructorEntity);
+        }
+        instructorSelfServiceRemote.updateInstructor(instructorEntity);
+        return instructorEntity;
     }
 
     /******* Above Has been finished ********/
@@ -184,20 +192,49 @@ public class HelloController {
         instructorSelfServiceRemote.setInsId(1);
     }
 
-    @ResponseBody
-    @RequestMapping("/AddNewCourse")
-    public void addNewCourse() {
-        CourseTypeEnum type = CourseTypeEnum.specialization;
-        instructorSelfServiceRemote.addNewCourse("Machine learning", type);
-    }
+
 
     @ResponseBody
     @RequestMapping("/UpdateCourseInfo")
-    public void updateCourseInfo() {
-        CourseTypeEnum type = CourseTypeEnum.common;
-        instructorSelfServiceRemote.updateCourseInfo(1,"Thermodynamics", type);
+    public CourseEntity updateCourseInfo(@RequestBody CourseEntity courseEntity) {
+        int courseId = courseEntity.getCourseId();
+        if( courseId != 0){
+            CourseEntity source = instructorGenServiceRemote.getCourseById(courseId);
+            UpdateTool.copyNullProperties(source, courseEntity);
+        }
+        instructorSelfServiceRemote.updateCourseInfo(courseEntity);
+        return courseEntity;
     }
 
+    @ResponseBody
+    @RequestMapping("/AddNewCourse")
+    public CourseEntity addNewCourse(@RequestBody CourseEntity courseEntity) {
+        courseEntity.setCourseId(0);
+        instructorSelfServiceRemote.addNewCourse(courseEntity);
+        return courseEntity;
+    }
+
+    @DeleteMapping("/DeleteCourse/{courseId}")
+    public String deleteCourse(@PathVariable int courseId){
+
+        CourseEntity courseEntity = instructorGenServiceRemote.getCourseById(courseId);
+        if (courseEntity == null){
+            return "course with id = "+courseId+" is not found";
+        }
+        instructorSelfServiceRemote.deleteCourse(courseId);
+        return "success";
+    }
+
+    @DeleteMapping("/DeleteIns/{insId}")
+    public String deleteIns(@PathVariable int insId){
+
+        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(insId);
+        if (instructorEntity == null){
+            return "Instructor with id = "+insId+" is not found";
+        }
+        instructorSelfServiceRemote.deleteInstructorByInsId(insId);
+        return "success";
+    }
 
     @ResponseBody
     @RequestMapping("/SetTimeOut")
@@ -207,10 +244,10 @@ public class HelloController {
         return message;
     }
 
+
     @ResponseBody
     @RequestMapping("/RegisterInstructor")
-    public boolean registerInstructor() {
-        EJBInstructorEntity instructorEntity = new EJBInstructorEntity("Xiao", "Li", "xiao.li@kuleuven.be","xiaoli", "t000003");
+    public boolean registerInstructor(@RequestBody EJBInstructorEntity instructorEntity) {
 
         if (instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
             return false;
@@ -223,19 +260,18 @@ public class HelloController {
         return true;
     }
 
+    @PostMapping("/resetInsPassword")
     @ResponseBody
-    @RequestMapping("/ResetInsPassword")
-    public boolean resetInsPassword() {
+    public boolean resetInsPassword(@RequestBody EJBInstructorEntity instructorEntity) {
 
-        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(2);
         if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
             return false;
         } else {
 //            String rawPass = instructorEntity.getPassword();
-            String newPass = "jack";
+            String newPass = "reset";
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             instructorEntity.setPassword(passwordEncoder.encode(newPass));
-            instructorGenServiceRemote.updateIns(instructorEntity);
+            instructorSelfServiceRemote.updateInstructor(instructorEntity);
         }
         return true;
     }

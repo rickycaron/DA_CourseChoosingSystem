@@ -2,7 +2,6 @@ package com.a20da10.dao.ejb;
 
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.CourseEntity;
-import com.a20da10.Entity.spring.CourseTypeEnum;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +20,10 @@ public class InstructorDaoImpl implements InstructorDao {
         em.persist(entity);
     }
 
+
     @Override
-    @Transactional
-    public void updateById(int id, String firstName, String lasttName, String email) {
-        EJBInstructorEntity i = em.find(EJBInstructorEntity.class,id);
-        i.setFirstName(firstName);
-        i.setLastName(lasttName);
-        i.setEmail(email);
+    public void updateIns(EJBInstructorEntity instructorEntity) {
+        em.merge(instructorEntity);
     }
 
     @Override
@@ -46,8 +42,7 @@ public class InstructorDaoImpl implements InstructorDao {
     @Override
     @Transactional
     public EJBInstructorEntity getById(int id) {
-        EJBInstructorEntity i = em.find(EJBInstructorEntity.class,id);
-        return i;
+        return em.find(EJBInstructorEntity.class,id);
     }
 
     @Override
@@ -80,17 +75,18 @@ public class InstructorDaoImpl implements InstructorDao {
     }
 
     @Override
-    @Transactional
-    public void updateCourseInfo(int courseId, String name, int instructorId, CourseTypeEnum type){
-        CourseEntity c = em.find(CourseEntity.class,courseId);
-        c.setName(name);
-        c.setInstructorId(instructorId);
-        c.setType(type);
+    public CourseEntity findCoursesByCourseId(int courseId) {
+        return em.find(CourseEntity.class, courseId);
     }
 
     @Override
-    public void addNewCourse(String name, int instructorId, CourseTypeEnum courseType) {
-        CourseEntity c = new CourseEntity(name, instructorId, courseType);
+    @Transactional
+    public void updateCourseInfo(CourseEntity courseEntity){
+        em.merge(courseEntity);
+    }
+
+    @Override
+    public void addNewCourse(CourseEntity c) {
         em.persist(c);
     }
 
@@ -104,11 +100,6 @@ public class InstructorDaoImpl implements InstructorDao {
     public void initEntityManager() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("DAPU");
         this.em = entityManagerFactory.createEntityManager();
-    }
-
-    @Override
-    public int TestInt() {
-        return 1;
     }
 
 }
