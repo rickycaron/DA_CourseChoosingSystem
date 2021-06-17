@@ -11,6 +11,7 @@ import com.a20da10.activemq.ProducerTest;
 import com.a20da10.activemq.StudentReceiver;
 import com.a20da10.dao.spring.CourseDao;
 import com.a20da10.dao.spring.MessageDao;
+import com.a20da10.service.ejb.AccountServiceRemote;
 import com.a20da10.service.ejb.InstructorGenServiceRemote;
 import com.a20da10.service.ejb.InstructorSelfServiceRemote;
 import com.a20da10.service.ejb.MyTimerServiceRemote;
@@ -18,6 +19,7 @@ import com.a20da10.service.spring.StudentGeneralService;
 import com.a20da10.service.spring.StudentSelfService;
 import com.a20da10.service.spring.UpdateTool;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -73,6 +75,9 @@ public class HelloController {
 
     @Autowired
     StudentReceiver studentReceiver;
+
+    @Autowired
+    AccountServiceRemote accountServiceRemote;
 
     @Autowired
     InstructorGenServiceRemote instructorGenServiceRemote;
@@ -164,6 +169,12 @@ public class HelloController {
 
     /*******Test for instructors below********/
     @ResponseBody
+    @RequestMapping("/SetInsId")
+    public void setInsId(){
+        instructorSelfServiceRemote.setInsId(1);
+    }
+
+    @ResponseBody
     @RequestMapping("/GetCoursesOfMine")
     public List<CourseEntity> getCoursesOfMine (){
         return instructorSelfServiceRemote.getCoursesOfMine();
@@ -172,8 +183,8 @@ public class HelloController {
     @ResponseBody
     @RequestMapping("/UpdateCourseInfo")
     public void updateCourseInfo() {
-        CourseTypeEnum type = CourseTypeEnum.specialization;
-        instructorSelfServiceRemote.updateCourseInfo(1,"EE5", type);
+        CourseTypeEnum type = CourseTypeEnum.common;
+        instructorSelfServiceRemote.updateCourseInfo(1,"Thermodynamics", type);
     }
 
     @ResponseBody
@@ -219,5 +230,45 @@ public class HelloController {
     @RequestMapping("/UpdateInsInfo")
     public void updateInsInfo() {
         instructorSelfServiceRemote.updateInstructor("Bobs", "Evans", "bobs.evans");
+    }
+
+    @ResponseBody
+    @RequestMapping("/RegisterInstructor")
+    public boolean registerInstructor() {
+
+        EJBInstructorEntity instructorEntity = new EJBInstructorEntity("Xiao", "Li", "xiao.li@kuleuven.be","xiaoli", "t000003");
+
+        if (instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+            return false;
+        } else {
+            String rawPass = instructorEntity.getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            instructorEntity.setPassword(passwordEncoder.encode(rawPass));
+            accountServiceRemote.register(instructorEntity);
+        }
+        return true;
+    }
+
+    @ResponseBody
+    @RequestMapping("/ResetInsPassword")
+    public boolean resetInsPassword() {
+
+        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(2);
+        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+            return false;
+        } else {
+//            String rawPass = instructorEntity.getPassword();
+            String newPass = "jack";
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            instructorEntity.setPassword(passwordEncoder.encode(newPass));
+            instructorGenServiceRemote.updateIns(instructorEntity);
+        }
+        return true;
+    }
+
+    @ResponseBody
+    @RequestMapping("/InsertIns")
+    public void InsertIns() {
+        instructorSelfServiceRemote.insertInstructor("Xiao", "Li", "xiao.li@kuleuven.be","xiaoli", "t000003");
     }
 }
