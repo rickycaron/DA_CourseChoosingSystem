@@ -12,5 +12,5 @@ public interface InstructorGenServiceLocal {
     public EJBInstructorEntity getInstructorByInsId(int insId);
     public List<EJBInstructorEntity> getAllInstructors();
     public List<CourseEntity> getCoursesByInsId (int insId);
-    public int statelessIncrementTestInt();
+    public CourseEntity getCourseById (int courseid);
 }

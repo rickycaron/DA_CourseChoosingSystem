@@ -33,6 +33,12 @@ public class AccountServiceImpl implements AccountServiceLocal, AccountServiceRe
     @Override
     public Integer getInstructorIdByEmail(String email) {
         EJBInstructorEntity instructorEntity = instructorDao.getByEmail(email);
-        return instructorEntity.getId();
+        return instructorEntity.getInstructorId();
+    }
+
+    @Override
+    public EJBInstructorEntity register(EJBInstructorEntity newInstructor) {
+        instructorDao.create(newInstructor);
+        return newInstructor;
     }
 }

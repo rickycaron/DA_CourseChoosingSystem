@@ -890,150 +890,214 @@ school|schema||a20da10||UPDATE|G</Grants>
       <Charset>utf8mb4</Charset>
     </collation>
     <user id="276" parent="1" name="a20da10"/>
-    <table id="277" parent="3" name="course"/>
-    <table id="278" parent="3" name="course_student"/>
-    <table id="279" parent="3" name="instructor"/>
-    <table id="280" parent="3" name="student"/>
-    <column id="281" parent="277" name="courseId">
+    <table id="277" parent="3" name="TextMessage">
+      <Engine>MyISAM</Engine>
+    </table>
+    <table id="278" parent="3" name="course"/>
+    <table id="279" parent="3" name="course_student"/>
+    <table id="280" parent="3" name="instructor"/>
+    <table id="281" parent="3" name="message">
+      <Engine>MyISAM</Engine>
+    </table>
+    <table id="282" parent="3" name="student"/>
+    <column id="283" parent="277" name="textMessage">
+      <Position>1</Position>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="284" parent="277" name="messageId">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="285" parent="277" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>messageId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="286" parent="278" name="courseId">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="282" parent="277" name="name">
+    <column id="287" parent="278" name="name">
       <Position>2</Position>
       <DataType>varchar(95)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="283" parent="277" name="instructorId">
+    <column id="288" parent="278" name="instructorId">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="284" parent="277" name="type">
+    <column id="289" parent="278" name="type">
       <Position>4</Position>
       <DataType>enum(&apos;common&apos;, &apos;specialization&apos;, &apos;elective&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="285" parent="277" name="toInstructorId_idx">
+    <column id="290" parent="278" name="beginTime">
+      <Position>5</Position>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="291" parent="278" name="description">
+      <Position>6</Position>
+      <DataType>varchar(1000)|0s</DataType>
+    </column>
+    <column id="292" parent="278" name="endTime">
+      <Position>7</Position>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="293" parent="278" name="weekDay">
+      <Position>8</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <index id="294" parent="278" name="toInstructorId_idx">
       <ColNames>instructorId</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="286" parent="277" name="PRIMARY">
+    <key id="295" parent="278" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>courseId</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="287" parent="277" name="toInstructorId">
+    <foreign-key id="296" parent="278" name="toInstructorId">
       <ColNames>instructorId</ColNames>
       <RefTableName>instructor</RefTableName>
       <RefColNames>instructorId</RefColNames>
     </foreign-key>
-    <column id="288" parent="278" name="id">
+    <column id="297" parent="279" name="id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="289" parent="278" name="courseId">
+    <column id="298" parent="279" name="courseId">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="290" parent="278" name="studentId">
+    <column id="299" parent="279" name="studentId">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="291" parent="278" name="toCourseId_idx">
+    <index id="300" parent="279" name="toCourseId_idx">
       <ColNames>courseId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="292" parent="278" name="toStudentId_idx">
+    <index id="301" parent="279" name="toStudentId_idx">
       <ColNames>studentId</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="293" parent="278" name="PRIMARY">
+    <key id="302" parent="279" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="294" parent="278" name="toCourseId">
+    <foreign-key id="303" parent="279" name="toCourseId">
       <ColNames>courseId</ColNames>
       <RefTableName>course</RefTableName>
       <RefColNames>courseId</RefColNames>
     </foreign-key>
-    <foreign-key id="295" parent="278" name="toStudentId">
+    <foreign-key id="304" parent="279" name="toStudentId">
       <ColNames>studentId</ColNames>
       <RefTableName>student</RefTableName>
       <RefColNames>studentId</RefColNames>
     </foreign-key>
-    <column id="296" parent="279" name="instructorId">
+    <column id="305" parent="280" name="instructorId">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="297" parent="279" name="firstName">
+    <column id="306" parent="280" name="firstName">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="298" parent="279" name="lastName">
+    <column id="307" parent="280" name="lastName">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="299" parent="279" name="email">
+    <column id="308" parent="280" name="email">
       <Position>4</Position>
       <DataType>varchar(95)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="300" parent="279" name="password">
+    <column id="309" parent="280" name="password">
       <Position>5</Position>
       <DataType>varchar(95)|0s</DataType>
     </column>
-    <column id="301" parent="279" name="instructorNumber">
+    <column id="310" parent="280" name="instructorNumber">
       <Position>6</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="302" parent="279" name="PRIMARY">
+    <key id="311" parent="280" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>instructorId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="303" parent="280" name="studentId">
+    <column id="312" parent="281" name="DTYPE">
+      <Position>1</Position>
+      <DataType>varchar(31)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="313" parent="281" name="messageId">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="314" parent="281" name="date">
+      <Position>3</Position>
+      <DataType>date|0s</DataType>
+    </column>
+    <column id="315" parent="281" name="receiverId">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="316" parent="281" name="senderId">
+      <Position>5</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <key id="317" parent="281" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>messageId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="318" parent="282" name="studentId">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="304" parent="280" name="firstName">
+    <column id="319" parent="282" name="firstName">
       <Position>2</Position>
       <DataType>varchar(55)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="305" parent="280" name="lastName">
+    <column id="320" parent="282" name="lastName">
       <Position>3</Position>
       <DataType>varchar(55)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="306" parent="280" name="email">
+    <column id="321" parent="282" name="email">
       <Position>4</Position>
       <DataType>varchar(85)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="307" parent="280" name="password">
+    <column id="322" parent="282" name="password">
       <Position>5</Position>
       <DataType>varchar(95)|0s</DataType>
     </column>
-    <column id="308" parent="280" name="studentNumber">
+    <column id="323" parent="282" name="studentNumber">
       <Position>6</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="309" parent="280" name="PRIMARY">
+    <key id="324" parent="282" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>studentId</ColNames>
       <Primary>1</Primary>
