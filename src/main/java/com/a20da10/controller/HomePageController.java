@@ -44,8 +44,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @ResponseBody
     public boolean Login(@RequestBody StudentEntity studentEntity, HttpSession session, HttpServletResponse response,HttpServletRequest request){
         //0.Fetching parameters
-//        String email = request.getParameter("email");
-//        String password = request.getParameter("password");
         String email = studentEntity.getEmail();
         String password = studentEntity.getPassword();
         System.out.println("Email got from Vue" + email);
@@ -147,6 +145,36 @@ public class HomePageController<LoginOutAndRegisterSer> {
         System.out.println("Data is already sent!!!!!!!!!!!!");
         return studentGeneralService.getAllStudent();
     }
-}
+
+    @PostMapping("/registerStudent")
+    @ResponseBody
+    public boolean registerStudent(@RequestBody StudentEntity studentEntity) {
+
+        if (studentGeneralService.getAllStudent().contains(studentEntity)) {
+            return false;
+        } else {
+            String rawPass = studentEntity.getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            studentEntity.setPassword(passwordEncoder.encode(rawPass));
+            logService.register(studentEntity);
+        }
+        return true;
+    }
+    @PostMapping("/resetStudentPassword")
+    @ResponseBody
+    public boolean resetStudentPassword(@RequestBody StudentEntity studentEntity) {
+
+        if (studentGeneralService.getAllStudent().contains(studentEntity)) {
+            return false;
+        } else {
+            String rawPass = studentEntity.getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            studentEntity.setPassword(passwordEncoder.encode(rawPass));
+            studentGeneralService.updateStudent(studentEntity);
+        }
+        return true;
+    }
+
+    }
 
 

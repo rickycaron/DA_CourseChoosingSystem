@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -111,7 +112,11 @@ public class CourseStudentController {
      * */
     @RequestMapping("/disenrollCourse/{courseId}")
     @ResponseBody
-    public CourseEntity disenrollStudentFromCourse(@PathVariable Integer courseId){
+    public CourseEntity disenrollStudentFromCourse(@PathVariable Integer courseId, HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
 
         return studentSelfService.cancelCourse(studentSelfService.getBasicInfo(), courseId);
     }

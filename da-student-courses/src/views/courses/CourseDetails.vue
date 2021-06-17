@@ -3,19 +3,17 @@
 
 <div v-if="course != null">
     <p>Course id is {{id}}</p>
-    <p>{{course.courseName}}</p>  
-    <p>{{course.courseDetail}}</p> 
-    <p>{{course.teacherID}}</p>  
+    <p>{{course.name}}</p>  
+    <p>{{course.description}}</p> 
+    <p>{{course.instructorId}}</p>  
     <p>----------------------------------------------------------</p> 
-    <!-- <p>{{teacher.firstName}}</p>
-    <p>{{teacher.lastName}}</p> -->
+    <!-- <p>{{course.firstName}}</p>
+    <p>{{course.lastName}}</p> -->
 
 </div>
 <div v-else>
     <p>Loading course detail</p>
 </div>
-
-
 
   
 </template>
@@ -26,36 +24,18 @@ export default {
     data(){
         return{
             course:null,
-            teacher:null
-            
+            // teacher:null
         }
     },
     mounted: function()
     {
-        //  fetch('http://localhost:3000/courses/' + this.id)
-        // .then((res)=> res.json())
-        // .then((data) => this.course = data)
-        // .catch(err => console.log(err.message)) 
-
-        axios.get("http://localhost:3000/courses/" + this.id)
+        axios.get("courseStudent/getCourseById/" + this.id)
         .then( res => this.course = res.data)
         .catch(err => console.log(err) )
-        
-        //  axios.get("http://localhost:3000/teachers/" + this.id)
-        // .then(res => this.teacher = res.data)
-        // .catch(err => console.log(err) )  
-        
-        // const url = require('url');
-        // let payload = {"courseID": this.id}
-        // const params = new URLSearchParams(payload)
-        // axios.get(`http://localhost:3000/courses?${params}`)
-        // // .then(res => console.log(res.data))
-        // .then(res => this.course = res.data)
-        // .catch(err => console.log(err) )  
     },
     updated: function()
     {
-        axios.get("http://localhost:3000/courses/" + this.id)
+        axios.get("courseStudent/getCourseById/" + this.id)
         .then( res => this.course = res.data)
         .catch(err => console.log(err) )   
     }

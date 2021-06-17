@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -59,8 +60,8 @@ public class StudentGeneralServiceImpl implements StudentGeneralService {
 
     @Override
     @Transactional
-    public void persistTextMessge(Integer senderId, Integer receriverId, String txt) {
-        messageDao.persistTextMessge(senderId,receriverId,txt);
+    public void persistTextMessge(Integer senderId, Integer receriverId, String txt, Date date) {
+        messageDao.persistTextMessge(senderId,receriverId,txt,date);
         System.out.println("service persiste message");
     }
 

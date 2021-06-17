@@ -39,4 +39,10 @@ public class LoginOutAndRegisterServiceImpl implements LoginOutAndRegisterServic
         return studentEntity.getStudentId();
     }
 
+    @Override
+    public StudentEntity register(StudentEntity newStudent) {
+        studentDao.addStudent(newStudent);
+        return newStudent;
+    }
+
 }
