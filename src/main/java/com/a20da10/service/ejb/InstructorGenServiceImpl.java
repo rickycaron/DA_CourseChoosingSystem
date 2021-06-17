@@ -41,9 +41,4 @@ public class InstructorGenServiceImpl implements InstructorGenServiceLocal, Inst
         return insDao.findCoursesByCourseId(courseid);
     }
 
-    @Override
-    public void updateIns(EJBInstructorEntity instructorEntity) {
-        dao.updateEntity(instructorEntity);
-    }
-
 }

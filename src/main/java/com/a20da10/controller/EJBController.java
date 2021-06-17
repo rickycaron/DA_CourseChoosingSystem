@@ -84,20 +84,6 @@ public class EJBController {
     }
 
     @ResponseBody
-    @RequestMapping("/UpdateCourseInfo")
-    public void updateCourseInfo() {
-        CourseTypeEnum type = CourseTypeEnum.specialization;
-        instructorSelfServiceRemote.updateCourseInfo(1,"EE5", type);
-    }
-
-    @ResponseBody
-    @RequestMapping("/AddNewCourse")
-    public void addNewCourse() {
-        CourseTypeEnum type = CourseTypeEnum.specialization;
-        instructorSelfServiceRemote.addNewCourse("Machine learning", type);
-    }
-
-    @ResponseBody
     @RequestMapping("/SetTimeOut")
     public String setTimeOut() {
         myTimerServiceRemote.setTimer(5000);
@@ -128,13 +114,5 @@ public class EJBController {
     public EJBInstructorEntity getMyInfo() {
         return instructorSelfServiceLocal.getMyInfo();
     }
-
-    @ResponseBody
-    @RequestMapping("/UpdateInsInfo")
-    public void updateInsInfo() {
-        instructorSelfServiceRemote.updateInstructor("Bobs", "Evans", "bobs.evans");
-    }
-
-
 
 }

@@ -36,16 +36,6 @@ public class CourseInstructorController {
         return instructorGenServiceRemote.getCoursesByInsId(insId);
     }
 
-    @ResponseBody
-    @RequestMapping("/AddCourse")
-    public void addNewCourse() {
-        CourseTypeEnum type = CourseTypeEnum.specialization;
-        instructorSelfServiceRemote.addNewCourse("Machine learning", type);
-    }
-
-
-
-
     @PostMapping("/UpdateCourse")
     @Transactional
     @ResponseBody

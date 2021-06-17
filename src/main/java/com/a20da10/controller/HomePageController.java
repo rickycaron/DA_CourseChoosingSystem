@@ -194,22 +194,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
 //        return true;
 //    }
 
-    @PostMapping("/resetInsPassword")
-    @ResponseBody
-    public boolean resetInsPassword() {
-
-        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(2);
-        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
-            return false;
-        } else {
-//            String rawPass = instructorEntity.getPassword();
-            String newPass = "reset";
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            instructorEntity.setPassword(passwordEncoder.encode(newPass));
-            instructorGenServiceRemote.updateIns(instructorEntity);
-        }
-        return true;
-    }
+//
 
 
     }

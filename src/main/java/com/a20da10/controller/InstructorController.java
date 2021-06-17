@@ -41,12 +41,4 @@ public class InstructorController {
     public List<CourseEntity>  getCourseByInsId(@PathVariable Integer insId) {
         return instructorGenServiceRemote.getCoursesByInsId(insId);
     }
-
-    @ResponseBody
-    @RequestMapping("/UpdateInsInfo")
-    public void updateInsInfo() {
-        instructorSelfServiceRemote.updateInstructor("Bobs", "Evans", "bobs.evans@gmail.com");
-    }
-
-
 }

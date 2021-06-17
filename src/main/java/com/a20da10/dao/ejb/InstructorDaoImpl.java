@@ -27,11 +27,6 @@ public class InstructorDaoImpl implements InstructorDao {
     }
 
     @Override
-    public void updateEntity(EJBInstructorEntity instructorEntity) {
-        em.merge(instructorEntity);
-    }
-
-    @Override
     public List<EJBInstructorEntity> getByName(String firsName, String lastName) {
         Query query =em.createQuery("SELECT i FROM  EJBInstructorEntity i WHERE i.firstName = :firstName AND i.lastName = :lastName", EJBInstructorEntity.class);
         query.setParameter("firstName",firsName);
