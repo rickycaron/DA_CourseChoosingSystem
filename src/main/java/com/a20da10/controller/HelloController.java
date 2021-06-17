@@ -184,7 +184,12 @@ public class HelloController {
         instructorSelfServiceRemote.setInsId(1);
     }
 
-
+    @ResponseBody
+    @RequestMapping("/AddNewCourse")
+    public void addNewCourse() {
+        CourseTypeEnum type = CourseTypeEnum.specialization;
+        instructorSelfServiceRemote.addNewCourse("Machine learning", type);
+    }
 
     @ResponseBody
     @RequestMapping("/UpdateCourseInfo")
@@ -193,12 +198,6 @@ public class HelloController {
         instructorSelfServiceRemote.updateCourseInfo(1,"Thermodynamics", type);
     }
 
-    @ResponseBody
-    @RequestMapping("/AddNewCourse")
-    public void addNewCourse() {
-        CourseTypeEnum type = CourseTypeEnum.specialization;
-        instructorSelfServiceRemote.addNewCourse("Machine learning", type);
-    }
 
     @ResponseBody
     @RequestMapping("/SetTimeOut")
@@ -208,20 +207,9 @@ public class HelloController {
         return message;
     }
 
-
-
-
-
-
-
-
-
-
-
     @ResponseBody
     @RequestMapping("/RegisterInstructor")
     public boolean registerInstructor() {
-
         EJBInstructorEntity instructorEntity = new EJBInstructorEntity("Xiao", "Li", "xiao.li@kuleuven.be","xiaoli", "t000003");
 
         if (instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {

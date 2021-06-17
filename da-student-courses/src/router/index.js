@@ -40,6 +40,11 @@ const routes = [
     name:'Courses',
     component:Courses
   },
+  {
+    path:'/chooseCourse',
+    name:'ChooseCourses',
+    component:() => import  ('../views/courses/ChooseCourses')
+  },
   { 
     path:'/courses/:id',
     name:'CourseDetails', 

@@ -66,8 +66,8 @@ export default {
          toggleState()
          {
             this.isStudent = !this.isStudent 
-            this.email= ' ',
-            this.password=''
+            // this.email= ' ',
+            // this.password=''
          },
          showPassword()
          {

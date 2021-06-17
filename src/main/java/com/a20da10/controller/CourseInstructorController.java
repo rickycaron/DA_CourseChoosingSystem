@@ -1,6 +1,7 @@
 package com.a20da10.controller;
 
 import com.a20da10.Entity.spring.CourseEntity;
+import com.a20da10.Entity.spring.CourseTypeEnum;
 import com.a20da10.service.ejb.InstructorGenServiceRemote;
 import com.a20da10.service.ejb.InstructorSelfServiceRemote;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,14 @@ public class CourseInstructorController {
         return instructorGenServiceRemote.getCoursesByInsId(insId);
     }
 
-
-    @PostMapping("/AddCourse")
-    @Transactional
     @ResponseBody
-    public boolean addCourse(){
-        return false;
+    @RequestMapping("/AddCourse")
+    public void addNewCourse() {
+        CourseTypeEnum type = CourseTypeEnum.specialization;
+        instructorSelfServiceRemote.addNewCourse("Machine learning", type);
     }
+
+
 
 
     @PostMapping("/UpdateCourse")

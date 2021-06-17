@@ -146,8 +146,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
     @PostMapping("/registerStudent")
     @ResponseBody
-    public boolean registerStudent(@RequestBody StudentEntity studentEntity) {
-
+    public boolean registerStudent(@RequestBody StudentEntity studentEntity, HttpServletResponse response) {
         if (studentGeneralService.getAllStudent().contains(studentEntity)) {
             return false;
         } else {
@@ -156,6 +155,10 @@ public class HomePageController<LoginOutAndRegisterSer> {
             studentEntity.setPassword(passwordEncoder.encode(rawPass));
             logService.register(studentEntity);
         }
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
         return true;
     }
 

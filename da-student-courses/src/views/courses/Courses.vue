@@ -30,10 +30,9 @@
 
 <script>
 import CourseCard from './CourseCard.vue'
-import CreateCourseForm from '../../components/CreateCourseForm.vue'
 
 export default {
-    components:{CourseCard,CreateCourseForm},
+    components:{CourseCard},
     data()
     {
         return{
@@ -86,8 +85,8 @@ export default {
     }, 
     mounted: function () 
     {
-        
-        axios.get('courseStudent/getMycourses')
+        let url = 'course' + (this.$store.getters.getIsStudent ? 'Student': 'Instructor' ) + '/getMycourses'
+        axios.get(url)
         .then(res => {
             console.log(res.data)
             this.courses = res.data
