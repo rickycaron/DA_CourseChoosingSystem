@@ -46,10 +46,6 @@ public class CourseStudentController {
     }
 
 
-    /*Get all the courses this student currently is not enrolled, but can enroll later
-     * input:(default the current student id)
-     * output: courses basic information in JSON array
-     * */
     @RequestMapping("/getMyAvailableCourses")
     @ResponseBody
     public List<CourseEntity> getAllCoursesAvaliable(){
@@ -68,6 +64,11 @@ public class CourseStudentController {
         System.out.println("-------------------------Enter the enroll of a course----------------------------");
         CourseEntity courseEntity = studentGeneralService.getCourseById(courseId);
         studentSelfService.subscribeCourse(courseEntity);
+        System.out.println("-------------------------Finsihing the enroll of a course----------------------------");
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
 
         return courseEntity;
     }

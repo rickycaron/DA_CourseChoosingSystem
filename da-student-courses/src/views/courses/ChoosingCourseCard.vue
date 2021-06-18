@@ -48,18 +48,11 @@ export default {
         // if(confirm("Do you really want to disenroll from this course?"))
             // {
                 console.log("To enroll the course of id"+ this.courseID)
-            //     axios({
-            // url: apiurl,
-            // headers: {"Content-Type":"application/json;charset=utf-8"},
-            // data: userInfo,
-            // method: 'PUT',
-            // withCredentials: true,
-            // crossDomain: true
-            // })
                 axios.post('courseStudent/subscribeCourse/'+ this.courseID)
                 .then(resp => {
                     console.log("The course is enrolled")
                     console.log(resp.data)
+                    this.$router.go(this.$router.currentRoute)
                     // this.courses = this.courses.filter(function(course, index, arr)
                     // { 
                     //     return course.courseId != courseid;
