@@ -58,6 +58,11 @@ public class StudentSelfServiceImpl implements StudentSelfService {
         return courseDao.getCourseEntity(courseId);
     }
 
+    @Override
+    public CourseEntity getCourseEntity(Integer courseId) {
+        return courseDao.getCourseEntity(courseId);
+    }
+
 
     public void setStudentId(int studentId) {
         StudentId = studentId;

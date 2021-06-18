@@ -66,12 +66,9 @@ public class CourseStudentController {
     @ResponseBody
     public CourseEntity subscribeCourse(@PathVariable Integer courseId, HttpServletResponse response){
         System.out.println("-------------------------Enter the enroll of a course----------------------------");
-        CourseEntity courseEntity = courseDao.getCourseEntity(courseId);
+        CourseEntity courseEntity = studentGeneralService.getCourseById(courseId);
         studentSelfService.subscribeCourse(courseEntity);
-        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
-        response.setHeader("Access-Control-Allow-Credentials","true");
+
         return courseEntity;
     }
 
