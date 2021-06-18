@@ -27,9 +27,11 @@ public class MessageController {
     @PostMapping("/sendMyMessage")
     @ResponseBody
     public void produceMessage(@RequestBody TextMessageEntity textMessageEntity){
+        System.out.println("--------------------------------Begin to send the message-----------------------------------------------");
         producerTest.sendMessage(textMessageEntity.getTextMessage(),
                 textMessageEntity.getSenderId(),
                 textMessageEntity.getReceiverId());
+        System.out.println("--------------------------------The message is sent-----------------------------------------------");
     }
 
     @GetMapping("/getMyMessages")

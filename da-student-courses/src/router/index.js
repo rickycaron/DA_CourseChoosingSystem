@@ -7,7 +7,7 @@ import CourseDetails from '../views/courses/CourseDetails'
 import CreateCourse from '../components/CreateCourseForm.vue'
 import loginForm from '../views/account/login.vue'
 import Register from '../views/account/register.vue'
-import Profile from '../components/Profile.vue'
+import Profile from '../views/account/Profile.vue'
 
 const routes = [
   {

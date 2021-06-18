@@ -17,6 +17,8 @@
                   </div>
                 </div>
               </div>
+              <SendMessage v-if="!( id == $store.getters.getUserId )" :receiverId="id">
+              </SendMessage>
               <!-- <div class="card mt-3">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -117,17 +119,27 @@
                   </div>
                 </div>
               </div>
+                  {{"The id is " + this.$route.params.id}}
+    {{"is a student " + this.$route.params.isStudent}}
+
+              <Messages v-if=" ( id == $store.getters.getUserId )"  >
+              </Messages>
+
             </div>
           </div>
         </div>
     </div>
-    {{"The id is " + this.$route.params.id}}
-    {{"is a student " + this.$route.params.isStudent}}
+
 
 </template>
 
 <script>
+import Messages from '../messages/MessageList.vue'
+import SendMessage from '../messages/SendMessage.vue'
+
+
 export default {
+  components:{Messages,SendMessage},
   props:['id','isStudent'],
   data()
   {
