@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5 mb-4 h1"> Course Panel</div>
+    <div class="mt-5 mb-4 h1"> Choosing Course</div>
     
     <p> {{courses.length}} Courses</p>
 
@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-end">
         <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="editSwitch" v-model="editSwitch">
-            <label class="custom-control-label" for="editSwitch">Edit Courses</label>
+            <label class="custom-control-label" for="editSwitch">Choose Courses Switch</label>
         </div>
     </div>
 
@@ -15,8 +15,8 @@
     <div v-if="courses.length">
         <div class="card-deck d-flex justify-content-center">
             <div v-for="course in courses" :key="course.courseId" >
-                <CourseCard :courseinfo="course" :ableToDelete = "editSwitch"  @delete-a-Course="deleteCourse">
-                </CourseCard>
+                <ChoosingCourseCard :courseinfo="course" :ableToDelete = "editSwitch"  @delete-a-Course="deleteCourse">
+                </ChoosingCourseCard>
             </div>
         </div>
     </div>
@@ -29,30 +29,19 @@
 
 
 <script>
-import CourseCard from './CourseCard.vue'
+import ChoosingCourseCard from './ChoosingCourseCard.vue'
 
 export default {
-    components:{CourseCard},
+    components:{ChoosingCourseCard},
     data()
     {
         return{
             courses:[],
-            editSwitch:false
+            editSwitch:true
         }
     },
     methods: 
     {
-        // addCourse(newCourseInfo)
-        // {
-        //     // console.log("I submit!")
-        //     axios.post('http://localhost:3000/courses/', newCourseInfo)
-        //     .then(res => console.log(res.data))
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
-        //     // console.log(newCourseInfo)
-        //     // this.courses.push(newCourseInfo)
-        // },
         deleteCourse(courseid)
         {
             // if(confirm("Do you really want to disenroll from this course?"))
@@ -71,22 +60,11 @@ export default {
                     console.log(error);
                 })
             // }
-
-            //  this.$confirm("Are you sure to delete it ?").then(() => { });//NOT USEABLE
-            // for( let i = 0; i < this.courses.length; i++)
-            // {                    
-            //     if ( this.courses[i].courseID === courseid)
-            //     { 
-            //         this.courses.splice(i, 1); 
-            //         i--; 
-            //     }
-            // }
         }
     }, 
     mounted: function () 
     {
-        let url = 'course' + (this.$store.getters.getIsStudent ? 'Student': 'Instructor' ) + '/getMycourses'
-        axios.get(url)
+        axios.get('courseStudent/getMyAvailableCourses')
         .then(res => {
             console.log(res.data)
             this.courses = res.data

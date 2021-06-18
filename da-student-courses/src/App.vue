@@ -29,62 +29,57 @@ export default {
     redirect(){ this.$router.push({name:'Home'})},
     back(){this.$router.go(-1)},
     forward(){this.$router.go(1)},
-    setUser(info){
+    setUser(info)
+    {
       this.$store.dispatch('changeLoginState',true)
-      this.$store.dispatch('setIsStudent',true)
-      let userinfo = {
+      let userinfo = null
+      if(this.$cookies.get('isStudent') === 'true')
+      {
+        this.$store.dispatch('setIsStudent',true)
+        userinfo = {
           id:info.studentId,
+          number:info.studentNumber,
           email:info.email,
           firstName:info.firstName,
           lastName:info.lastName,
-          password:info.password,
-          number:info.studentNumber}
-          console.log(userinfo)
+          password:info.password
+          }
+      }else
+      {
+        this.$store.dispatch('setIsStudent',false)
+        userinfo = {
+          id:info.instructorId,
+          number:info.instructorNumber,
+          email:info.email,
+          firstName:info.firstName,
+          lastName:info.lastName,
+          password:info.password
+          }
+      }
       this.$store.dispatch('setUserInfo',userinfo)
+    },
+     getUser()
+    { 
+      if(  (this.$cookies.get('isLoggedIn')  ) == 'true' )
+      {
+        axios.get('welcome/myinfo' +( ( (this.$cookies.get('isStudent') ) == 'true' ? '':'Ins' ) ))
+        .then(res =>{
+          console.log("The current user is:")
+          console.log(res.data)
+          this.setUser(res.data)})
+        .catch(err => console.log(err))
+      }
     }
   },
   mounted:function()
   {
-    //  console.log("The mounted function in the App page is called")
-    //   axios.get('welcome/myinfo')
-    //   .then(res =>{
-    //     console.log("In the begining:" + res.data)
-    //      this.setUser(res.data)})
-    //   .catch(err => console.log(err))
-    axios({url: 'welcome/myinfo',
-    headers: { "Content-Type":"application/json;charset=utf-8"},
-    method: 'GET',
-    withCredentials: true,
-    crossDomain: true
-}).then(res => {
-    console.log("In the begining:" + res.data)
-    this.setUser(res.data)
-    // this.userinformation = res.data
-}).catch(error => {
-    console.log(error);})
-
+     console.log("The mounted function in the App page is called")
+     this.getUser()
   },
   updated: function () 
   {
     console.log("The updated function in the App page is called")
-
-      // axios.get('welcome/myinfo')
-      // .then(res =>{
-      //   console.log("In the begining:" + res.data)
-      //    this.setUser(res.data)})
-      // .catch(err => console.log(err))
-
-      axios({url: 'welcome/myinfo',
-            headers: { "Content-Type":"application/json;charset=utf-8"},
-            method: 'GET',
-            withCredentials: true,
-            crossDomain: true
-        }).then(res => {
-            console.log("In the begining:" + res.data)
-            this.setUser(res.data)
-            // this.userinformation = res.data
-        }).catch(error => {
-            console.log(error);})
+    this.getUser()
   }
 }
 </script>
@@ -102,10 +97,7 @@ export default {
   color: #2c3e50;
 }
 
-#navbarNavDropdown a.router-link-exact-active {
-  
+#navbarNavDropdown a.router-link-exact-active { 
   color: #3F48CC;
 }
-
-
 </style>

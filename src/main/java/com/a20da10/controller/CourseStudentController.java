@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -27,11 +28,6 @@ public class CourseStudentController {
     @Autowired
     CourseDao courseDao;
 
-
-    /*Return all the details information together with teacher information about a course
-    * input:courseId
-    * output:JSON course details + teacher details
-    * */
     @RequestMapping("/getCourseById/{courseId}")
     @ResponseBody
     public CourseEntity getCourseById(@PathVariable Integer courseId){
@@ -64,55 +60,29 @@ public class CourseStudentController {
         return allCourses;
     }
 
-    /*subscribe a student to a course
-     * input: courseId, (current studentId)
-     * output: true/false
-     */
+
     @RequestMapping("/subscribeCourse/{courseId}")
     @Transactional
     @ResponseBody
-    public CourseEntity subscribeCourse(@PathVariable Integer courseId){
+    public CourseEntity subscribeCourse(@PathVariable Integer courseId, HttpServletResponse response){
+        System.out.println("-------------------------Enter the enroll of a course----------------------------");
         CourseEntity courseEntity = courseDao.getCourseEntity(courseId);
         studentSelfService.subscribeCourse(courseEntity);
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
         return courseEntity;
     }
 
-    /*cancel a student to a course
-     * input: courseId, (current studentId)
-     * output: true/false
-     * */
-    @RequestMapping("/cancelCourse/{courseId}")
-    @ResponseBody
-    public CourseEntity cancelCourse(@PathVariable Integer courseId){
-        return null;
-    }
 
-    /*Below is some optional api functions*/
-
-    /*Get all the courses of a student
-     * input: the student id)
-     * output: courses basic information in JSON array
-     * */
-    @RequestMapping("/getEnrolledCourses")
-    @Transactional
-    @ResponseBody
-    public List<CourseEntity> getEnrolledCourses(){
-        return null;
-    }
-
-    /*enroll a student to a course, this function is used by instructor
-     * input: courseId, studentId
-     * output: true/false
-     */
-
-
-    /* disenroll a student from a course, this function is used by instructor
-     * input: courseId,  studentId
-     * output: true/false
-     * */
     @RequestMapping("/disenrollCourse/{courseId}")
     @ResponseBody
-    public CourseEntity disenrollStudentFromCourse(@PathVariable Integer courseId){
+    public CourseEntity disenrollStudentFromCourse(@PathVariable Integer courseId, HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
 
         return studentSelfService.cancelCourse(studentSelfService.getBasicInfo(), courseId);
     }

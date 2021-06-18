@@ -1,6 +1,10 @@
 package com.a20da10.controller;
 
 import com.a20da10.Entity.spring.CourseEntity;
+import com.a20da10.Entity.spring.CourseTypeEnum;
+import com.a20da10.service.ejb.InstructorGenServiceRemote;
+import com.a20da10.service.ejb.InstructorSelfServiceRemote;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -12,33 +16,26 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
 @RequestMapping("/courseInstructor")
 public class CourseInstructorController {
+    @Autowired
+    InstructorGenServiceRemote instructorGenServiceRemote;
 
-    /*Get all the courses this instructor currently is teaching
-     * input:(default the current instructor id)
-     * output: all the courses basic information in JSON array
-     * */
+    @Autowired
+    InstructorSelfServiceRemote instructorSelfServiceRemote;
+
+    @Transactional
+    @ResponseBody
     @RequestMapping("/getMycourses")
-    @Transactional
-    @ResponseBody
-    public List<CourseEntity> getMyCourses(){
-        return null;
+    public List<CourseEntity> getCoursesOfMine (){
+        return instructorSelfServiceRemote.getCoursesOfMine();
     }
 
-    /* Add a course
-     * input: (default the current instructor id) + JSON Array:{courseName, courseDeatils,...}
-     * output: true/false
-     * */
-    @PostMapping("/AddCourse")
-    @Transactional
+
     @ResponseBody
-    public boolean addCourse(){
-        return false;
+    @RequestMapping("/GetCourseByInsId/{insId}")
+    public List<CourseEntity>  getCourseByInsId(@PathVariable Integer insId) {
+        return instructorGenServiceRemote.getCoursesByInsId(insId);
     }
 
-    /* Update a course info
-     * input: course
-     * output: true/false
-     * */
     @PostMapping("/UpdateCourse")
     @Transactional
     @ResponseBody
@@ -46,10 +43,7 @@ public class CourseInstructorController {
         return false;
     }
 
-    /* Remove a course
-     * input: courseId
-     * output: true/false
-     * */
+
     @RequestMapping("/RemoveCourse")
     @Transactional
     @ResponseBody

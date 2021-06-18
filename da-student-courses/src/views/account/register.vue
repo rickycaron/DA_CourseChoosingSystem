@@ -111,7 +111,7 @@ export default {
                     password: this.password
                     }
                 console.log(userInfo)
-                // let apiUrl = 'welcome/' + (this.isStudent?'student':'instructor') //
+                let apiUrl = 'welcome/' + (this.isStudent?'registerStudent':'instructor') //
                 axios({
                 url: apiUrl,
                 data: userInfo,

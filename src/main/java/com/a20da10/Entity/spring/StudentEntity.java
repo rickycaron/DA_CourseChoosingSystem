@@ -3,6 +3,7 @@ package com.a20da10.Entity.spring;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "student", schema = "school")
-public class StudentEntity {
+public class StudentEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int studentId;

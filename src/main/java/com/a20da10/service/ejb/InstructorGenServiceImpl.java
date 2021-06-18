@@ -13,33 +13,32 @@ import java.util.List;
 @Stateless(name = "InstructorGenServiceImpl")
 public class InstructorGenServiceImpl implements InstructorGenServiceLocal, InstructorGenServiceRemote{
 
-    int testInt = 0;
     @Inject
-    private InstructorDao dao;
+    private InstructorDao insDao;
 
     @Override
     public List<EJBInstructorEntity> getInstructorByName(String firsName, String lastName) {
-        return dao.getByName(firsName, lastName);
+        return insDao.getByName(firsName, lastName);
     }
 
     @Override
     public EJBInstructorEntity getInstructorByInsId(int insId) {
-        return dao.getById(insId);
+        return insDao.getById(insId);
     }
 
     @Override
     public List<EJBInstructorEntity> getAllInstructors() {
-        return dao.getAll();
+        return insDao.getAll();
     }
 
     @Override
     public List<CourseEntity> getCoursesByInsId(int insId) {
-        return dao.findCoursesByInsId(insId);
+        return insDao.findCoursesByInsId(insId);
     }
 
-    public int statelessIncrementTestInt(){
-        testInt++;
-        return testInt;
+    @Override
+    public CourseEntity getCourseById(int courseid) {
+        return insDao.findCoursesByCourseId(courseid);
     }
 
 }

@@ -53,7 +53,7 @@ public class StudentDaoImpl implements StudentDao{
     @Override
     public void cancleCourse(StudentEntity studentEntity, CourseEntity courseEntity) {
 
-            studentEntity.getCourseEntities().removeIf(e->e.getCourseId()==studentEntity.getStudentId());
+            studentEntity.getCourseEntities().removeIf(e->e.getCourseId()== courseEntity.getCourseId());
 
     }
 

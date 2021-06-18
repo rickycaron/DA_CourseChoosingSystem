@@ -6,15 +6,12 @@
 
         <div class="card-body overflow-hidden"  style="height: 13rem" >
           <h5 class="card-title">{{courseName}}</h5>
+          <br>
           <p class="card-subtitle">{{teacherName}}</p>
-          course id is: {{courseID}}
+          Course Id: {{courseID}}
           <div class="overflow-hidden" style="height: 10rem">
             <p class="card-text">{{courseDetail}}</p>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore sunt optio suscipit nihil, ab quisquam. Dignissimos asperiores, et fugit velit libero aperiam eaque repellendus, ipsa non rem laborum temporibus dolorum.</p>
           </div>
-
-          <!-- <p class="card-text">{{getPhotoPath}}</p> -->
-          
         </div>
 
         <router-link :to = "{ name: 'CourseDetails', params: {id:this.courseID}}" class="mt-3 mb-3">
@@ -38,13 +35,12 @@ export default {
     props: ['courseinfo','ableToDelete'],
     data(){
         return{
-            // courseID : this.courseinfo.courseID,
-            courseID : this.courseinfo.id,
-            courseName : this.courseinfo.courseName,
-            courseDetail : this.courseinfo.courseDetail,
-            teacherID : this.courseinfo.teacherID,
+            courseID : this.courseinfo.courseId,
+            courseName : this.courseinfo.name,
+            courseDetail : this.courseinfo.description,
+            teacherID : this.courseinfo.instructorId,
             teacherName : this.courseinfo.teacherFirstName +' '+ this.courseinfo.teacherLastName,
-            courseImage:require("../assets/programminginc.png")
+            courseImage:require("../../assets/programminginc.png")
         }
     },
     methods: {

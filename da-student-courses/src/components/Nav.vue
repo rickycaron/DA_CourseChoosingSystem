@@ -1,4 +1,7 @@
 <template>
+    {{ "The user exists:" + this.$cookies.isKey('isStudent') }}
+    {{"The user is a student: " + this.$cookies.get('isStudent')}}
+
 <p>The use is currenlty loggedin: {{$store.getters.isLoggedIn}} -- 
 The user is a student {{$store.getters.getIsStudent}} -- 
 User Information: {{$store.getters.getUserInfo}}</p>
@@ -17,6 +20,9 @@ User Information: {{$store.getters.getUserInfo}}</p>
       </li>
       <li class="nav-item">
         <router-link :to="{name:'Courses'}" class="nav-link" >Courses</router-link>
+      </li>
+      <li class="nav-item" v-if="$store.getters.getIsStudent">
+        <router-link :to="{name:'ChooseCourses'}" class="nav-link" >Choose Course</router-link>
       </li>
       <li class="nav-item" v-if="! $store.getters.getIsStudent">
         <router-link :to="{name:'CreateCourse'}" class="nav-link" >Create a Course</router-link> 
@@ -87,6 +93,8 @@ export default {
             }).then(res => {
               if(res.data){
                 console.log("Logout!")
+                this.$cookies.remove('isLoggedIn')
+                this.$cookies.remove('isStudent')
                 this.$store.dispatch('changeLoginState',false)
                 this.$store.dispatch('setUserInfo',{ id:'', email:'',firstName:'',lastName:'',password:'', number:''})
                 this.$router.push({name:'login'})

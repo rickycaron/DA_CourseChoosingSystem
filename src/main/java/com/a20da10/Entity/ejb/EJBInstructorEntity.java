@@ -10,21 +10,22 @@ import java.util.Objects;
 @Entity
 @Table(name = "instructor", schema = "school")
 public class EJBInstructorEntity implements Serializable {
-    public EJBInstructorEntity(String firstName, String lasttName, String email, String password) {
+    public EJBInstructorEntity(String firstName, String lasttName, String email, String password, String instructorNumber) {
         this.firstName = firstName;
         this.lastName = lasttName;
         this.email = email;
         this.password = password;
+        this.instructorNumber = instructorNumber;
     }
 
     @Id
-    @GeneratedValue
-    @Column(name = "instructorId", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int instructorId;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private String instructorNumber;
     @OneToMany(targetEntity = CourseEntity.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "instructorId", referencedColumnName = "instructorId")
     private List<CourseEntity> courses;
@@ -32,17 +33,17 @@ public class EJBInstructorEntity implements Serializable {
     public EJBInstructorEntity() {
 
     }
-
-    public int getId() {
+    @Column(name = "instructorId", nullable = false)
+    public int getInstructorId() {
         return instructorId;
     }
+    public void setInstructorId(int insId){this.instructorId = insId;}
 
     @Basic
     @Column(name = "firstName", nullable = false, length = 45)
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String name) {
         this.firstName = name;
     }
@@ -52,19 +53,23 @@ public class EJBInstructorEntity implements Serializable {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     @Basic
     @Column(name = "email", nullable = false, length = 95)
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Basic
+    @Column(name = "instructorNumber", nullable = false, length = 45)
+    public String getInstructorNumber (){return instructorNumber;}
+    public void setInstructorNumber(String insNumber){this.instructorNumber = insNumber;}
 
     @Override
     public boolean equals(Object o) {

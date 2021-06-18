@@ -2,7 +2,6 @@ package com.a20da10.service.ejb;
 
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.CourseEntity;
-import com.a20da10.Entity.spring.CourseTypeEnum;
 import com.a20da10.dao.ejb.InstructorDao;
 
 import javax.ejb.Stateful;
@@ -14,38 +13,37 @@ public class InstructorSelfServiceImpl implements InstructorSelfServiceLocal,Ins
 
     int instructorId;
 
-    int testInt = 0;
     @Inject
-    private InstructorDao dao;
+    private InstructorDao insDao;
 
     @Override
-    public List<CourseEntity> getCoursesOfMine(int insId) {
-        return dao.findCoursesByInsId(insId);
+    public EJBInstructorEntity getMyInfo() {
+        return insDao.getById(instructorId);
     }
 
     @Override
-    public void insertInstructor(String firstName, String lasttName, String email, String password) {
-        dao.create(new EJBInstructorEntity(firstName, lasttName, email, password));
+    public List<CourseEntity> getCoursesOfMine() {
+        return insDao.findCoursesByInsId(instructorId);
     }
 
     @Override
-    public void updateInstructor(int insId, String firstName, String lasttName, String email){
-        dao.updateById(insId, firstName, lasttName, email);
+    public void insertInstructor(String firstName, String lasttName, String email, String password, String instructorNumber) {
+        insDao.create(new EJBInstructorEntity(firstName, lasttName, email, password, instructorNumber));
+    }
+
+    @Override
+    public void updateInstructor(EJBInstructorEntity instructorEntity) {
+        insDao.updateIns(instructorEntity);
     }
 
     @Override
     public void deleteInstructorByInsId(int insId) {
-        dao.deleteById(insId);
+        insDao.deleteById(insId);
     }
 
     @Override
-    public void updateCourseInfo(int courseId, String name, int instructorId, CourseTypeEnum type) {
-        dao.updateCourseInfo(courseId, name, instructorId, type);
-    }
-
-    @Override
-    public void addNewCourse(String name, int instructorId, CourseTypeEnum type){
-        dao.addNewCourse(name, instructorId, type);
+    public void addNewCourse(CourseEntity courseEntity){
+        insDao.addNewCourse(courseEntity);
     }
     public void setInsId(int id){
         this.instructorId = id;
@@ -55,12 +53,13 @@ public class InstructorSelfServiceImpl implements InstructorSelfServiceLocal,Ins
     }
     @Override
     public void deleteCourse(int courseId){
-        dao.deleteCourse(courseId);
+        insDao.deleteCourse(courseId);
     }
 
-    public int statefulIncrementTestInt (){
-        testInt++;
-        return testInt;
+    @Override
+    public void updateCourseInfo(CourseEntity courseEntity) {
+        insDao.updateCourseInfo(courseEntity);
     }
+
 
 }

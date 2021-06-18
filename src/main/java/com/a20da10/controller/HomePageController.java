@@ -3,6 +3,7 @@ package com.a20da10.controller;
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.service.ejb.AccountServiceLocal;
+import com.a20da10.service.ejb.InstructorGenServiceRemote;
 import com.a20da10.service.ejb.InstructorSelfServiceRemote;
 import com.a20da10.service.spring.LoginOutAndRegisterService;
 import com.a20da10.service.spring.StudentGeneralService;
@@ -33,20 +34,21 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @Autowired
     private LoginOutAndRegisterService logService;
 
-
     @Autowired
     private AccountServiceLocal accountServiceLocal;
 
     @Autowired
     private InstructorSelfServiceRemote instructorSelfServiceRemote;
 
+    @Autowired
+    private InstructorGenServiceRemote instructorGenServiceRemote;
+
     private final List<String> allowedOrigins = Arrays.asList("http://localhost:8081");//
+
     @PostMapping("/loginStudent")
     @ResponseBody
     public boolean Login(@RequestBody StudentEntity studentEntity, HttpSession session, HttpServletResponse response,HttpServletRequest request){
         //0.Fetching parameters
-//        String email = request.getParameter("email");
-//        String password = request.getParameter("password");
         String email = studentEntity.getEmail();
         String password = studentEntity.getPassword();
         System.out.println("Email got from Vue" + email);
@@ -68,9 +70,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
             response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
             response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-            String origin = request.getHeader("Origin");
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
-            // 是否允许浏览器携带用户身份信息（cookie）
             response.setHeader("Access-Control-Allow-Credentials","true");
             return true;
         }
@@ -83,7 +83,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
         String email = ejbInstructorEntity.getEmail();
         String password = ejbInstructorEntity.getPassword();
         System.out.println("Email got from Vue" + email);
-        System.out.println("Password got from Vue" + password);
+        System.out.println("Password got from Vue: " + password);
         //1.Verification
         if (accountServiceLocal.InstructorAuthentication(email, password)) {
             //2.Add studentId into service
@@ -101,9 +101,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
             response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
             response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-            String origin = request.getHeader("Origin");
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
-            // 是否允许浏览器携带用户身份信息（cookie）
             response.setHeader("Access-Control-Allow-Credentials","true");
             return true;
         }
@@ -136,23 +134,19 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @GetMapping("/myinfo")
     @ResponseBody
     public StudentEntity getMyInfo(){
-        System.out.println(studentSelfService.getBasicInfo());
         return studentSelfService.getBasicInfo();
     }
 
-    @GetMapping("/students")
     @ResponseBody
-    public List<StudentEntity> getAllStudentJson(HttpServletResponse response){
-//        Response.setHeader.Add("Access-Control-Allow-Origin", "*");
-//        response.setHeader("Access-Control-Allow-Origin", "*");
-        System.out.println("Data is already sent!!!!!!!!!!!!");
-        return studentGeneralService.getAllStudent();
+    @GetMapping("/myinfoIns")
+    public EJBInstructorEntity getMyInfoIns() {
+        return instructorSelfServiceRemote.getMyInfo();
     }
+
 
     @PostMapping("/registerStudent")
     @ResponseBody
-    public boolean registerStudent(@RequestBody StudentEntity studentEntity) {
-
+    public boolean registerStudent(@RequestBody StudentEntity studentEntity, HttpServletResponse response) {
         if (studentGeneralService.getAllStudent().contains(studentEntity)) {
             return false;
         } else {
@@ -161,8 +155,13 @@ public class HomePageController<LoginOutAndRegisterSer> {
             studentEntity.setPassword(passwordEncoder.encode(rawPass));
             logService.register(studentEntity);
         }
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
         return true;
     }
+
     @PostMapping("/resetStudentPassword")
     @ResponseBody
     public boolean resetStudentPassword(@RequestBody StudentEntity studentEntity) {
@@ -177,6 +176,26 @@ public class HomePageController<LoginOutAndRegisterSer> {
         }
         return true;
     }
+
+//    @PostMapping("/registerInstructor")
+//    @ResponseBody
+//    public boolean registerInstructor() {
+//
+//        EJBInstructorEntity instructorEntity = new EJBInstructorEntity("Xi", "Li", "xiao.li@kuleuven.be","xiaoli", "t000003");
+//
+//        if (instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+//            return false;
+//        } else {
+//            String rawPass = instructorEntity.getPassword();
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            instructorEntity.setPassword(passwordEncoder.encode(rawPass));
+//            accountServiceLocal.register(instructorEntity);
+//        }
+//        return true;
+//    }
+
+//
+
 
     }
 

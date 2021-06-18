@@ -1,5 +1,6 @@
 package com.a20da10.controller;
 
+import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.CourseTypeEnum;
 import com.a20da10.service.ejb.*;
@@ -79,21 +80,7 @@ public class EJBController {
     @ResponseBody
     @RequestMapping("/GetCoursesOfMine")
     public List<CourseEntity> getCoursesOfMine (){
-        return instructorSelfServiceRemote.getCoursesOfMine(instructorSelfServiceRemote.getInsId());
-    }
-
-    @ResponseBody
-    @RequestMapping("/UpdateCourseInfo")
-    public void updateCourseInfo() {
-        CourseTypeEnum type = CourseTypeEnum.specialization;
-        instructorSelfServiceRemote.updateCourseInfo(1,"EE5", 2, type);
-    }
-
-    @ResponseBody
-    @RequestMapping("/AddNewCourse")
-    public void addNewCourse() {
-        CourseTypeEnum type = CourseTypeEnum.specialization;
-        instructorSelfServiceRemote.addNewCourse("Machine learning", 2, type);
+        return instructorSelfServiceRemote.getCoursesOfMine();
     }
 
     @ResponseBody
@@ -104,5 +91,28 @@ public class EJBController {
         return message;
     }
 
+    @ResponseBody
+    @RequestMapping("/GetAll")
+    public List<EJBInstructorEntity> getAllIns() {
+        return instructorGenServiceRemote.getAllInstructors();
+    }
+
+    @ResponseBody
+    @RequestMapping("/GetInsById")
+    public EJBInstructorEntity getInsById() {
+        return instructorGenServiceRemote.getInstructorByInsId(1);
+    }
+
+    @ResponseBody
+    @RequestMapping("/GetCourseByInsId")
+    public List<CourseEntity>  getCourseByInsId() {
+        return instructorGenServiceRemote.getCoursesByInsId(1);
+    }
+
+    @ResponseBody
+    @RequestMapping("/GetMyInfo")
+    public EJBInstructorEntity getMyInfo() {
+        return instructorSelfServiceLocal.getMyInfo();
+    }
 
 }
