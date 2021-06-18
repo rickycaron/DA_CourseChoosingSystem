@@ -22,7 +22,7 @@ export default {
     },
     mounted: function () 
     {
-        let url = 'course' + (this.$store.getters.getIsStudent == 'true' ? 'Student': 'Instructor' ) + '/getMycourses'
+        let url = 'course' + ((this.$cookies.get('isStudent') == 'true') ? 'Student': 'Instructor' ) + '/getMycourses'
         axios.get(url)
         .then(res => this.courses = res.data.sort(function compareFn(a, b) 
         {  

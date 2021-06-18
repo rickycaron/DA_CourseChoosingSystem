@@ -34,10 +34,6 @@ public class CourseStudentController {
         return studentGeneralService.getCourseById(courseId);
     }
 
-    /*Get all the courses this student currently is enrolled
-    * input:(default the current student id)
-    * output: courses basic information in JSON array
-    * */
     @RequestMapping("/getMycourses")
     @Transactional
     @ResponseBody
@@ -61,15 +57,12 @@ public class CourseStudentController {
     @Transactional
     @ResponseBody
     public CourseEntity subscribeCourse(@PathVariable Integer courseId, HttpServletResponse response){
-        System.out.println("-------------------------Enter the enroll of a course----------------------------");
         CourseEntity courseEntity = studentGeneralService.getCourseById(courseId);
         studentSelfService.subscribeCourse(courseEntity);
-        System.out.println("-------------------------Finsihing the enroll of a course----------------------------");
         response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
         response.setHeader("Access-Control-Allow-Credentials","true");
-
         return courseEntity;
     }
 

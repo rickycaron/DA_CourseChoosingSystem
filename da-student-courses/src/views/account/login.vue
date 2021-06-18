@@ -21,7 +21,7 @@
                                     <label for="password">Password</label>
                                 </div>
                                 <div v-if="errorMessage" class="alert alert-danger">
-                                    <strong>Wrong! </strong>{{errorMessage}}
+                                    <strong>Logged in failed! </strong>{{errorMessage}}
                                 </div>
                                 <!-- <input type="checkbox" @click="showPassword">Show Password -->
                                 <div class="jumbotron bg-light">
@@ -111,6 +111,7 @@ export default {
                 }
             }).catch(error => {
                 console.log(error);
+                this.errorMessage = " Are you sure you are " + (this.isStudent ? "a student?":"an Instructor")
             })
          }
 

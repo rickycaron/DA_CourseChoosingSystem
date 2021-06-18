@@ -14,9 +14,17 @@
           </div>
         </div>
 
-        <router-link :to = "{ name: 'CourseDetails', params: {id:this.courseID}}" class="mt-3 mb-3">
-            <button class="btn btn-primary " > Details </button>
-        </router-link>
+          <router-link :to = "{ name: 'CourseDetails', params: {id:this.courseID}}" class="mt-3 mb-3 ">
+              <button class="btn purple-button-primary " > Details </button>
+          </router-link>
+
+        <div class="d-flex justify-content-end" v-if="!$store.getters.getIsStudent">
+          <router-link :to = "{ name: 'EditCourseForm', params: {id:this.courseID}}" class="mr-3 mb-3 purple-button-secondary">
+            <i class="fas fa-edit fa-2x"></i>
+          </router-link>
+        </div>
+
+
 
         <button 
           class="btn btn-danger"
@@ -40,37 +48,37 @@ export default {
             courseDetail : this.courseinfo.description,
             teacherID : this.courseinfo.instructorId,
             teacherName : this.courseinfo.teacherFirstName +' '+ this.courseinfo.teacherLastName,
-            courseImage:require("../../assets/programminginc.png")
+            courseImage:require("../../assets/programminginc.png"),
+
         }
     },
     methods: {
       deleteACourse(){
         console.log('Delete course', this.courseID)
-
         this.$emit('delete-a-Course', this.courseID)
       }
     },
     computed: {
-      getPhotoPath()
-      {
-        let coursedetail = this.courseDetail.toLowerCase()
-        let photopath = "../assets/"
-        if(coursedetail.includes(' c++')){
-          return String(photopath.concat("C++.jpg"))
-        }
-        else if(coursedetail.includes(" c") ){
-          return photopath.concat("programminginc.png")
-        }
-        else if(coursedetail.includes(' andriod') ){
-          return photopath.concat('Android.jpg')
-        }
-        else if(coursedetail.includes(' java') ){
-          return photopath.concat('Java.jpg')
-        }
-        else{
-          return photopath.concat("default.png")
-      }
-    }
+    //   getPhotoPath()
+    //   {
+    //     let coursedetail = this.courseDetail.toLowerCase()
+    //     let photopath = "../assets/"
+    //     if(coursedetail.includes(' c++')){
+    //       return String(photopath.concat("C++.jpg"))
+    //     }
+    //     else if(coursedetail.includes(" c") ){
+    //       return photopath.concat("programminginc.png")
+    //     }
+    //     else if(coursedetail.includes(' andriod') ){
+    //       return photopath.concat('Android.jpg')
+    //     }
+    //     else if(coursedetail.includes(' java') ){
+    //       return photopath.concat('Java.jpg')
+    //     }
+    //     else{
+    //       return photopath.concat("default.png")
+    //   }
+    // }
   }
 
 

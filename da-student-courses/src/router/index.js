@@ -57,6 +57,12 @@ const routes = [
     component:CreateCourse,
   },
   { 
+    path:'/editCourse/:id',
+    name:'EditCourseForm', 
+    component:() => import ('../components/EditCourseForm.vue'),
+    props:true
+  },
+  { 
     path:'/students',
     name:'Students', 
     component: () => import  ('../views/students/Students.vue')

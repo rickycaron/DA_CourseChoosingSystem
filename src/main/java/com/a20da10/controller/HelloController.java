@@ -193,48 +193,50 @@ public class HelloController {
     }
 
 
+//    @ResponseBody
+//    @RequestMapping("/UpdateCourseInfo")
+//    public CourseEntity updateCourseInfo(@RequestBody CourseEntity courseEntity) {
+//        int courseId = courseEntity.getCourseId();
+//        if( courseId != 0){
+//            CourseEntity source = instructorGenServiceRemote.getCourseById(courseId);
+//            UpdateTool.copyNullProperties(source, courseEntity);
+//        }
+//        instructorSelfServiceRemote.updateCourseInfo(courseEntity);
+//        return courseEntity;
+//    }
 
-    @ResponseBody
-    @RequestMapping("/UpdateCourseInfo")
-    public CourseEntity updateCourseInfo(@RequestBody CourseEntity courseEntity) {
-        int courseId = courseEntity.getCourseId();
-        if( courseId != 0){
-            CourseEntity source = instructorGenServiceRemote.getCourseById(courseId);
-            UpdateTool.copyNullProperties(source, courseEntity);
-        }
-        instructorSelfServiceRemote.updateCourseInfo(courseEntity);
-        return courseEntity;
-    }
 
-    @ResponseBody
-    @RequestMapping("/AddNewCourse")
-    public CourseEntity addNewCourse(@RequestBody CourseEntity courseEntity) {
-        courseEntity.setCourseId(0);
-        instructorSelfServiceRemote.addNewCourse(courseEntity);
-        return courseEntity;
-    }
 
-    @DeleteMapping("/DeleteCourse/{courseId}")
-    public String deleteCourse(@PathVariable int courseId){
 
-        CourseEntity courseEntity = instructorGenServiceRemote.getCourseById(courseId);
-        if (courseEntity == null){
-            return "course with id = "+courseId+" is not found";
-        }
-        instructorSelfServiceRemote.deleteCourse(courseId);
-        return "success";
-    }
+//    @ResponseBody
+//    @RequestMapping("/AddNewCourse")
+//    public CourseEntity addNewCourse(@RequestBody CourseEntity courseEntity) {
+//        courseEntity.setCourseId(0);
+//        instructorSelfServiceRemote.addNewCourse(courseEntity);
+//        return courseEntity;
+//    }
 
-    @DeleteMapping("/DeleteIns/{insId}")
-    public String deleteIns(@PathVariable int insId){
+//    @DeleteMapping("/DeleteCourse/{courseId}")
+//    public String deleteCourse(@PathVariable int courseId){
+//
+//        CourseEntity courseEntity = instructorGenServiceRemote.getCourseById(courseId);
+//        if (courseEntity == null){
+//            return "course with id = "+courseId+" is not found";
+//        }
+//        instructorSelfServiceRemote.deleteCourse(courseId);
+//        return "success";
+//    }
 
-        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(insId);
-        if (instructorEntity == null){
-            return "Instructor with id = "+insId+" is not found";
-        }
-        instructorSelfServiceRemote.deleteInstructorByInsId(insId);
-        return "success";
-    }
+//    @DeleteMapping("/DeleteIns/{insId}")
+//    public String deleteIns(@PathVariable int insId){
+//
+//        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(insId);
+//        if (instructorEntity == null){
+//            return "Instructor with id = "+insId+" is not found";
+//        }
+//        instructorSelfServiceRemote.deleteInstructorByInsId(insId);
+//        return "success";
+//    }
 
     @ResponseBody
     @RequestMapping("/SetTimeOut")
