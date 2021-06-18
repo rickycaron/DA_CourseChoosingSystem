@@ -69,6 +69,7 @@ public class CourseStudentController {
      * output: true/false
      */
     @RequestMapping("/subscribeCourse/{courseId}")
+    @Transactional
     @ResponseBody
     public CourseEntity subscribeCourse(@PathVariable Integer courseId){
         CourseEntity courseEntity = courseDao.getCourseEntity(courseId);
