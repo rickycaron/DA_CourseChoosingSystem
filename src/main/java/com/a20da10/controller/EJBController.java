@@ -2,6 +2,7 @@ package com.a20da10.controller;
 
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.CourseEntity;
+import com.a20da10.Entity.spring.CourseTypeEnum;
 import com.a20da10.service.ejb.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

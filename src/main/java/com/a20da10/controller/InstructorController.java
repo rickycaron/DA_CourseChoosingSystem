@@ -41,5 +41,4 @@ public class InstructorController {
     public List<CourseEntity>  getCourseByInsId(@PathVariable Integer insId) {
         return instructorGenServiceRemote.getCoursesByInsId(insId);
     }
-
 }

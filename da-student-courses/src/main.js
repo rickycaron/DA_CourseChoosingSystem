@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './axios'
 import store from './store'
-
+import VueCookies from 'vue3-cookies'
 
 axios.defaults.withCredentials = true
 
@@ -24,6 +24,6 @@ axios.defaults.withCredentials = true
 // Vue.config.productionTip = false
 
 
-createApp(App).use(store).use(router).mount('#app')
+createApp(App).use(store).use(router).use(VueCookies).mount('#app')
 
 

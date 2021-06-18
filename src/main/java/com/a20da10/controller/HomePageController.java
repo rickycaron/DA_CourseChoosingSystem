@@ -3,6 +3,7 @@ package com.a20da10.controller;
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.service.ejb.AccountServiceLocal;
+import com.a20da10.service.ejb.AccountServiceRemote;
 import com.a20da10.service.ejb.InstructorGenServiceRemote;
 import com.a20da10.service.ejb.InstructorSelfServiceRemote;
 import com.a20da10.service.spring.LoginOutAndRegisterService;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
@@ -43,7 +42,8 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @Autowired
     private InstructorGenServiceRemote instructorGenServiceRemote;
 
-    private final List<String> allowedOrigins = Arrays.asList("http://localhost:8081");//
+    @Autowired
+    AccountServiceRemote accountServiceRemote;
 
     @PostMapping("/loginStudent")
     @ResponseBody
@@ -146,8 +146,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
     @PostMapping("/registerStudent")
     @ResponseBody
-    public boolean registerStudent(@RequestBody StudentEntity studentEntity) {
-
+    public boolean registerStudent(@RequestBody StudentEntity studentEntity, HttpServletResponse response) {
         if (studentGeneralService.getAllStudent().contains(studentEntity)) {
             return false;
         } else {
@@ -156,14 +155,19 @@ public class HomePageController<LoginOutAndRegisterSer> {
             studentEntity.setPassword(passwordEncoder.encode(rawPass));
             logService.register(studentEntity);
         }
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
         return true;
     }
 
     @PostMapping("/resetStudentPassword")
     @ResponseBody
     public boolean resetStudentPassword(@RequestBody StudentEntity studentEntity) {
+        System.out.println("------------------------------Enter the reset password-----------------------------------------");
 
-        if (studentGeneralService.getAllStudent().contains(studentEntity)) {
+        if (! (studentGeneralService.getAllStudent().contains(studentEntity)) ) {
             return false;
         } else {
             String rawPass = studentEntity.getPassword();
@@ -173,6 +177,42 @@ public class HomePageController<LoginOutAndRegisterSer> {
         }
         return true;
     }
+
+    @ResponseBody
+    @RequestMapping("/registerInstructor")
+    public boolean registerInstructor(@RequestBody EJBInstructorEntity instructorEntity) {
+        System.out.println("-----------------------------register instructor-----------------------------------");
+
+        if (instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+            return false;
+        } else {
+            String rawPass = instructorEntity.getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            instructorEntity.setPassword(passwordEncoder.encode(rawPass));
+            accountServiceRemote.register(instructorEntity);
+        }
+        System.out.println("-----------------------------finish register instructor-----------------------------------");
+        return true;
+    }
+
+    @PostMapping("/resetInsPassword")
+    @ResponseBody
+    public boolean resetInsPassword(@RequestBody EJBInstructorEntity instructorEntity) {
+        System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
+        System.out.println(instructorEntity);
+        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+            return false;
+        } else {
+//            String rawPass = instructorEntity.getPassword();
+            String newPass = "reset";
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            instructorEntity.setPassword(passwordEncoder.encode(newPass));
+            instructorSelfServiceRemote.updateInstructor(instructorEntity);
+        }
+        return true;
+    }
+
+
 
     }
 

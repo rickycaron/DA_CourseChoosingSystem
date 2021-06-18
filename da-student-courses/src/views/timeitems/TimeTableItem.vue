@@ -27,8 +27,8 @@ export default {
     data()
     {
         return{
-            courseID : this.courseinfo.id,
-            courseName : this.courseinfo.courseName,
+            courseID : this.courseinfo.courseId,
+            courseName : this.courseinfo.name,
             courseDetail : this.courseinfo.courseDetail,
             teacherID : this.courseinfo.teacherID,
             teacherName : this.courseinfo.teacherFirstName +' '+ this.courseinfo.teacherLastName,

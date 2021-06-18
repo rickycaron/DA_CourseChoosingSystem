@@ -20,7 +20,7 @@ public class ProducerTest {
         jmsTemplate.send(new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
-                 TextMessage txtMessage = session.createTextMessage("this is the message sent by producer " + mess);
+                 TextMessage txtMessage = session.createTextMessage(mess);
                  txtMessage.setStringProperty("role","student");
 
                 txtMessage.setIntProperty("receiverId",receiverId);

@@ -1,13 +1,16 @@
 package com.a20da10.controller;
 
 import com.a20da10.Entity.spring.CourseEntity;
+import com.a20da10.Entity.spring.CourseTypeEnum;
 import com.a20da10.service.ejb.InstructorGenServiceRemote;
 import com.a20da10.service.ejb.InstructorSelfServiceRemote;
+import com.a20da10.service.spring.UpdateTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /*This controller is for students manipulating with courses*/
@@ -35,28 +38,61 @@ public class CourseInstructorController {
         return instructorGenServiceRemote.getCoursesByInsId(insId);
     }
 
-
-    @PostMapping("/AddCourse")
-    @Transactional
     @ResponseBody
-    public boolean addCourse(){
-        return false;
+    @RequestMapping("/GetCourse/{courseId}")
+    public CourseEntity  getCourse(@PathVariable Integer courseId) {
+        return instructorGenServiceRemote.getCourseById(courseId);
     }
 
+//    @PostMapping("/UpdateCourse")
+//    @Transactional
+//    @ResponseBody
+//    public boolean UpdateCourse(){
+//        return false;
+//    }
 
-    @PostMapping("/UpdateCourse")
-    @Transactional
     @ResponseBody
-    public boolean UpdateCourse(){
-        return false;
+    @RequestMapping("/AddNewCourse")
+    public CourseEntity addNewCourse(@RequestBody CourseEntity courseEntity,HttpServletResponse response) {
+        instructorSelfServiceRemote.addNewCourse(courseEntity);
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
+        return courseEntity;
     }
 
-
-    @RequestMapping("/RemoveCourse")
-    @Transactional
     @ResponseBody
-    public List<CourseEntity> removeCourse(){
-        return null;
+    @RequestMapping("/DeleteCourse/{courseId}")
+    public boolean deleteCourse(@PathVariable int courseId, HttpServletResponse response){
+        CourseEntity courseEntity = instructorGenServiceRemote.getCourseById(courseId);
+        if (courseEntity == null){
+            System.out.println("course with id = "+courseId+" is not found");
+            return false;
+        }
+        instructorSelfServiceRemote.deleteCourse(courseId);
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
+        return true;
     }
+
+    @ResponseBody
+    @RequestMapping("/UpdateCourseInfo")
+    public CourseEntity updateCourseInfo(@RequestBody CourseEntity courseEntity, HttpServletResponse response) {
+        int courseId = courseEntity.getCourseId();
+        if( courseId != 0){
+            CourseEntity source = instructorGenServiceRemote.getCourseById(courseId);
+            UpdateTool.copyNullProperties(source, courseEntity);
+        }
+        instructorSelfServiceRemote.updateCourseInfo(courseEntity);
+        response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+        response.setHeader("Access-Control-Allow-Credentials","true");
+        return courseEntity;
+    }
+
 
 }

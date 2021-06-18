@@ -1,6 +1,6 @@
 <template>
 
-<h1 class="my-5">All Instructors(Now demo with students)</h1>
+<h1 class="my-5">All Instructors</h1>
 <div class="list-group ml-4 mr-2">
     <div class="mb-2 list-group-item flex-column align-items-start list-table-head">
         <div class="d-flex w-100 justify-content-between">
@@ -9,7 +9,7 @@
         </div>
     </div>
     <div v-if="instructors.length > 0">
-            <div v-for="instructor in instructors" :key="instructor.studentId" >
+            <div v-for="instructor in instructors" :key="instructor.instructorId" >
                 <InstructorItem :instructortinfo="instructor" class="my-1" > 
                 </InstructorItem>
             </div>
@@ -35,27 +35,13 @@ export default {
     },
     mounted: function () 
     {
-        axios.get("rest/students")
+        axios.get("instructorRest/instructors")
         .then(res => {
             console.log("Instructors information Got!!")
                 console.log(res.data)
                 this.instructors = res.data
             })
         .catch(err => console.log(err))
-
-        // axios({
-        //     url: 'rest/students',
-        //     headers: { "Content-Type":"application/json;charset=utf-8"},
-        //     method: 'GET',
-        //     withCredentials: true,
-        //     crossDomain: true
-        //     }).then(res => {
-        //         console.log("Instructors information Got!!")
-        //         console.log(res.data)
-        //         this.instructors = res.data
-        //     }).catch(error => {
-        //         console.log(error);})
-
     }
 
 }

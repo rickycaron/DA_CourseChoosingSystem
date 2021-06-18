@@ -18,6 +18,7 @@ public interface StudentSelfService {
 
     public List<TextMessageEntity> getAllTextMessageById();
     public CourseEntity cancelCourse(StudentEntity studentEntity,Integer courseId);
+    public CourseEntity getCourseEntity(Integer courseId);
 
 
 

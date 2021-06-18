@@ -108,7 +108,7 @@
                   <div v-if="errorMessage" class="alert alert-danger">
                     <strong>Warning! </strong>{{errorMessage}}
                   </div>
-                  <div class="row" v-if=" id == $store.getters.getUserId" >
+                  <div class="row" v-if=" ( id == $store.getters.getUserId ) && ( (isStudent) == $store.getters.getIsStudent ) " >
                     <div class="col-sm-12">
                       <hr>
                       <button v-if="!editable"  @click="ToggleEdit" class="btn purple-button-primary col-sm-2" > Edit </button>
@@ -133,7 +133,7 @@ export default {
   {
       return{
         id:this.id,
-        isStudent:this.isStudent,
+        isStudent:(this.isStudent == "true"),
         email:'',
         firstName:'',
         lastName:'',
@@ -156,9 +156,12 @@ export default {
     setUpProfilePage(){
       console.log(this.$route.params)
       console.log("The id in the profile page: " + this.id + "is a student?" + this.isStudent )
-      // let url = "rest/" + ( this.isStudent ? "student":"instructor") +"/"+ this.id
-      let url ="welcome/myinfo"
-        // axios.get(url)
+      let url = ""
+      if(this.isStudent == "true"){
+         url = "rest/student/"+ this.id
+      }else{
+         url = "instructorRest/instructor/"+ this.id
+      }
          axios({
             url: url,
             headers: {"Content-Type":"application/json;charset=utf-8"},
@@ -173,7 +176,7 @@ export default {
             this.email = res.data.email,
             this.firstName = res.data.firstName ,
             this.lastName = res.data.lastName ,
-            this.number = res.data.studentNumber
+            this.number = ( (this.isStudent == "true") ? res.data.studentNumber : res.data.instructorNumber) 
             }).catch(err => console.log(err))
     },
     UpdateUserInfo(){
