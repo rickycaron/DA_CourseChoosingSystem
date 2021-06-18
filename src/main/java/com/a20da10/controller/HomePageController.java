@@ -211,6 +211,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
             instructorEntity.setPassword(passwordEncoder.encode(newPass));
             instructorSelfServiceRemote.updateInstructor(instructorEntity);
         }
+        System.out.println("-----------------------------Finish reset password instructor-----------------------------------");
         return true;
     }
 

@@ -46,7 +46,7 @@ export default {
             courseID : this.courseinfo.courseId,
             courseName : this.courseinfo.name,
             courseDetail : this.courseinfo.description,
-            teacherID : this.courseinfo.instructorId,
+            instructorId : this.courseinfo.instructorId,
             teacherName : this.courseinfo.teacherFirstName +' '+ this.courseinfo.teacherLastName,
             courseImage:require("../../assets/programminginc.png"),
 
@@ -57,6 +57,17 @@ export default {
         console.log('Delete course', this.courseID)
         this.$emit('delete-a-Course', this.courseID)
       }
+    },
+     mounted: function () 
+    {
+        console.log("The mounted function in course card runs the instrudtor id is "+ (this.courseinfo.instructorId))
+        let url = 'instructorRest/instructor/' + (this.courseinfo.instructorId)
+        axios.get(url)
+        .then(res => {
+            console.log(res.data)
+            this.teacherName = res.data.firstName +' '+ res.data.lastName
+        })
+        .catch(err => console.log(err) )
     },
     computed: {
     //   getPhotoPath()

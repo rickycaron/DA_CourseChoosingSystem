@@ -37,16 +37,27 @@ export default {
             courseID : this.courseinfo.courseId,
             courseName : this.courseinfo.name,
             courseDetail : this.courseinfo.description,
-            teacherID : this.courseinfo.instructorId,
+            instructorId : this.courseinfo.instructorId,
             teacherName : this.courseinfo.teacherFirstName +' '+ this.courseinfo.teacherLastName,
             courseImage:require("../../assets/programminginc.png")
         }
+    },     
+    mounted: function () 
+    {
+        console.log("The mounted function in course card runs the instrudtor id is "+ (this.courseinfo.instructorId))
+        let url = 'instructorRest/instructor/' + (this.courseinfo.instructorId)
+        axios.get(url)
+        .then(res => {
+            console.log(res.data)
+            this.teacherName = res.data.firstName +' '+ res.data.lastName
+        })
+        .catch(err => console.log(err) )
     },
     methods: {
       enrollACourse(){
         // this.$emit('delete-a-Course', this.courseID)
-        // if(confirm("Do you really want to disenroll from this course?"))
-            // {
+        if(confirm("Do you really want to disenroll from this course?"))
+            {
                 console.log("To enroll the course of id"+ this.courseID)
                 axios.post('courseStudent/subscribeCourse/'+ this.courseID)
                 .then(resp => {
@@ -59,7 +70,7 @@ export default {
                     // });
                 })
                 .catch(error => {console.log(error);})
-            // }
+            }
       }
     }
 
