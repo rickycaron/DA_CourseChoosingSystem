@@ -66,11 +66,5 @@ public class RESTController {
         return "success";
     }
 
-//    @ResponseBody
-//    @RequestMapping("/Instructors")
-//    public List<EJBInstructorEntity> getAllIns() {
-//        return instructorGenServiceRemote.getAllInstructors();
-//    }
-
 
 }

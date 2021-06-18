@@ -54,7 +54,7 @@
                                 <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Get started!</button>
                                 <!-- <a class="d-block text-center mt-2 small" href="login">Already have an account?</a> -->
                                 <div class="d-flex justify-content-between mt-4">
-                                    <router-link :to="{name:'forgetPassword'}" class="small" >Forgot password?</router-link> 
+                                    <router-link :to="{name:'resetPassword'}" class="small" >Forgot password?</router-link> 
                                     <router-link :to="{name:'login'}" class="small" >Already have an account?</router-link> 
                                 </div>
                             </form>
@@ -85,11 +85,11 @@ export default {
           toggleState()
          {
             this.isStudent = !this.isStudent 
-            this.firstName = ''
-            this.lastName  = ''
-            this.email = ''
-            this.password = ''
-            this.passwordAgain = ''
+            // this.firstName = ''
+            // this.lastName  = ''
+            // this.email = ''
+            // this.password = ''
+            // this.passwordAgain = ''
          },
           showPassword()
          {
@@ -108,10 +108,13 @@ export default {
                     firstName:this.firstName,
                     lastName:this.lastName,
                     email: this.email,
-                    password: this.password
+                    password: this.password,
+                    // studentNumber:"r0000009"
+                    // instructorNumber:"r0000009"
                     }
                 console.log(userInfo)
-                let apiUrl = 'welcome/' + (this.isStudent?'registerStudent':'instructor') //
+                console.log("is a student?"+ this.isStudent)
+                let apiUrl = 'welcome/' + (this.isStudent?'registerStudent':'registerInstructor') //
                 axios({
                 url: apiUrl,
                 data: userInfo,

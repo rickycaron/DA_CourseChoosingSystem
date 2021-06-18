@@ -141,17 +141,7 @@ public class HelloController {
        return studentGeneralService.getSingleStudent(1).getCourseEntities();
     }
 
-    @RequestMapping("/hello11")
-    @ResponseBody
-    public void sendMessage(){
-        producerTest.sendMessage("time now is 1305 ",3,1);
-    }
-    @RequestMapping("/hello12")
-    @ResponseBody
-    public List<TextMessageEntity> getMessage(){
 
-        return messageDao.getAllTextMessageById(3);
-    }
 
 
     @PutMapping("/updateProfile")
@@ -170,6 +160,17 @@ public class HelloController {
 
     /*******Test for instructors below********/
 
+    @RequestMapping("/hello11")
+    @ResponseBody
+    public void sendMessage(){
+        producerTest.sendMessage("time now is 1305 ",3,1);
+    }
+    @RequestMapping("/hello12")
+    @ResponseBody
+    public List<TextMessageEntity> getMessage(){
+
+        return messageDao.getAllTextMessageById(3);
+    }
 
     @ResponseBody
     @RequestMapping("/UpdateInsInfo")
@@ -244,38 +245,6 @@ public class HelloController {
         myTimerServiceRemote.setTimer(5000);
         String message = "Test the set timeout method";
         return message;
-    }
-
-
-    @ResponseBody
-    @RequestMapping("/RegisterInstructor")
-    public boolean registerInstructor(@RequestBody EJBInstructorEntity instructorEntity) {
-
-        if (instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
-            return false;
-        } else {
-            String rawPass = instructorEntity.getPassword();
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            instructorEntity.setPassword(passwordEncoder.encode(rawPass));
-            accountServiceRemote.register(instructorEntity);
-        }
-        return true;
-    }
-
-    @PostMapping("/resetInsPassword")
-    @ResponseBody
-    public boolean resetInsPassword(@RequestBody EJBInstructorEntity instructorEntity) {
-
-        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
-            return false;
-        } else {
-//            String rawPass = instructorEntity.getPassword();
-            String newPass = "reset";
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            instructorEntity.setPassword(passwordEncoder.encode(newPass));
-            instructorSelfServiceRemote.updateInstructor(instructorEntity);
-        }
-        return true;
     }
 
     @ResponseBody

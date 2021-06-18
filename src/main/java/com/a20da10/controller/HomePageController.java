@@ -3,6 +3,7 @@ package com.a20da10.controller;
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.service.ejb.AccountServiceLocal;
+import com.a20da10.service.ejb.AccountServiceRemote;
 import com.a20da10.service.ejb.InstructorGenServiceRemote;
 import com.a20da10.service.ejb.InstructorSelfServiceRemote;
 import com.a20da10.service.spring.LoginOutAndRegisterService;
@@ -43,7 +44,8 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @Autowired
     private InstructorGenServiceRemote instructorGenServiceRemote;
 
-    private final List<String> allowedOrigins = Arrays.asList("http://localhost:8081");//
+    @Autowired
+    AccountServiceRemote accountServiceRemote;
 
     @PostMapping("/loginStudent")
     @ResponseBody
@@ -165,8 +167,9 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @PostMapping("/resetStudentPassword")
     @ResponseBody
     public boolean resetStudentPassword(@RequestBody StudentEntity studentEntity) {
+        System.out.println("------------------------------Enter the reset password-----------------------------------------");
 
-        if (studentGeneralService.getAllStudent().contains(studentEntity)) {
+        if (! (studentGeneralService.getAllStudent().contains(studentEntity)) ) {
             return false;
         } else {
             String rawPass = studentEntity.getPassword();
@@ -177,24 +180,40 @@ public class HomePageController<LoginOutAndRegisterSer> {
         return true;
     }
 
-//    @PostMapping("/registerInstructor")
-//    @ResponseBody
-//    public boolean registerInstructor() {
-//
-//        EJBInstructorEntity instructorEntity = new EJBInstructorEntity("Xi", "Li", "xiao.li@kuleuven.be","xiaoli", "t000003");
-//
-//        if (instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
-//            return false;
-//        } else {
-//            String rawPass = instructorEntity.getPassword();
-//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//            instructorEntity.setPassword(passwordEncoder.encode(rawPass));
-//            accountServiceLocal.register(instructorEntity);
-//        }
-//        return true;
-//    }
+    @ResponseBody
+    @RequestMapping("/registerInstructor")
+    public boolean registerInstructor(@RequestBody EJBInstructorEntity instructorEntity) {
+        System.out.println("-----------------------------register instructor-----------------------------------");
 
-//
+        if (instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+            return false;
+        } else {
+            String rawPass = instructorEntity.getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            instructorEntity.setPassword(passwordEncoder.encode(rawPass));
+            accountServiceRemote.register(instructorEntity);
+        }
+        System.out.println("-----------------------------finish register instructor-----------------------------------");
+        return true;
+    }
+
+    @PostMapping("/resetInsPassword")
+    @ResponseBody
+    public boolean resetInsPassword(@RequestBody EJBInstructorEntity instructorEntity) {
+        System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
+        System.out.println(instructorEntity);
+        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+            return false;
+        } else {
+//            String rawPass = instructorEntity.getPassword();
+            String newPass = "reset";
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            instructorEntity.setPassword(passwordEncoder.encode(newPass));
+            instructorSelfServiceRemote.updateInstructor(instructorEntity);
+        }
+        return true;
+    }
+
 
 
     }

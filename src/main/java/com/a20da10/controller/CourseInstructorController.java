@@ -70,9 +70,7 @@ public class CourseInstructorController {
             System.out.println("course with id = "+courseId+" is not found");
             return false;
         }
-//        System.out.println("-------------------------Begin to delete course to the data base----------------------------");
         instructorSelfServiceRemote.deleteCourse(courseId);
-//        System.out.println("-------------------------Finishing the delete course to the data base----------------------------");
         response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
@@ -83,15 +81,12 @@ public class CourseInstructorController {
     @ResponseBody
     @RequestMapping("/UpdateCourseInfo")
     public CourseEntity updateCourseInfo(@RequestBody CourseEntity courseEntity, HttpServletResponse response) {
-        System.out.println("--------------------------------Begin to update the course------------------------------");
         int courseId = courseEntity.getCourseId();
-        System.out.println("--------------------------------Begin to update the course of id "+ courseId +"------------------------------");
         if( courseId != 0){
             CourseEntity source = instructorGenServiceRemote.getCourseById(courseId);
             UpdateTool.copyNullProperties(source, courseEntity);
         }
         instructorSelfServiceRemote.updateCourseInfo(courseEntity);
-        System.out.println("-------------------------Finishing the update course to the data base----------------------------");
         response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");

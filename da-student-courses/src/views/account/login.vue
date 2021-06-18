@@ -36,7 +36,7 @@
                                 <p  v-if="!isStudent" > {{isStudent}}I am a course instructor!</p>
                                 <button  class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" >Sign in</button>
                                 <div class="d-flex justify-content-between">
-                                    <router-link :to="{name:'forgetPassword'}" class="small" >Forgot password?</router-link> 
+                                    <router-link :to="{name:'resetPassword'}" class="small" >Forgot password?</router-link> 
                                     <router-link :to="{name:'register'}" class="small" >Register</router-link> 
                                 </div>
                             </form>
