@@ -35,6 +35,15 @@
         <property name="businessInterface" value="com.a20da10.service.ejb.InstructorGenServiceRemote"></property>
     </bean>
 
+    <bean id="SingletonBeanLocal" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/SingletonBeanImpl!com.a20da10.service.ejb.SingletonBeanLocal"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.SingletonBeanLocal"></property>
+    </bean>
+    <bean id="SingletonBeanRemote" class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/SingletonBeanImpl!com.a20da10.service.ejb.SingletonBeanRemote"/>
+        <property name="businessInterface" value="com.a20da10.service.ejb.SingletonBeanRemote"></property>
+    </bean>
+
     <bean id="AccountServiceLocal" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
         <property name="jndiName" value="java:global/DistributedApplication-1.0-SNAPSHOT/AccountServiceImpl!com.a20da10.service.ejb.AccountServiceLocal"/>
         <property name="businessInterface" value="com.a20da10.service.ejb.AccountServiceLocal"></property>

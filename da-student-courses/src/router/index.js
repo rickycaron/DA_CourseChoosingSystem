@@ -7,7 +7,7 @@ import CourseDetails from '../views/courses/CourseDetails'
 import CreateCourse from '../components/CreateCourseForm.vue'
 import loginForm from '../views/account/login.vue'
 import Register from '../views/account/register.vue'
-import Profile from '../components/Profile.vue'
+import Profile from '../views/account/Profile.vue'
 
 const routes = [
   {
@@ -40,6 +40,11 @@ const routes = [
     name:'Courses',
     component:Courses
   },
+  {
+    path:'/chooseCourse',
+    name:'ChooseCourses',
+    component:() => import  ('../views/courses/ChooseCourses')
+  },
   { 
     path:'/courses/:id',
     name:'CourseDetails', 
@@ -50,6 +55,12 @@ const routes = [
     path:'/createCourse',
     name:'CreateCourse', 
     component:CreateCourse,
+  },
+  { 
+    path:'/editCourse/:id',
+    name:'EditCourseForm', 
+    component:() => import ('../components/EditCourseForm.vue'),
+    props:true
   },
   { 
     path:'/students',

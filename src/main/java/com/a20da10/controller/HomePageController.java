@@ -2,10 +2,7 @@ package com.a20da10.controller;
 
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.StudentEntity;
-import com.a20da10.service.ejb.AccountServiceLocal;
-import com.a20da10.service.ejb.AccountServiceRemote;
-import com.a20da10.service.ejb.InstructorGenServiceRemote;
-import com.a20da10.service.ejb.InstructorSelfServiceRemote;
+import com.a20da10.service.ejb.*;
 import com.a20da10.service.spring.LoginOutAndRegisterService;
 import com.a20da10.service.spring.StudentGeneralService;
 import com.a20da10.service.spring.StudentSelfService;
@@ -44,6 +41,12 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
     @Autowired
     AccountServiceRemote accountServiceRemote;
+
+    @Autowired
+    SingletonBeanRemote singletonBeanRemote;
+
+    @Autowired
+    MyTimerServiceRemote myTimerServiceRemote;
 
     @PostMapping("/loginStudent")
     @ResponseBody
@@ -98,7 +101,8 @@ public class HomePageController<LoginOutAndRegisterSer> {
             //5.redirect to home page
             System.out.println(instructorSelfServiceRemote);
             System.out.println("instructor login success");
-
+            myTimerServiceRemote.setTimer(3600000);
+            singletonBeanRemote.addToList(email);
             response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
             response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
@@ -110,11 +114,21 @@ public class HomePageController<LoginOutAndRegisterSer> {
 
     @RequestMapping("/logout")
     @ResponseBody
-    public boolean Logout(HttpSession session, SessionStatus sessionStatus) {
-//        springIOC.getAutowireCapableBeanFactory().destroyBean(studentSelfService);
+    public boolean LogoutIns(@RequestBody EJBInstructorEntity ejbInstructorEntity, HttpSession session, SessionStatus sessionStatus) {
+
+        String email = ejbInstructorEntity.getEmail();
         session.invalidate();
         sessionStatus.setComplete();
-//        System.out.println(this.getClass().getClassLoader().getResource("main.css").getPath());
+        singletonBeanRemote.removeFromList(email);
+        return true;
+    }
+
+    @RequestMapping("/logoutIns")
+    @ResponseBody
+    public boolean LogoutStudent(HttpSession session, SessionStatus sessionStatus) {
+
+        session.invalidate();
+        sessionStatus.setComplete();
         return true;
     }
 
@@ -195,24 +209,24 @@ public class HomePageController<LoginOutAndRegisterSer> {
         return true;
     }
 
-    @PostMapping("/resetInsPassword")
+
+    @RequestMapping("/resetInsPassword")
     @ResponseBody
-    public boolean resetInsPassword(@RequestBody EJBInstructorEntity instructorEntity) {
+    public boolean resetInsPassword(@RequestBody EJBInstructorEntity insEntity) {
+
+        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(insEntity.getInstructorId());
         System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
         System.out.println(instructorEntity);
         if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
             return false;
         } else {
-//            String rawPass = instructorEntity.getPassword();
-            String newPass = "reset";
+            String newPass = insEntity.getPassword();
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             instructorEntity.setPassword(passwordEncoder.encode(newPass));
             instructorSelfServiceRemote.updateInstructor(instructorEntity);
         }
         return true;
     }
-
-
 
     }
 

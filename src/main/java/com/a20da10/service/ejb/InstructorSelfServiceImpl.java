@@ -61,5 +61,4 @@ public class InstructorSelfServiceImpl implements InstructorSelfServiceLocal,Ins
         insDao.updateCourseInfo(courseEntity);
     }
 
-
 }

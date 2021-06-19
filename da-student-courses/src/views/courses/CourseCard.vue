@@ -6,20 +6,25 @@
 
         <div class="card-body overflow-hidden"  style="height: 13rem" >
           <h5 class="card-title">{{courseName}}</h5>
+          <br>
           <p class="card-subtitle">{{teacherName}}</p>
-          course id is: {{courseID}}
+          Course Id: {{courseID}}
           <div class="overflow-hidden" style="height: 10rem">
             <p class="card-text">{{courseDetail}}</p>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore sunt optio suscipit nihil, ab quisquam. Dignissimos asperiores, et fugit velit libero aperiam eaque repellendus, ipsa non rem laborum temporibus dolorum.</p>
           </div>
-
-          <!-- <p class="card-text">{{getPhotoPath}}</p> -->
-          
         </div>
 
-        <router-link :to = "{ name: 'CourseDetails', params: {id:this.courseID}}" class="mt-3 mb-3">
-            <button class="btn btn-primary " > Details </button>
-        </router-link>
+          <router-link :to = "{ name: 'CourseDetails', params: {id:this.courseID}}" class="mt-3 mb-3 ">
+              <button class="btn purple-button-primary " > Details </button>
+          </router-link>
+
+        <div class="d-flex justify-content-end" v-if="!$store.getters.getIsStudent">
+          <router-link :to = "{ name: 'EditCourseForm', params: {id:this.courseID}}" class="mr-3 mb-3 purple-button-secondary">
+            <i class="fas fa-edit fa-2x"></i>
+          </router-link>
+        </div>
+
+
 
         <button 
           class="btn btn-danger"
@@ -41,39 +46,50 @@ export default {
             courseID : this.courseinfo.courseId,
             courseName : this.courseinfo.name,
             courseDetail : this.courseinfo.description,
-            teacherID : this.courseinfo.instructorId,
+            instructorId : this.courseinfo.instructorId,
             teacherName : this.courseinfo.teacherFirstName +' '+ this.courseinfo.teacherLastName,
-            courseImage:require("../../assets/programminginc.png")
+            courseImage:require("../../assets/programminginc.png"),
+
         }
     },
     methods: {
       deleteACourse(){
         console.log('Delete course', this.courseID)
-
         this.$emit('delete-a-Course', this.courseID)
       }
     },
+     mounted: function () 
+    {
+        console.log("The mounted function in course card runs the instrudtor id is "+ (this.courseinfo.instructorId))
+        let url = 'instructorRest/instructor/' + (this.courseinfo.instructorId)
+        axios.get(url)
+        .then(res => {
+            console.log(res.data)
+            this.teacherName = res.data.firstName +' '+ res.data.lastName
+        })
+        .catch(err => console.log(err) )
+    },
     computed: {
-      getPhotoPath()
-      {
-        let coursedetail = this.courseDetail.toLowerCase()
-        let photopath = "../assets/"
-        if(coursedetail.includes(' c++')){
-          return String(photopath.concat("C++.jpg"))
-        }
-        else if(coursedetail.includes(" c") ){
-          return photopath.concat("programminginc.png")
-        }
-        else if(coursedetail.includes(' andriod') ){
-          return photopath.concat('Android.jpg')
-        }
-        else if(coursedetail.includes(' java') ){
-          return photopath.concat('Java.jpg')
-        }
-        else{
-          return photopath.concat("default.png")
-      }
-    }
+    //   getPhotoPath()
+    //   {
+    //     let coursedetail = this.courseDetail.toLowerCase()
+    //     let photopath = "../assets/"
+    //     if(coursedetail.includes(' c++')){
+    //       return String(photopath.concat("C++.jpg"))
+    //     }
+    //     else if(coursedetail.includes(" c") ){
+    //       return photopath.concat("programminginc.png")
+    //     }
+    //     else if(coursedetail.includes(' andriod') ){
+    //       return photopath.concat('Android.jpg')
+    //     }
+    //     else if(coursedetail.includes(' java') ){
+    //       return photopath.concat('Java.jpg')
+    //     }
+    //     else{
+    //       return photopath.concat("default.png")
+    //   }
+    // }
   }
 
 

@@ -22,7 +22,8 @@ export default {
     },
     mounted: function () 
     {
-        axios.get('courseStudent/getMycourses')
+        let url = 'course' + ((this.$cookies.get('isStudent') == 'true') ? 'Student': 'Instructor' ) + '/getMycourses'
+        axios.get(url)
         .then(res => this.courses = res.data.sort(function compareFn(a, b) 
         {  
             if(a.weekDay < b.weekDay){return -1}

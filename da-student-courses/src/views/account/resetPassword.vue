@@ -13,6 +13,10 @@
                             </div>
                             <form @submit.prevent="submitLoginForm">
                                 <div class="form-label-group">
+                                    <input type="number" id="sid" class="form-control" placeholder="Id" required autofocus v-model="id">
+                                    <label for="sid">Id</label>
+                                </div>
+                                <div class="form-label-group">
                                     <input type="text" id="fname" class="form-control" placeholder="First Name" required autofocus v-model="firstName">
                                     <label for="fname">First Name</label>
                                 </div>
@@ -35,13 +39,20 @@
                                 <div v-if="errorMessage" class="alert alert-danger">
                                     <strong>Wrong! </strong>{{errorMessage}}
                                 </div>
-                                 <div class="custom-control custom-checkbox mb-3 d-flex justify-content-end">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1" @click="showPassword">
-                                    <label class="custom-control-label" for="customCheck1">Show password</label>
+                               <div class="jumbotron bg-light">
+                                    <div class="df-switch">
+                                        <button @click="toggleState" type="button" class="btn btn-lg btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                        <div class="inner-handle"></div>
+                                        <div class="handle"></div>
+                                        </button>
+                                    </div>
                                 </div>
-                                <!-- <p  v-if="isStudent" > I am a student！</p>
-                                <p  v-else > I am a course instructor!</p> -->
-                                <button  class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" >Reset Password</button>
+                                <p  v-if="isStudent" > I am a student！</p>
+                                <p  v-else > I am a course instructor!</p>
+                                <button  
+                                class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" 
+                                @click="submitResetPassword"
+                                >Reset Password</button>
                             </form>
                         </div>
                     </div>
@@ -56,6 +67,7 @@
 export default {
     data(){
          return{
+            id:'',
             firstName:'',
             lastName:'',
             email: '',
@@ -76,21 +88,35 @@ export default {
                     x.type = "password";
                 }
          },
+         toggleState()
+         {
+            this.isStudent = !this.isStudent 
+         },
          submitResetPassword()
          {
 
             let info = {
+                firstName:this.firstName,
+                lastName:this.lastName,
                 email: this.email,
                 password: this.password
             }   
+            if(this.isStudent){
+                info.studentId = this.id
+            }else{
+                info.instructorId = this.id
+                info.instructorNumber = "t0000009"
+            }
+
             console.log(info)
-            let apiUrl = 'welcome/login' + (this.isStudent?'Student':'Instructor')
+            console.log("is a student?"+ this.isStudent)
+            let apiUrl = 'welcome/' + (this.isStudent?'resetStudentPassword':'resetInsPassword')
 
             axios({
             url: apiUrl,
             data: info,
             headers: { "Content-Type":"application/json;charset=utf-8"},
-            method: 'PUT',
+            method: 'POST',
             withCredentials: true,
             crossDomain: true
             }).then(res => {

@@ -21,6 +21,9 @@ User Information: {{$store.getters.getUserInfo}}</p>
       <li class="nav-item">
         <router-link :to="{name:'Courses'}" class="nav-link" >Courses</router-link>
       </li>
+      <li class="nav-item" v-if="$store.getters.getIsStudent">
+        <router-link :to="{name:'ChooseCourses'}" class="nav-link" >Choose Course</router-link>
+      </li>
       <li class="nav-item" v-if="! $store.getters.getIsStudent">
         <router-link :to="{name:'CreateCourse'}" class="nav-link" >Create a Course</router-link> 
       </li>
