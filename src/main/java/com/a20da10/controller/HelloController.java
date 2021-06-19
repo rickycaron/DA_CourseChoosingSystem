@@ -312,6 +312,7 @@ public class HelloController {
         return message;
     }
 
+
     @ResponseBody
     @RequestMapping("/SOAPGetInsByName")
     public List<EjbInstructorEntity> getInsByName(){

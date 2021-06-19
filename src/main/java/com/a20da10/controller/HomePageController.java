@@ -115,7 +115,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
     @RequestMapping("/logout")
     @ResponseBody
     public boolean LogoutIns(@RequestBody EJBInstructorEntity ejbInstructorEntity, HttpSession session, SessionStatus sessionStatus) {
-
         String email = ejbInstructorEntity.getEmail();
         session.invalidate();
         sessionStatus.setComplete();
