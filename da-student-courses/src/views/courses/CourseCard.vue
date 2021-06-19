@@ -23,18 +23,13 @@
             <i class="fas fa-edit fa-2x"></i>
           </router-link>
         </div>
-
-
-
         <button 
           class="btn btn-danger"
           :hidden="!ableToDelete"
          @click="deleteACourse"> 
          Delete
          </button>
-
       </div>
-
 </template>
 
 
@@ -68,31 +63,7 @@ export default {
             this.teacherName = res.data.firstName +' '+ res.data.lastName
         })
         .catch(err => console.log(err) )
-    },
-    computed: {
-    //   getPhotoPath()
-    //   {
-    //     let coursedetail = this.courseDetail.toLowerCase()
-    //     let photopath = "../assets/"
-    //     if(coursedetail.includes(' c++')){
-    //       return String(photopath.concat("C++.jpg"))
-    //     }
-    //     else if(coursedetail.includes(" c") ){
-    //       return photopath.concat("programminginc.png")
-    //     }
-    //     else if(coursedetail.includes(' andriod') ){
-    //       return photopath.concat('Android.jpg')
-    //     }
-    //     else if(coursedetail.includes(' java') ){
-    //       return photopath.concat('Java.jpg')
-    //     }
-    //     else{
-    //       return photopath.concat("default.png")
-    //   }
-    // }
-  }
-
-
+    }
 }
 </script>
 

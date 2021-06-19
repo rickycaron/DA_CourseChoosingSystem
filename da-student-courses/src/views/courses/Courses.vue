@@ -42,54 +42,45 @@ export default {
     },
     methods: 
     {
-        // addCourse(newCourseInfo)
-        // {
-        //     // console.log("I submit!")
-        //     axios.post('http://localhost:3000/courses/', newCourseInfo)
-        //     .then(res => console.log(res.data))
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
-        //     // console.log(newCourseInfo)
-        //     // this.courses.push(newCourseInfo)
-        // },
         disenrollCoursebyStudent(courseid)
         {
-            // if(confirm("Do you really want to disenroll from this course?"))
-            // {
+            if(confirm("Do you really want to disenroll from this course?"))
+            {
                 console.log("To disenroll the course of id"+ courseid)
                 axios.get('courseStudent/disenrollCourse/'+ courseid)
                 .then(resp => {
                     console.log("The course is disenrolled")
                     console.log(resp.data)
-                    this.courses = this.courses.filter(function(course, index, arr)
-                    { 
-                        return course.courseId != courseid;
-                    });
+                    this.$router.go(this.$router.currentRoute)
+                    // this.courses = this.courses.filter(function(course, index, arr)
+                    // { 
+                    //     return course.courseId != courseid;
+                    // });
                 })
                 .catch(error => {
                     console.log(error);
                 })
-            // }
+            }
         },
         deleteCoursebyIns(courseid)
         {
-            // if(confirm("Do you really want to delete this course?"))
-            // {
+            if(confirm("Do you really want to delete this course?"))
+            {
                 console.log("To delete the course of id"+ courseid)
                 axios.get('courseInstructor/DeleteCourse/'+ courseid)
                 .then(resp => {
                     console.log("The course is deleted")
                     console.log(resp.data)
-                    this.courses = this.courses.filter(function(course, index, arr)
-                    { 
-                        return course.courseId != courseid;
-                    });
+                    this.$router.go(this.$router.currentRoute)
+                    // this.courses = this.courses.filter(function(course, index, arr)
+                    // { 
+                    //     return course.courseId != courseid;
+                    // });
                 })
                 .catch(error => {
                     console.log(error);
                 })
-            // }
+            }
         },
         deleteCourse(courseid)
         {

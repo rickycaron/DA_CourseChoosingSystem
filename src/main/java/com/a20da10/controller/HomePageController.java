@@ -207,6 +207,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
             return false;
         } else {
             String newPass = insEntity.getPassword();
+            System.out.println("-----------------------------The new password is "+ newPass +"-----------------------------------");
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             instructorEntity.setPassword(passwordEncoder.encode(newPass));
             instructorSelfServiceRemote.updateInstructor(instructorEntity);

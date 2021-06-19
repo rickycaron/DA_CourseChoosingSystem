@@ -35,8 +35,8 @@
                                 <div v-if="errorMessage" class="alert alert-danger">
                                     <strong>Warning! </strong>{{errorMessage}}
                                 </div>
-                            <p> I am a student: {{isStudent}}</p> 
-                            <p>{{firstName}}</p>
+                            <!-- <p> I am a student: {{isStudent}}</p> 
+                            <p>{{firstName}}</p> -->
 
                                 <!-- <div class="custom-control custom-checkbox mb-3 d-flex justify-content-end">
                                     <input type="checkbox" class="custom-control-input" id="customCheck1" @click="showPassword">
@@ -108,10 +108,14 @@ export default {
                     firstName:this.firstName,
                     lastName:this.lastName,
                     email: this.email,
-                    password: this.password,
-                    // studentNumber:"r0000009"
-                    // instructorNumber:"r0000009"
+                    password: this.password
                     }
+                let number = Math.floor((Math.random() * 10000000) + 1)
+                if(this.isStudent){
+                    userInfo.studentNumber = 'r' + number
+                }else{
+                    userInfo.instructorNumber = 't' + number
+                }
                 console.log(userInfo)
                 console.log("is a student?"+ this.isStudent)
                 let apiUrl = 'welcome/' + (this.isStudent?'registerStudent':'registerInstructor') //

@@ -55,7 +55,6 @@ export default {
     },
     methods: {
       enrollACourse(){
-        // this.$emit('delete-a-Course', this.courseID)
         if(confirm("Do you really want to disenroll from this course?"))
             {
                 console.log("To enroll the course of id"+ this.courseID)
@@ -64,10 +63,6 @@ export default {
                     console.log("The course is enrolled")
                     console.log(resp.data)
                     this.$router.go(this.$router.currentRoute)
-                    // this.courses = this.courses.filter(function(course, index, arr)
-                    // { 
-                    //     return course.courseId != courseid;
-                    // });
                 })
                 .catch(error => {console.log(error);})
             }

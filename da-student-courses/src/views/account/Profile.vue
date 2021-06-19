@@ -196,19 +196,27 @@ export default {
       this.editable = !this.editable
 
       let userInfo = {
-          studentId:1,
           firstName:this.firstName,
           lastName:this.lastName,
           email: this.email,
-          // password: this.password
           }
-      let apiurl = "rest/" + ( this.isStudent ? "student":"instructor")
+        if(this.isStudent== 'true'){
+            userInfo.studentId=this.id
+            userInfo.studentNumber=this.studentNumber
+        }else{
+            userInfo.instructorId=this.id
+            userInfo.instructorNumber=this.instructorNumber
+        }
+      let apiurl =( this.isStudent == 'true' ? "rest/student":"instructorRest/UpdateInsInfo")
+      console.log(this.isStudent)
+      console.log(userInfo)
+      console.log(apiurl)
 
          axios({
             url: apiurl,
             headers: {"Content-Type":"application/json;charset=utf-8"},
             data: userInfo,
-            method: 'PUT',
+            method: 'Put',
             withCredentials: true,
             crossDomain: true
             })
