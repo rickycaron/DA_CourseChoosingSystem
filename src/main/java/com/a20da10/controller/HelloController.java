@@ -239,6 +239,67 @@ public class HelloController {
 //        return "success";
 //    }
 
+//    @ResponseBody
+//    @RequestMapping("/UpdateCourseInfo")
+//    public CourseEntity updateCourseInfo(@RequestBody CourseEntity courseEntity) {
+//        int courseId = courseEntity.getCourseId();
+//        if( courseId != 0){
+//            CourseEntity source = instructorGenServiceRemote.getCourseById(courseId);
+//            UpdateTool.copyNullProperties(source, courseEntity);
+//        }
+//        instructorSelfServiceRemote.updateCourseInfo(courseEntity);
+//        return courseEntity;
+//    }
+
+
+
+
+//    @ResponseBody
+//    @RequestMapping("/AddNewCourse")
+//    public CourseEntity addNewCourse(@RequestBody CourseEntity courseEntity) {
+//        courseEntity.setCourseId(0);
+//        instructorSelfServiceRemote.addNewCourse(courseEntity);
+//        return courseEntity;
+//    }
+
+//    @DeleteMapping("/DeleteCourse/{courseId}")
+//    public String deleteCourse(@PathVariable int courseId){
+//
+//        CourseEntity courseEntity = instructorGenServiceRemote.getCourseById(courseId);
+//        if (courseEntity == null){
+//            return "course with id = "+courseId+" is not found";
+//        }
+//        instructorSelfServiceRemote.deleteCourse(courseId);
+//        return "success";
+//    }
+
+//    @DeleteMapping("/DeleteIns/{insId}")
+//    public String deleteIns(@PathVariable int insId){
+//
+//        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(insId);
+//        if (instructorEntity == null){
+//            return "Instructor with id = "+insId+" is not found";
+//        }
+//        instructorSelfServiceRemote.deleteInstructorByInsId(insId);
+//        return "success";
+//    }
+    @RequestMapping("/resetInsPassword")
+    @ResponseBody
+    public boolean resetInsPassword() {
+        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(1);
+        System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
+        System.out.println(instructorEntity);
+        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+            return false;
+        } else {
+    //            String rawPass = instructorEntity.getPassword();
+            String newPass = "reset";
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            instructorEntity.setPassword(passwordEncoder.encode(newPass));
+            instructorSelfServiceRemote.updateInstructor(instructorEntity);
+        }
+        return true;
+    }
     @ResponseBody
     @RequestMapping("/SetTimeOut")
     public String setTimeOut() {

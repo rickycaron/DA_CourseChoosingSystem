@@ -18,8 +18,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:8081",allowCredentials = "true")
@@ -211,7 +209,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
             instructorEntity.setPassword(passwordEncoder.encode(newPass));
             instructorSelfServiceRemote.updateInstructor(instructorEntity);
         }
-        System.out.println("-----------------------------Finish reset password instructor-----------------------------------");
         return true;
     }
 
