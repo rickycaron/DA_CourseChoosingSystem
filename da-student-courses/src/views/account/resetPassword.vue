@@ -105,6 +105,7 @@ export default {
                 info.studentId = this.id
             }else{
                 info.instructorId = this.id
+                info.instructorNumber = "t0000009"
             }
 
             console.log(info)

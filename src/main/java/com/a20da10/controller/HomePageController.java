@@ -195,24 +195,24 @@ public class HomePageController<LoginOutAndRegisterSer> {
         return true;
     }
 
-    @PostMapping("/resetInsPassword")
+
+    @RequestMapping("/resetInsPassword")
     @ResponseBody
-    public boolean resetInsPassword(@RequestBody EJBInstructorEntity instructorEntity) {
+    public boolean resetInsPassword(@RequestBody EJBInstructorEntity insEntity) {
+
+        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(insEntity.getInstructorId());
         System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
         System.out.println(instructorEntity);
         if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
             return false;
         } else {
-//            String rawPass = instructorEntity.getPassword();
-            String newPass = "reset";
+            String newPass = insEntity.getPassword();
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             instructorEntity.setPassword(passwordEncoder.encode(newPass));
             instructorSelfServiceRemote.updateInstructor(instructorEntity);
         }
         return true;
     }
-
-
 
     }
 

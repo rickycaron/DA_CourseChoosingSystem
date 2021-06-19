@@ -187,12 +187,11 @@ public class HelloController {
 
     /******* Above Has been finished ********/
 
-    @ResponseBody
-    @RequestMapping("/SetInsId")
-    public void setInsId(){
-        instructorSelfServiceRemote.setInsId(1);
-    }
-
+//    @ResponseBody
+//    @RequestMapping("/SetInsId")
+//    public void setInsId(){
+//        instructorSelfServiceRemote.setInsId(1);
+//    }
 
 //    @ResponseBody
 //    @RequestMapping("/UpdateCourseInfo")
@@ -205,8 +204,6 @@ public class HelloController {
 //        instructorSelfServiceRemote.updateCourseInfo(courseEntity);
 //        return courseEntity;
 //    }
-
-
 
 
 //    @ResponseBody
@@ -283,23 +280,23 @@ public class HelloController {
 //        instructorSelfServiceRemote.deleteInstructorByInsId(insId);
 //        return "success";
 //    }
-    @RequestMapping("/resetInsPassword")
-    @ResponseBody
-    public boolean resetInsPassword() {
-        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(1);
-        System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
-        System.out.println(instructorEntity);
-        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
-            return false;
-        } else {
-    //            String rawPass = instructorEntity.getPassword();
-            String newPass = "reset";
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            instructorEntity.setPassword(passwordEncoder.encode(newPass));
-            instructorSelfServiceRemote.updateInstructor(instructorEntity);
-        }
-        return true;
-    }
+//    @RequestMapping("/resetInsPassword")
+//    @ResponseBody
+//    public boolean resetInsPassword() {
+//        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(6);
+//        System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
+//        System.out.println(instructorEntity);
+//        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+//            return false;
+//        } else {
+//    //            String rawPass = instructorEntity.getPassword();
+//            String newPass = "reset";
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            instructorEntity.setPassword(passwordEncoder.encode(newPass));
+//            instructorSelfServiceRemote.updateInstructor(instructorEntity);
+//        }
+//        return true;
+//    }
     @ResponseBody
     @RequestMapping("/SetTimeOut")
     public String setTimeOut() {
@@ -308,9 +305,4 @@ public class HelloController {
         return message;
     }
 
-    @ResponseBody
-    @RequestMapping("/InsertIns")
-    public void InsertIns() {
-        instructorSelfServiceRemote.insertInstructor("Xiao", "Li", "xiao.li@kuleuven.be","xiaoli", "t000003");
-    }
 }
