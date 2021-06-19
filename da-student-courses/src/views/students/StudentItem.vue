@@ -1,8 +1,4 @@
 <template>
-  <!-- <router-link 
-    :to = "{ name: 'Profile', params: {id:this.id}}" 
-    class="mb-1 list-group-item list-group-item-action flex-column align-items-start">
-  </router-link> -->
   <div
     @click="goToStudentProfile(id)"
     class="mb-1 list-group-item list-group-item-action flex-column align-items-start">

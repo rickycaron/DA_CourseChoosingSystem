@@ -337,6 +337,7 @@ public class HelloController {
         return soap.getAll();
     }
 
+
     @ResponseBody
     @RequestMapping("/SingletonGetLoggedInstructors")
     public Map<String, Integer> getLoggedList(){
