@@ -23,7 +23,8 @@
             <i class="fas fa-edit fa-2x"></i>
           </router-link>
         </div>
-        <button 
+
+        <button
           class="btn btn-danger"
           :hidden="!ableToDelete"
          @click="deleteACourse"> 
@@ -53,7 +54,7 @@ export default {
         this.$emit('delete-a-Course', this.courseID)
       }
     },
-     mounted: function () 
+     mounted: function ()
     {
         console.log("The mounted function in course card runs the instrudtor id is "+ (this.courseinfo.instructorId))
         let url = 'instructorRest/instructor/' + (this.courseinfo.instructorId)

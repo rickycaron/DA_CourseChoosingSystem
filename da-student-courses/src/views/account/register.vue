@@ -108,7 +108,9 @@ export default {
                     firstName:this.firstName,
                     lastName:this.lastName,
                     email: this.email,
-                    password: this.password
+                    password: this.password,
+                    // studentNumber:"r0000009"
+                    // instructorNumber:"r0000009"
                     }
                 let number = Math.floor((Math.random() * 10000000) + 1)
                 if(this.isStudent){

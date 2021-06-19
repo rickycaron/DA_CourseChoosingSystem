@@ -18,16 +18,7 @@ public class AccountServiceImpl implements AccountServiceLocal, AccountServiceRe
         EJBInstructorEntity instructorEntity = instructorDao.getByEmail(email);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         System.out.println(passwordEncoder.encode(password));
-//        String pw = passwordEncoder.encode("test");
-        //        System.out.println(passwordEncoder.encode(password));
-//        String pw = passwordEncoder.encode("test");
-        Boolean result =passwordEncoder.matches(password, instructorEntity.getPassword());
-        if (result){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return passwordEncoder.matches(password, instructorEntity.getPassword());
     }
 
     @Override

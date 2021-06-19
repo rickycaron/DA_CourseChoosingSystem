@@ -5,16 +5,16 @@ import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.Entity.spring.CourseTypeEnum;
 import com.a20da10.Entity.spring.StudentEntity;
 import com.a20da10.Entity.spring.TextMessageEntity;
+import com.a20da10.SOAPJava.EjbInstructorEntity;
+import com.a20da10.SOAPJava.Soap;
+import com.a20da10.SOAPJava.SoapService;
 import com.a20da10.activemq.ConsumerTest;
 import com.a20da10.activemq.JmsListener11;
 import com.a20da10.activemq.ProducerTest;
 import com.a20da10.activemq.StudentReceiver;
 import com.a20da10.dao.spring.CourseDao;
 import com.a20da10.dao.spring.MessageDao;
-import com.a20da10.service.ejb.AccountServiceRemote;
-import com.a20da10.service.ejb.InstructorGenServiceRemote;
-import com.a20da10.service.ejb.InstructorSelfServiceRemote;
-import com.a20da10.service.ejb.MyTimerServiceRemote;
+import com.a20da10.service.ejb.*;
 import com.a20da10.service.spring.StudentGeneralService;
 import com.a20da10.service.spring.StudentSelfService;
 import com.a20da10.service.spring.UpdateTool;
@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 @RestController
@@ -88,6 +89,10 @@ public class HelloController {
 
     @Autowired
     MyTimerServiceRemote myTimerServiceRemote;
+
+    @Autowired
+    SingletonBeanRemote singletonBeanRemote;
+
     @RequestMapping(value = "/hello1")
     @ResponseBody
     public String getAllStudent(HttpServletRequest request,Model model) throws SQLException, PropertyVetoException, ClassNotFoundException {
@@ -307,4 +312,33 @@ public class HelloController {
         return message;
     }
 
+    @ResponseBody
+    @RequestMapping("/SOAPGetInsByName")
+    public List<EjbInstructorEntity> getInsByName(){
+        SoapService soapService = new SoapService();
+        Soap soap = soapService.getSoapPort();
+        return soap.getByName("Bob","Evans");
+    }
+
+    @ResponseBody
+    @RequestMapping("/SOAPGetInsByEmail")
+    public String getInsByEmail(){
+        SoapService soapService = new SoapService();
+        Soap soap = soapService.getSoapPort();
+        return soap.getByEmail("bob.evans@kuleuven.be").getEmail();
+    }
+
+    @ResponseBody
+    @RequestMapping("/SOAPGetAllIns")
+    public List<EjbInstructorEntity> getAllIns(){
+        SoapService soapService = new SoapService();
+        Soap soap = soapService.getSoapPort();
+        return soap.getAll();
+    }
+
+    @ResponseBody
+    @RequestMapping("/SingletonGetLoggedInstructors")
+    public Map<String, Integer> getLoggedList(){
+        return singletonBeanRemote.getFromList();
+    }
 }

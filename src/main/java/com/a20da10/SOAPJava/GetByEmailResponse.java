@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getByIdResponse complex type.
+ * <p>Java class for getByEmailResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="getByIdResponse">
+ * &lt;complexType name="getByEmailResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getByIdResponsex", propOrder = {
+@XmlType(name = "getByEmailResponseSoap", propOrder = {
     "_return"
 })
-public class GetByIdResponse {
+public class GetByEmailResponse {
 
     @XmlElement(name = "return")
     protected EjbInstructorEntity _return;
