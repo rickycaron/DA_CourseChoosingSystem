@@ -19,7 +19,6 @@ public class MyTimerServiceImpl implements  MyTimerServiceLocal, MyTimerServiceR
 
     @Timeout
     public void programmaticTimeout(Timer timer){ //mouse click event
-        logger.info("Your session will be expired in 10 minutes ! ");
         logger.info("Your have been online for 1 hour, please take a rest ! " + new java.util.Date());
     }
 }

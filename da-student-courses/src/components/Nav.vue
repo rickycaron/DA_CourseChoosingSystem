@@ -84,7 +84,7 @@ export default {
     methods:{
         logOut()
         {
-          let url = 'welcome/logout'+( (this.$store.getters.getIsStudent == "true")?'':'Ins')
+          let url = 'welcome/logout'+( (this.$store.getters.getIsStudent )?'':'Ins')
             axios({
             url:url,
             headers: { "Content-Type":"application/json;charset=utf-8"},

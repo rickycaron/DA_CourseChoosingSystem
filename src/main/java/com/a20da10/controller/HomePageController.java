@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -95,7 +93,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
             Integer id = accountServiceLocal.getInstructorIdByEmail(email);
             System.out.println(email + password);
             //3.create stateful bean for later access
-            instructorSelfServiceRemote = this.getInstructorSelfServiceRemote(instructorSelfServiceRemote);
             instructorSelfServiceRemote.setInsId(id);
             System.out.println("InstructorSelfService id is" + id);
             //4.Set session attribute for interceptor checking later
@@ -104,7 +101,7 @@ public class HomePageController<LoginOutAndRegisterSer> {
             //5.redirect to home page
             System.out.println(instructorSelfServiceRemote);
             System.out.println("instructor login success");
-            myTimerServiceRemote.setTimer(1200000);
+            myTimerServiceRemote.setTimer(3600000);
             singletonBeanRemote.addToList(email);
             response.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
             response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -115,25 +112,28 @@ public class HomePageController<LoginOutAndRegisterSer> {
         return false;
     }
 
-    @RequestMapping("/logoutIns")
-    @ResponseBody
-    public boolean LogoutIns(@RequestBody EJBInstructorEntity ejbInstructorEntity, HttpSession session, SessionStatus sessionStatus) {
-        String email = ejbInstructorEntity.getEmail();
-        session.invalidate();
-        sessionStatus.setComplete();
-        singletonBeanRemote.removeFromList(email);
-        instructorSelfServiceRemote.removeBean();
-        return true;
-    }
-
     @RequestMapping("/logout")
     @ResponseBody
     public boolean LogoutStudent(HttpSession session, SessionStatus sessionStatus) {
-
         session.invalidate();
         sessionStatus.setComplete();
         return true;
     }
+
+    @RequestMapping("/logoutIns")
+    @ResponseBody
+    public boolean LogoutIns(HttpSession session, SessionStatus sessionStatus) {
+        session.invalidate();
+        sessionStatus.setComplete();
+        return true;
+    }
+//    public boolean LogoutIns(@RequestBody EJBInstructorEntity ejbInstructorEntity, HttpSession session, SessionStatus sessionStatus) {
+//        String email = ejbInstructorEntity.getEmail();
+//        session.invalidate();
+//        sessionStatus.setComplete();
+//        singletonBeanRemote.removeFromList(email);
+//        return true;
+//    }
 
     @RequestMapping("/")
     public String welcome(){
@@ -230,20 +230,6 @@ public class HomePageController<LoginOutAndRegisterSer> {
             instructorSelfServiceRemote.updateInstructor(instructorEntity);
         }
         return true;
-    }
-
-
-    private InstructorSelfServiceRemote getInstructorSelfServiceRemote(InstructorSelfServiceRemote instructorSelfServiceRemote){
-        try {
-            instructorSelfServiceRemote.getInsId();
-        } catch(javax.ejb.EJBException e){
-            try {
-                instructorSelfServiceRemote = (InstructorSelfServiceRemote) new InitialContext().lookup("java:global/DistributedApplication-1.0-SNAPSHOT/InstructorSelfServiceImpl!com.a20da10.service.ejb.InstructorSelfServiceRemote");
-            }catch (NamingException exception){
-                exception.printStackTrace();
-            }
-        }
-        return instructorSelfServiceRemote;
     }
 
     }
