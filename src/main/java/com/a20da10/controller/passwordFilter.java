@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-@WebFilter(urlPatterns = "/welcome")
+@WebFilter(urlPatterns = "/welcome/*")
 public class passwordFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
