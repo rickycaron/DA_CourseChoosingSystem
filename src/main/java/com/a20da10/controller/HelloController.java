@@ -313,29 +313,29 @@ public class HelloController {
     }
 
 
-    @ResponseBody
-    @RequestMapping("/SOAPGetInsByName")
-    public List<EjbInstructorEntity> getInsByName(){
-        SoapService soapService = new SoapService();
-        Soap soap = soapService.getSoapPort();
-        return soap.getByName("Bob","Evans");
-    }
-
-    @ResponseBody
-    @RequestMapping("/SOAPGetInsByEmail")
-    public String getInsByEmail(){
-        SoapService soapService = new SoapService();
-        Soap soap = soapService.getSoapPort();
-        return soap.getByEmail("bob.evans@kuleuven.be").getEmail();
-    }
-
-    @ResponseBody
-    @RequestMapping("/SOAPGetAllIns")
-    public List<EjbInstructorEntity> getAllIns(){
-        SoapService soapService = new SoapService();
-        Soap soap = soapService.getSoapPort();
-        return soap.getAll();
-    }
+//    @ResponseBody
+//    @RequestMapping("/SOAPGetInsByName")
+//    public List<EjbInstructorEntity> getInsByName(){
+//        SoapService soapService = new SoapService();
+//        Soap soap = soapService.getSoapPort();
+//        return soap.getByName("Bob","Evans");
+//    }
+//
+//    @ResponseBody
+//    @RequestMapping("/SOAPGetInsByEmail")
+//    public String getInsByEmail(){
+//        SoapService soapService = new SoapService();
+//        Soap soap = soapService.getSoapPort();
+//        return soap.getByEmail("bob.evans@kuleuven.be").getEmail();
+//    }
+//
+//    @ResponseBody
+//    @RequestMapping("/SOAPGetAllIns")
+//    public List<EjbInstructorEntity> getAllIns(){
+//        SoapService soapService = new SoapService();
+//        Soap soap = soapService.getSoapPort();
+//        return soap.getAll();
+//    }
 
 
     @ResponseBody

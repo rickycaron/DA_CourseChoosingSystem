@@ -1,13 +1,22 @@
 package com.a20da10.controller;
 
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-@WebFilter("/hello-servlet")
+@WebFilter(urlPatterns = "/welcome")
 public class passwordFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -15,50 +24,13 @@ public class passwordFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("You are in a filter now !");
-        PrintWriter out = response.getWriter();
-        HttpServletRequest req = (HttpServletRequest) request;
-        String passwordInput = request.getParameter("passwordInput");
-        String passwordConfirm = request.getParameter("passwordConfirm");
+    public void doFilter(ServletRequest req, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        System.out.println("------------------------------------------You are in a filter now !--------------------------------------------------");
+        HttpServletRequest request = (HttpServletRequest) req;
+        System.out.println(request.getRequestURL());
 
-        Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-        Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
-        Pattern lowerCasePatten = Pattern.compile("[a-z ]");
-        Pattern digitCasePatten = Pattern.compile("[0-9 ]");
-        boolean flag=true;
-
-        if (!passwordInput.equals(passwordConfirm)) {
-            System.out.println("password and confirm password does not match");
-            flag=false;
-        }
-        if (passwordInput.length() < 8) {
-            System.out.println("Password lenght must have alleast 8 character !!");
-            flag=false;
-        }
-        if (!specailCharPatten.matcher(passwordInput).find()) {
-            System.out.println("Password must have atleast one specail character !!");
-            flag=false;
-        }
-        if (!UpperCasePatten.matcher(passwordInput).find()) {
-            System.out.println("Password must have atleast one uppercase character !!");
-            flag=false;
-        }
-        if (!lowerCasePatten.matcher(passwordInput).find()) {
-            System.out.println("Password must have atleast one lowercase character !!");
-            flag=false;
-        }
-        if (!digitCasePatten.matcher(passwordInput).find()) {
-            System.out.println("Password must have atleast one digit character !!");
-            flag=false;
-        }
-
-        if(flag) {
-            chain.doFilter(request, response);
-            System.out.println("Password is valid !");
-        }
-        else
-            System.out.println("Please input a valid password !");
+        Logger logger = Logger.getGlobal();
+        logger.info("The user "+ request.getSession()+ " is visiting!");
     }
 
     @Override

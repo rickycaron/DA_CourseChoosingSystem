@@ -1,10 +1,10 @@
 <template>
-    {{ "The user exists:" + this.$cookies.isKey('isStudent') }}
+    <!-- {{ "The user exists:" + this.$cookies.isKey('isStudent') }}
     {{"The user is a student: " + this.$cookies.get('isStudent')}}
 
 <p>The use is currenlty loggedin: {{$store.getters.isLoggedIn}} -- 
 The user is a student {{$store.getters.getIsStudent}} -- {{typeof($store.getters.getIsStudent)}} -- 
-User Information: {{$store.getters.getUserInfo}}</p>
+User Information: {{$store.getters.getUserInfo}}</p> -->
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
   <router-link to="/" class="navbar-brand" > CourseSystem </router-link>

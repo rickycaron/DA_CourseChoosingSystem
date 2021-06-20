@@ -13,12 +13,12 @@
                     <button class="btn btn-lg btn-block btn-login text-uppercase font-weight-bold text-white mb-2" id="submitButton">
                         Send
                     </button>
-                    {{receiverId}}
+                    <!-- {{receiverId}} -->
                 </div>
             </form>
         </div>
     </div>
-   <p>{{text}}</p>
+   <!-- <p>{{text}}</p> -->
 </template>
 
 <script>

@@ -56,8 +56,8 @@
         </div>
     </div>
 
-   <p>{{name}}</p>
-   <p>{{description}}</p>
+   <!-- <p>{{name}}</p>
+   <p>{{description}}</p> -->
 </template>
 
 <script>

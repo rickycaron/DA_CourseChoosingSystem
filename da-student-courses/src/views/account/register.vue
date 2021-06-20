@@ -98,19 +98,33 @@ export default {
             if (x.type === "password") {x.type = "text"; y.type = "text";} 
             else { x.type = "password"; y.type = "password";}
          },
-         submitRegisterForm(){
-            if( ! (this.password === this.passwordAgain) )
-            {
-                this.errorMessage = "The passwords don't match"
-            }else
-            {
+         async submitRegisterForm(){
+            // if( ! (this.password === this.passwordAgain) )
+            // {
+            //     this.errorMessage = "The passwords don't match"
+            // }else
+            // {
+                // let passwordTest = {
+                //     passwordInput:this.password,
+                //     passwordConfirm:this.passwordAgain
+                // }
+
+                // await axios.post('hello-servlet',passwordTest).then(res => {
+                // console.log("Password for filter sent!")
+                //     console.log(res.data)
+                //     if(res.data != "Hello World!" ){
+                //         console.log("Password check failed!")
+                //         this.errorMessage = "The password doesn't match.!"
+                //     }
+                // }).catch(error => {console.log(error);})
+
                 let userInfo = {
                     firstName:this.firstName,
                     lastName:this.lastName,
                     email: this.email,
                     password: this.password,
-                    // studentNumber:"r0000009"
-                    // instructorNumber:"r0000009"
+                    passwordInput:this.password,
+                    passwordConfirm:this.passwordAgain
                     }
                 let number = Math.floor((Math.random() * 10000000) + 1)
                 if(this.isStudent){
@@ -120,13 +134,21 @@ export default {
                 }
                 console.log(userInfo)
                 console.log("is a student?"+ this.isStudent)
-                let apiUrl = 'welcome/' + (this.isStudent?'registerStudent':'registerInstructor') //
+                let apiUrl = 'welcome/' + (this.isStudent?'registerStudent':'registerInstructor') 
+
                 axios({
                 url: apiUrl,
-                data: userInfo,
-                headers: {
-                    "Content-Type":"application/json;charset=utf-8"
-                },
+                data: {
+                    'firstName':this.firstName,
+                    'lastName':this.lastName,
+                    'email': this.email,
+                    'password': this.password,
+                    'passwordInput':this.password,
+                    'passwordConfirm':this.passwordAgain
+                    },
+                // headers: {
+                //     "Content-Type":"application/json;charset=utf-8"
+                // },
                 method: 'POST',
                 withCredentials: true,
                 crossDomain: true
@@ -142,7 +164,7 @@ export default {
                         this.errorMessage = "Registration falied. The email may have been taken. Please try again!"
                     }
                 }).catch(error => {console.log(error);})
-         }
+        //  }
             
          }
      }

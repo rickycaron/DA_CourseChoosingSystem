@@ -90,13 +90,10 @@ export default {
         getTeacherName(){
             return (this.teacher.firstName + ' ' + this.teacher.lastName)
         }
+    },
+    updated: function()
+    {
     }
-    // updated: function()
-    // {
-    //     axios.get("courseStudent/getCourseById/" + this.id)
-    //     .then( res => this.course = res.data)
-    //     .catch(err => console.log(err) )   
-    // }
 }
 </script>
 

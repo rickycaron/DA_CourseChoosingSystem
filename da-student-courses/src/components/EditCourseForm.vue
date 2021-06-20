@@ -2,7 +2,7 @@
     <div class="rol d-flex justify-content-center ">
         <div class="col-sm-8 p-4">
             <form  @submit.prevent="onSubmit">
-                <h3>Create a new course</h3>
+                <h3>Edit a course</h3>
 
                 <div class="form-group">
                     <label class="d-flex flex-row">Course Name:</label>
@@ -56,8 +56,8 @@
         </div>
     </div>
 
-   <p>{{name}}</p>
-   <p>{{description}}</p>
+   <!-- <p>{{name}}</p>
+   <p>{{description}}</p> -->
 </template>
 
 <script>
