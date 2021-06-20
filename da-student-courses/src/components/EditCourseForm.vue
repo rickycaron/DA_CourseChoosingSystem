@@ -2,7 +2,7 @@
     <div class="rol d-flex justify-content-center ">
         <div class="col-sm-8 p-4">
             <form  @submit.prevent="onSubmit">
-                <h3>Create a new course</h3>
+                <h3>Edit a course</h3>
 
                 <div class="form-group">
                     <label class="d-flex flex-row">Course Name:</label>
@@ -49,7 +49,7 @@
 
                 <div class="submit mt-4">
                     <button class="btn btn-lg btn-block btn-login text-uppercase font-weight-bold text-white mb-2" id="submitButton">
-                        Create
+                        Update
                     </button>
                 </div>
             </form>
@@ -62,8 +62,10 @@
 
 <script>
  export default {
+     props:['id'],
      data(){
          return{
+             id:this.id,
              name: ' ',
              description: ' ',
              weekDay: 1,
@@ -72,6 +74,28 @@
              type:''
          }
      },
+     mounted: function () 
+    {
+        console.log("The mounted function in edit course form runs")
+      console.log("The id of the course to edit: " + this.id )
+
+         axios({
+            url: 'courseInstructor/GetCourse/' + this.id,
+            headers: {"Content-Type":"application/json;charset=utf-8"},
+            method: 'GET',
+            withCredentials: true,
+            crossDomain: true
+            })
+        .then(res => {
+            console.log(res.data)
+            this.name = res.data.name,
+            this.type = res.data.type,
+            this.weekDay = res.data.weekDay,
+            this.beginTime =res.data.beginTime,
+            this.endTime = res.data.endTime,
+            this.description = res.data.description
+            }).catch(err => console.log(err))
+    },
      methods: {
          onSubmit(){
              let begin = this.beginTime.split(":")
@@ -82,6 +106,7 @@
                  return
              }
             let newCourseInfo = {
+                courseId: this.id,
                 instructorId: this.$store.getters.getUserId,
                 name: this.name,
                 description: this.description ,
@@ -89,9 +114,19 @@
                 beginTime: this.beginTime,
                 endTime: this.endTime,
                 type:this.type
-            }            
-            axios.post('courseInstructor/AddNewCourse', newCourseInfo)
-            .then(res => {
+            }  
+            console.log("Update the course of id"+this.id) 
+            console.log(newCourseInfo)   
+
+            axios({
+                url: 'courseInstructor/UpdateCourseInfo',
+                headers: {"Content-Type":"application/json;charset=utf-8"},
+                data: newCourseInfo,
+                method: 'POST',
+                withCredentials: true,
+                crossDomain: true
+                }).then(res => {
+                console.log("tHE UPDATE IS SUCCESSED")
                 console.log(res.data)
                 if(confirm("New courses added successfully. Add another one?"))
                 {

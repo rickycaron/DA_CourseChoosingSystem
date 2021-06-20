@@ -10,15 +10,11 @@ import com.a20da10.activemq.ProducerTest;
 import com.a20da10.activemq.StudentReceiver;
 import com.a20da10.dao.spring.CourseDao;
 import com.a20da10.dao.spring.MessageDao;
-import com.a20da10.service.ejb.AccountServiceRemote;
-import com.a20da10.service.ejb.InstructorGenServiceRemote;
-import com.a20da10.service.ejb.InstructorSelfServiceRemote;
-import com.a20da10.service.ejb.MyTimerServiceRemote;
+import com.a20da10.service.ejb.*;
 import com.a20da10.service.spring.StudentGeneralService;
 import com.a20da10.service.spring.StudentSelfService;
 import com.a20da10.service.spring.UpdateTool;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 @RestController
@@ -85,6 +82,10 @@ public class HelloController {
 
     @Autowired
     MyTimerServiceRemote myTimerServiceRemote;
+
+    @Autowired
+    SingletonBeanRemote singletonBeanRemote;
+
     @RequestMapping(value = "/hello1")
     @ResponseBody
     public String getAllStudent(HttpServletRequest request,Model model) throws SQLException, PropertyVetoException, ClassNotFoundException {
@@ -179,17 +180,61 @@ public class HelloController {
             UpdateTool.copyNullProperties(source, instructorEntity);
         }
         instructorSelfServiceRemote.updateInstructor(instructorEntity);
+
+
         return instructorEntity;
     }
 
     /******* Above Has been finished ********/
 
-    @ResponseBody
-    @RequestMapping("/SetInsId")
-    public void setInsId(){
-        instructorSelfServiceRemote.setInsId(1);
-    }
+//    @ResponseBody
+//    @RequestMapping("/SetInsId")
+//    public void setInsId(){
+//        instructorSelfServiceRemote.setInsId(1);
+//    }
 
+//    @ResponseBody
+//    @RequestMapping("/UpdateCourseInfo")
+//    public CourseEntity updateCourseInfo(@RequestBody CourseEntity courseEntity) {
+//        int courseId = courseEntity.getCourseId();
+//        if( courseId != 0){
+//            CourseEntity source = instructorGenServiceRemote.getCourseById(courseId);
+//            UpdateTool.copyNullProperties(source, courseEntity);
+//        }
+//        instructorSelfServiceRemote.updateCourseInfo(courseEntity);
+//        return courseEntity;
+//    }
+
+
+//    @ResponseBody
+//    @RequestMapping("/AddNewCourse")
+//    public CourseEntity addNewCourse(@RequestBody CourseEntity courseEntity) {
+//        courseEntity.setCourseId(0);
+//        instructorSelfServiceRemote.addNewCourse(courseEntity);
+//        return courseEntity;
+//    }
+
+//    @DeleteMapping("/DeleteCourse/{courseId}")
+//    public String deleteCourse(@PathVariable int courseId){
+//
+//        CourseEntity courseEntity = instructorGenServiceRemote.getCourseById(courseId);
+//        if (courseEntity == null){
+//            return "course with id = "+courseId+" is not found";
+//        }
+//        instructorSelfServiceRemote.deleteCourse(courseId);
+//        return "success";
+//    }
+
+//    @DeleteMapping("/DeleteIns/{insId}")
+//    public String deleteIns(@PathVariable int insId){
+//
+//        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(insId);
+//        if (instructorEntity == null){
+//            return "Instructor with id = "+insId+" is not found";
+//        }
+//        instructorSelfServiceRemote.deleteInstructorByInsId(insId);
+//        return "success";
+//    }
 
 //    @ResponseBody
 //    @RequestMapping("/UpdateCourseInfo")
@@ -235,23 +280,23 @@ public class HelloController {
 //        instructorSelfServiceRemote.deleteInstructorByInsId(insId);
 //        return "success";
 //    }
-    @RequestMapping("/resetInsPassword")
-    @ResponseBody
-    public boolean resetInsPassword() {
-        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(1);
-        System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
-        System.out.println(instructorEntity);
-        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
-            return false;
-        } else {
-    //            String rawPass = instructorEntity.getPassword();
-            String newPass = "reset";
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            instructorEntity.setPassword(passwordEncoder.encode(newPass));
-            instructorSelfServiceRemote.updateInstructor(instructorEntity);
-        }
-        return true;
-    }
+//    @RequestMapping("/resetInsPassword")
+//    @ResponseBody
+//    public boolean resetInsPassword() {
+//        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(6);
+//        System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
+//        System.out.println(instructorEntity);
+//        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+//            return false;
+//        } else {
+//    //            String rawPass = instructorEntity.getPassword();
+//            String newPass = "reset";
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            instructorEntity.setPassword(passwordEncoder.encode(newPass));
+//            instructorSelfServiceRemote.updateInstructor(instructorEntity);
+//        }
+//        return true;
+//    }
     @ResponseBody
     @RequestMapping("/SetTimeOut")
     public String setTimeOut() {
@@ -260,9 +305,35 @@ public class HelloController {
         return message;
     }
 
+
+//    @ResponseBody
+//    @RequestMapping("/SOAPGetInsByName")
+//    public List<EjbInstructorEntity> getInsByName(){
+//        SoapService soapService = new SoapService();
+//        Soap soap = soapService.getSoapPort();
+//        return soap.getByName("Bob","Evans");
+//    }
+//
+//    @ResponseBody
+//    @RequestMapping("/SOAPGetInsByEmail")
+//    public String getInsByEmail(){
+//        SoapService soapService = new SoapService();
+//        Soap soap = soapService.getSoapPort();
+//        return soap.getByEmail("bob.evans@kuleuven.be").getEmail();
+//    }
+//
+//    @ResponseBody
+//    @RequestMapping("/SOAPGetAllIns")
+//    public List<EjbInstructorEntity> getAllIns(){
+//        SoapService soapService = new SoapService();
+//        Soap soap = soapService.getSoapPort();
+//        return soap.getAll();
+//    }
+
+
     @ResponseBody
-    @RequestMapping("/InsertIns")
-    public void InsertIns() {
-        instructorSelfServiceRemote.insertInstructor("Xiao", "Li", "xiao.li@kuleuven.be","xiaoli", "t000003");
+    @RequestMapping("/SingletonGetLoggedInstructors")
+    public Map<String, Integer> getLoggedList(){
+        return singletonBeanRemote.getFromList();
     }
 }

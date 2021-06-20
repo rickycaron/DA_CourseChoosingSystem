@@ -5,6 +5,6 @@ import javax.ejb.Timer;
 
 @Remote
 public interface MyTimerServiceRemote {
-    public void setTimer(long interval);
-    public void programmaticTimeout(Timer timer);
+    void setTimer(long interval);
+    void programmaticTimeout(Timer timer);
 }

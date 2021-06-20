@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-end">
         <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="editSwitch" v-model="editSwitch">
-            <label class="custom-control-label" for="editSwitch">Edit Courses</label>
+            <label class="custom-control-label" for="editSwitch">Delete Course</label>
         </div>
     </div>
 
@@ -30,10 +30,9 @@
 
 <script>
 import CourseCard from './CourseCard.vue'
-import CreateCourseForm from '../../components/CreateCourseForm.vue'
 
 export default {
-    components:{CourseCard,CreateCourseForm},
+    components:{CourseCard},
     data()
     {
         return{
@@ -43,51 +42,62 @@ export default {
     },
     methods: 
     {
-        // addCourse(newCourseInfo)
-        // {
-        //     // console.log("I submit!")
-        //     axios.post('http://localhost:3000/courses/', newCourseInfo)
-        //     .then(res => console.log(res.data))
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
-        //     // console.log(newCourseInfo)
-        //     // this.courses.push(newCourseInfo)
-        // },
-        deleteCourse(courseid)
+        disenrollCoursebyStudent(courseid)
         {
-            // if(confirm("Do you really want to disenroll from this course?"))
-            // {
-                console.log("To delete the course of id"+ courseid)
+            if(confirm("Do you really want to disenroll from this course?"))
+            {
+                console.log("To disenroll the course of id"+ courseid)
                 axios.get('courseStudent/disenrollCourse/'+ courseid)
                 .then(resp => {
                     console.log("The course is disenrolled")
                     console.log(resp.data)
-                    this.courses = this.courses.filter(function(course, index, arr)
-                    { 
-                        return course.courseId != courseid;
-                    });
+                    this.$router.go(this.$router.currentRoute)
+                    // this.courses = this.courses.filter(function(course, index, arr)
+                    // { 
+                    //     return course.courseId != courseid;
+                    // });
                 })
                 .catch(error => {
                     console.log(error);
                 })
-            // }
-
-            //  this.$confirm("Are you sure to delete it ?").then(() => { });//NOT USEABLE
-            // for( let i = 0; i < this.courses.length; i++)
-            // {                    
-            //     if ( this.courses[i].courseID === courseid)
-            //     { 
-            //         this.courses.splice(i, 1); 
-            //         i--; 
-            //     }
-            // }
+            }
+        },
+        deleteCoursebyIns(courseid)
+        {
+            if(confirm("Do you really want to delete this course?"))
+            {
+                console.log("To delete the course of id"+ courseid)
+                axios.get('courseInstructor/DeleteCourse/'+ courseid)
+                .then(resp => {
+                    console.log("The course is deleted")
+                    console.log(resp.data)
+                    this.$router.go(this.$router.currentRoute)
+                    // this.courses = this.courses.filter(function(course, index, arr)
+                    // { 
+                    //     return course.courseId != courseid;
+                    // });
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            }
+        },
+        deleteCourse(courseid)
+        {
+            if(this.$store.getters.getIsStudent)
+            {
+                this.disenrollCoursebyStudent(courseid)
+            }else
+            {
+                this.deleteCoursebyIns(courseid)
+            }
         }
     }, 
     mounted: function () 
     {
-        
-        axios.get('courseStudent/getMycourses')
+        console.log("The mounted function in courses"+ (this.$store.getters.getIsStudent))
+        let url = 'course' + (  (this.$cookies.get('isStudent') == 'true') ? 'Student': 'Instructor' ) + '/getMycourses'
+        axios.get(url)
         .then(res => {
             console.log(res.data)
             this.courses = res.data

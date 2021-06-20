@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.ws.Action;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
+import java.util.List;
 
 
 /**
@@ -26,17 +27,47 @@ public interface Soap {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.util.List<com.a20da10.soap.EjbInstructorEntity>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getByName", targetNamespace = "http://SOAP.a20da10.com/", className = "com.a20da10.soap.GetByName")
+    @ResponseWrapper(localName = "getByNameResponse", targetNamespace = "http://SOAP.a20da10.com/", className = "com.a20da10.soap.GetByNameResponse")
+    @Action(input = "http://SOAP.a20da10.com/Soap/getByNameRequest", output = "http://SOAP.a20da10.com/Soap/getByNameResponse")
+    public List<EjbInstructorEntity> getByName(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<com.a20da10.soap.EjbInstructorEntity>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getAll", targetNamespace = "http://SOAP.a20da10.com/", className = "com.a20da10.soap.GetAll")
+    @ResponseWrapper(localName = "getAllResponse", targetNamespace = "http://SOAP.a20da10.com/", className = "com.a20da10.soap.GetAllResponse")
+    @Action(input = "http://SOAP.a20da10.com/Soap/getAllRequest", output = "http://SOAP.a20da10.com/Soap/getAllResponse")
+    public List<EjbInstructorEntity> getAll();
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns com.a20da10.soap.EjbInstructorEntity
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getById", targetNamespace = "http://SOAP.a20da10.com/", className = "com.a20da10.soap.GetById")
-    @ResponseWrapper(localName = "getByIdResponse", targetNamespace = "http://SOAP.a20da10.com/", className = "com.a20da10.soap.GetByIdResponse")
-    @Action(input = "http://SOAP.a20da10.com/Soap/getByIdRequest", output = "http://SOAP.a20da10.com/Soap/getByIdResponse")
-    public EjbInstructorEntity getById(
+    @RequestWrapper(localName = "getByEmail", targetNamespace = "http://SOAP.a20da10.com/", className = "com.a20da10.soap.GetByEmail")
+    @ResponseWrapper(localName = "getByEmailResponse", targetNamespace = "http://SOAP.a20da10.com/", className = "com.a20da10.soap.GetByEmailResponse")
+    @Action(input = "http://SOAP.a20da10.com/Soap/getByEmailRequest", output = "http://SOAP.a20da10.com/Soap/getByEmailResponse")
+    public EjbInstructorEntity getByEmail(
         @WebParam(name = "arg0", targetNamespace = "")
-        int arg0);
+        String arg0);
 
 }

@@ -35,8 +35,8 @@
                                 <div v-if="errorMessage" class="alert alert-danger">
                                     <strong>Warning! </strong>{{errorMessage}}
                                 </div>
-                            <p> I am a student: {{isStudent}}</p> 
-                            <p>{{firstName}}</p>
+                            <!-- <p> I am a student: {{isStudent}}</p> 
+                            <p>{{firstName}}</p> -->
 
                                 <!-- <div class="custom-control custom-checkbox mb-3 d-flex justify-content-end">
                                     <input type="checkbox" class="custom-control-input" id="customCheck1" @click="showPassword">
@@ -54,7 +54,7 @@
                                 <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Get started!</button>
                                 <!-- <a class="d-block text-center mt-2 small" href="login">Already have an account?</a> -->
                                 <div class="d-flex justify-content-between mt-4">
-                                    <router-link :to="{name:'forgetPassword'}" class="small" >Forgot password?</router-link> 
+                                    <router-link :to="{name:'resetPassword'}" class="small" >Forgot password?</router-link> 
                                     <router-link :to="{name:'login'}" class="small" >Already have an account?</router-link> 
                                 </div>
                             </form>
@@ -85,11 +85,11 @@ export default {
           toggleState()
          {
             this.isStudent = !this.isStudent 
-            this.firstName = ''
-            this.lastName  = ''
-            this.email = ''
-            this.password = ''
-            this.passwordAgain = ''
+            // this.firstName = ''
+            // this.lastName  = ''
+            // this.email = ''
+            // this.password = ''
+            // this.passwordAgain = ''
          },
           showPassword()
          {
@@ -98,26 +98,57 @@ export default {
             if (x.type === "password") {x.type = "text"; y.type = "text";} 
             else { x.type = "password"; y.type = "password";}
          },
-         submitRegisterForm(){
-            if( ! (this.password === this.passwordAgain) )
-            {
-                this.errorMessage = "The passwords don't match"
-            }else
-            {
+         async submitRegisterForm(){
+            // if( ! (this.password === this.passwordAgain) )
+            // {
+            //     this.errorMessage = "The passwords don't match"
+            // }else
+            // {
+                // let passwordTest = {
+                //     passwordInput:this.password,
+                //     passwordConfirm:this.passwordAgain
+                // }
+
+                // await axios.post('hello-servlet',passwordTest).then(res => {
+                // console.log("Password for filter sent!")
+                //     console.log(res.data)
+                //     if(res.data != "Hello World!" ){
+                //         console.log("Password check failed!")
+                //         this.errorMessage = "The password doesn't match.!"
+                //     }
+                // }).catch(error => {console.log(error);})
+
                 let userInfo = {
                     firstName:this.firstName,
                     lastName:this.lastName,
                     email: this.email,
-                    password: this.password
+                    password: this.password,
+                    passwordInput:this.password,
+                    passwordConfirm:this.passwordAgain
                     }
+                let number = Math.floor((Math.random() * 10000000) + 1)
+                if(this.isStudent){
+                    userInfo.studentNumber = 'r' + number
+                }else{
+                    userInfo.instructorNumber = 't' + number
+                }
                 console.log(userInfo)
-                // let apiUrl = 'welcome/' + (this.isStudent?'student':'instructor') //
+                console.log("is a student?"+ this.isStudent)
+                let apiUrl = 'welcome/' + (this.isStudent?'registerStudent':'registerInstructor') 
+
                 axios({
                 url: apiUrl,
-                data: userInfo,
-                headers: {
-                    "Content-Type":"application/json;charset=utf-8"
-                },
+                data: {
+                    'firstName':this.firstName,
+                    'lastName':this.lastName,
+                    'email': this.email,
+                    'password': this.password,
+                    'passwordInput':this.password,
+                    'passwordConfirm':this.passwordAgain
+                    },
+                // headers: {
+                //     "Content-Type":"application/json;charset=utf-8"
+                // },
                 method: 'POST',
                 withCredentials: true,
                 crossDomain: true
@@ -133,7 +164,7 @@ export default {
                         this.errorMessage = "Registration falied. The email may have been taken. Please try again!"
                     }
                 }).catch(error => {console.log(error);})
-         }
+        //  }
             
          }
      }

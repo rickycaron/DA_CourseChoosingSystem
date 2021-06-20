@@ -1,5 +1,4 @@
 <template>
-
 <router-link :to = "{ name: 'CourseDetails', params: {id:this.courseID}}">
     <div  class="list-group-item list-group-item-action bg-light " aria-current="true">
         <!-- here it can add an active -->
@@ -10,15 +9,6 @@
     </div>   
 </router-link>
 
-    <!-- <a href="#" class="list-group-item list-group-item-action bg-light " aria-current="true">
-        here it can add an active
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{courseName}} </h5>
-            <small>{{weekDayRepresent}} {{timePresent(beginTime)}} - {{timePresent(endTime)}}</small>
-        </div>
-        <small></small>
-    </a> -->
-    
 </template>
 
 <script>
@@ -32,7 +22,6 @@ export default {
             courseDetail : this.courseinfo.courseDetail,
             teacherID : this.courseinfo.teacherID,
             teacherName : this.courseinfo.teacherFirstName +' '+ this.courseinfo.teacherLastName,
-            // courseImage:require("../assets/programminginc.png"),
             weekDay: this.courseinfo.weekDay,
             beginTime: this.courseinfo.beginTime, 
             endTime: this.courseinfo.endTime

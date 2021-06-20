@@ -6,7 +6,7 @@ import javax.ejb.Local;
 
 @Local
 public interface AccountServiceLocal{
-        public Boolean InstructorAuthentication(String email,String password);
-        public Integer getInstructorIdByEmail(String email);
-        public EJBInstructorEntity register(EJBInstructorEntity newInstructor);
+        Boolean InstructorAuthentication(String email,String password);
+        Integer getInstructorIdByEmail(String email);
+        EJBInstructorEntity register(EJBInstructorEntity newInstructor);
 }

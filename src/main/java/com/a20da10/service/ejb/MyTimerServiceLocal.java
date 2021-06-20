@@ -5,6 +5,6 @@ import javax.ejb.Timer;
 
 @Local
 public interface MyTimerServiceLocal {
-    public void setTimer(long interval);
-    public void programmaticTimeout(Timer timer);
+    void setTimer(long interval);
+    void programmaticTimeout(Timer timer);
 }

@@ -21,7 +21,7 @@
                                     <label for="password">Password</label>
                                 </div>
                                 <div v-if="errorMessage" class="alert alert-danger">
-                                    <strong>Wrong! </strong>{{errorMessage}}
+                                    <strong>Logged in failed! </strong>{{errorMessage}}
                                 </div>
                                 <!-- <input type="checkbox" @click="showPassword">Show Password -->
                                 <div class="jumbotron bg-light">
@@ -32,16 +32,16 @@
                                         </button>
                                     </div>
                                 </div>
-                                <p  v-if="isStudent" > I am a student！</p>
-                                <p  v-if="!isStudent" > {{isStudent}}I am a course instructor!</p>
+                                <!-- <p  v-if="isStudent" > I am a student！</p>
+                                <p  v-if="!isStudent" > {{isStudent}}I am a course instructor!</p> -->
                                 <button  class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" >Sign in</button>
                                 <div class="d-flex justify-content-between">
-                                    <router-link :to="{name:'forgetPassword'}" class="small" >Forgot password?</router-link> 
+                                    <router-link :to="{name:'resetPassword'}" class="small" >Forgot password?</router-link> 
                                     <router-link :to="{name:'register'}" class="small" >Register</router-link> 
                                 </div>
                             </form>
-                            {{this.$store.state.isloggedin}}
-                            {{this.$store.state.isStudent}}
+                            <!-- {{this.$store.state.isloggedin}}
+                            {{this.$store.state.isStudent}} -->
                         </div>
                     </div>
                 </div>
@@ -66,8 +66,8 @@ export default {
          toggleState()
          {
             this.isStudent = !this.isStudent 
-            this.email= ' ',
-            this.password=''
+            // this.email= ' ',
+            // this.password=''
          },
          showPassword()
          {
@@ -111,6 +111,7 @@ export default {
                 }
             }).catch(error => {
                 console.log(error);
+                this.errorMessage = " Are you sure you are " + (this.isStudent ? "a student?":"an Instructor")
             })
          }
 

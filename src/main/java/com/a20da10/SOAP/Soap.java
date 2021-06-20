@@ -2,20 +2,30 @@ package com.a20da10.SOAP;
 
 import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.dao.ejb.InstructorDaoImpl;
-import com.a20da10.service.ejb.Test;
 import org.springframework.stereotype.Component;
 
 import javax.jws.WebService;
+import java.util.List;
 
 @WebService
 @Component
 public class Soap { //This class is used to generate wsdl files and SOAP java files
 
-    private Test test = new Test();
     private InstructorDaoImpl instructorDaoImpl = new InstructorDaoImpl();
 
-    public EJBInstructorEntity getById(int id) {
+    public List<EJBInstructorEntity> getByName(String firsName, String lastName) {
         instructorDaoImpl.initEntityManager();
-        return instructorDaoImpl.getById(id);
+        return instructorDaoImpl.getByName(firsName, lastName);
     }
+
+    public EJBInstructorEntity getByEmail(String email) {
+        instructorDaoImpl.initEntityManager();
+        return instructorDaoImpl.getByEmail(email);
+    }
+
+    public List<EJBInstructorEntity> getAll() {
+        instructorDaoImpl.initEntityManager();
+        return instructorDaoImpl.getAll();
+    }
+
 }

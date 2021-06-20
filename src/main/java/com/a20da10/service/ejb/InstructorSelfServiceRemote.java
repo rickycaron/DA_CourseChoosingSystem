@@ -8,14 +8,15 @@ import java.util.List;
 
 @Remote
 public interface InstructorSelfServiceRemote {
-    public EJBInstructorEntity getMyInfo ();
-    public List<CourseEntity> getCoursesOfMine ();
-    public void insertInstructor(String firstName, String lasttName, String email, String password, String instructorNumber);
-    public void updateInstructor(EJBInstructorEntity instructorEntity);
-    public void deleteInstructorByInsId(int insId);
-    public void addNewCourse(CourseEntity courseEntity);
-    public void deleteCourse(int courseId);
-    public void updateCourseInfo(CourseEntity courseEntity);
-    public void setInsId(int id);
-    public int getInsId();
+    EJBInstructorEntity getMyInfo ();
+    List<CourseEntity> getCoursesOfMine ();
+    void insertInstructor(String firstName, String lasttName, String email, String password, String instructorNumber);
+    void updateInstructor(EJBInstructorEntity instructorEntity);
+    void deleteInstructorByInsId(int insId);
+    void addNewCourse(CourseEntity courseEntity);
+    void deleteCourse(int courseId);
+    void updateCourseInfo(CourseEntity courseEntity);
+    void setInsId(int id);
+    int getInsId();
+    void removeBean();
 }

@@ -8,9 +8,9 @@ import java.util.List;
 
 @Local
 public interface InstructorGenServiceLocal {
-    public List<EJBInstructorEntity> getInstructorByName(String firsName, String lastName);
-    public EJBInstructorEntity getInstructorByInsId(int insId);
-    public List<EJBInstructorEntity> getAllInstructors();
-    public List<CourseEntity> getCoursesByInsId (int insId);
-    public CourseEntity getCourseById (int courseid);
+    List<EJBInstructorEntity> getInstructorByName(String firsName, String lastName);
+    EJBInstructorEntity getInstructorByInsId(int insId);
+    List<EJBInstructorEntity> getAllInstructors();
+    List<CourseEntity> getCoursesByInsId (int insId);
+    CourseEntity getCourseById (int courseid);
 }

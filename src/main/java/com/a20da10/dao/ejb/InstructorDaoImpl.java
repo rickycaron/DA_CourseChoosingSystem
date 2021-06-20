@@ -28,7 +28,7 @@ public class InstructorDaoImpl implements InstructorDao {
 
     @Override
     public List<EJBInstructorEntity> getByName(String firsName, String lastName) {
-        Query query =em.createQuery("SELECT i FROM  EJBInstructorEntity i WHERE i.firstName = :firstName AND i.lastName = :lastName", EJBInstructorEntity.class);
+        TypedQuery<EJBInstructorEntity> query =em.createQuery("SELECT i FROM  EJBInstructorEntity i WHERE i.firstName = :firstName AND i.lastName = :lastName", EJBInstructorEntity.class);
         query.setParameter("firstName",firsName);
         query.setParameter("lastName",lastName);
         return query.getResultList();
@@ -50,7 +50,7 @@ public class InstructorDaoImpl implements InstructorDao {
     @Override
     @Transactional
     public List<EJBInstructorEntity> getAll() {
-        Query query = em.createQuery("SELECT p FROM EJBInstructorEntity p");
+        TypedQuery<EJBInstructorEntity>  query = em.createQuery("SELECT p FROM EJBInstructorEntity p", EJBInstructorEntity.class);
         return query.getResultList();
     }
 
@@ -64,7 +64,7 @@ public class InstructorDaoImpl implements InstructorDao {
     @Override
     @Transactional
     public List<CourseEntity> findCoursesByInsId(int insId) {
-        Query query = em.createQuery("SELECT c FROM CourseEntity c WHERE c.instructorId = :insId");
+        TypedQuery<CourseEntity> query = em.createQuery("SELECT c FROM CourseEntity c WHERE c.instructorId = :insId", CourseEntity.class);
         query.setParameter("insId", insId);
         return query.getResultList();
     }

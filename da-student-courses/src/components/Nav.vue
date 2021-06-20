@@ -1,10 +1,10 @@
 <template>
-    {{ "The user exists:" + this.$cookies.isKey('isStudent') }}
+    <!-- {{ "The user exists:" + this.$cookies.isKey('isStudent') }}
     {{"The user is a student: " + this.$cookies.get('isStudent')}}
 
 <p>The use is currenlty loggedin: {{$store.getters.isLoggedIn}} -- 
-The user is a student {{$store.getters.getIsStudent}} -- 
-User Information: {{$store.getters.getUserInfo}}</p>
+The user is a student {{$store.getters.getIsStudent}} -- {{typeof($store.getters.getIsStudent)}} -- 
+User Information: {{$store.getters.getUserInfo}}</p> -->
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
   <router-link to="/" class="navbar-brand" > CourseSystem </router-link>
@@ -20,6 +20,9 @@ User Information: {{$store.getters.getUserInfo}}</p>
       </li>
       <li class="nav-item">
         <router-link :to="{name:'Courses'}" class="nav-link" >Courses</router-link>
+      </li>
+      <li class="nav-item" v-if="$store.getters.getIsStudent">
+        <router-link :to="{name:'ChooseCourses'}" class="nav-link" >Choose Course</router-link>
       </li>
       <li class="nav-item" v-if="! $store.getters.getIsStudent">
         <router-link :to="{name:'CreateCourse'}" class="nav-link" >Create a Course</router-link> 
@@ -81,8 +84,9 @@ export default {
     methods:{
         logOut()
         {
+          let url = 'welcome/logout'+( (this.$store.getters.getIsStudent == "true")?'':'Ins')
             axios({
-            url: 'welcome/logout',
+            url:url,
             headers: { "Content-Type":"application/json;charset=utf-8"},
             method: 'GET',
             withCredentials: true,
