@@ -28,9 +28,10 @@ public class passwordFilter implements Filter {
         System.out.println("------------------------------------------You are in a filter now !--------------------------------------------------");
         HttpServletRequest request = (HttpServletRequest) req;
         System.out.println(request.getRequestURL());
-
         Logger logger = Logger.getGlobal();
         logger.info("The user "+ request.getSession()+ " is visiting!");
+
+        chain.doFilter(req, response);
     }
 
     @Override
