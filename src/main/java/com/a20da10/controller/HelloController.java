@@ -187,8 +187,6 @@ public class HelloController {
             UpdateTool.copyNullProperties(source, instructorEntity);
         }
         instructorSelfServiceRemote.updateInstructor(instructorEntity);
-
-
         return instructorEntity;
     }
 
@@ -213,6 +211,8 @@ public class HelloController {
 //    }
 
 
+
+
 //    @ResponseBody
 //    @RequestMapping("/AddNewCourse")
 //    public CourseEntity addNewCourse(@RequestBody CourseEntity courseEntity) {
@@ -286,6 +286,23 @@ public class HelloController {
 //        }
 //        instructorSelfServiceRemote.deleteInstructorByInsId(insId);
 //        return "success";
+//    }
+//    @RequestMapping("/resetInsPassword")
+//    @ResponseBody
+//    public boolean resetInsPassword() {
+//        EJBInstructorEntity instructorEntity = instructorGenServiceRemote.getInstructorByInsId(6);
+//        System.out.println("-----------------------------Enter reset password instructor-----------------------------------");
+//        System.out.println(instructorEntity);
+//        if (!instructorGenServiceRemote.getAllInstructors().contains(instructorEntity)) {
+//            return false;
+//        } else {
+//    //            String rawPass = instructorEntity.getPassword();
+//            String newPass = "reset";
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            instructorEntity.setPassword(passwordEncoder.encode(newPass));
+//            instructorSelfServiceRemote.updateInstructor(instructorEntity);
+//        }
+//        return true;
 //    }
 //    @RequestMapping("/resetInsPassword")
 //    @ResponseBody

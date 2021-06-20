@@ -18,4 +18,5 @@ public interface InstructorSelfServiceLocal {
     void updateCourseInfo(CourseEntity courseEntity);
     void setInsId(int id);
     int getInsId();
+    void removeBean();
 }

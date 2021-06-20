@@ -4,11 +4,15 @@ import com.a20da10.Entity.ejb.EJBInstructorEntity;
 import com.a20da10.Entity.spring.CourseEntity;
 import com.a20da10.dao.ejb.InstructorDao;
 
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.ejb.StatefulTimeout;
 import javax.inject.Inject;
 import java.util.List;
 
+
 @Stateful(name = "InstructorSelfServiceImpl")
+@StatefulTimeout(value = 30)
 public class InstructorSelfServiceImpl implements InstructorSelfServiceLocal,InstructorSelfServiceRemote{
 
     int instructorId;
@@ -61,4 +65,10 @@ public class InstructorSelfServiceImpl implements InstructorSelfServiceLocal,Ins
         insDao.updateCourseInfo(courseEntity);
     }
 
+    @Override
+    @Remove
+    public void removeBean(){
+        instructorId = -1;
+        insDao = null;
+    }
 }
