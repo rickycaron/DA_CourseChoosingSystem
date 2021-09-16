@@ -1,10 +1,8 @@
 # DA_CourseChoosingSystem
 * /da-student-course contains the folder for all the frontend code of vue3
 
-* /apache-activemq-5.16.2-bin: Contains the file for the server for the message, open apache-activemq-5.16.2-bin\apache-activemq-5.16.2\bin\win64\activemq.bat, then you can open the server
-* /soapClient folder: contains the project for the SOAP functions
+* /Webpages_Screenshots: all the screen shots for our website
 
-* /Screenshots: all the screen shots for our website
 * Project Structure.png: The overall structure of whole project
 
 ## Way to use:
