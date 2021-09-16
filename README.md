@@ -1,11 +1,10 @@
 # DA_CourseChoosingSystem
 
+* /apache-activemq-5.16.2-bin: Contains the file for the server for the message, open apache-activemq-5.16.2-bin\apache-activemq-5.16.2\bin\win64\activemq.bat, then you can open the server
+* /soapClient folder: contains the project for the SOAP functions
 
-/apache-activemq-5.16.2-bin: Contains the file for the server for the message, open apache-activemq-5.16.2-bin\apache-activemq-5.16.2\bin\win64\activemq.bat, then you can open the server
-/soapClient folder: contains the project for the SOAP functions
-
-/Screenshots: all the screen shots for our website
-Project Structure.png: The overall structure of whole project
+* /Screenshots: all the screen shots for our website
+* Project Structure.png: The overall structure of whole project
 
 ## Way to use:
 Open the daproject in IntelliJ, open Docker, 
